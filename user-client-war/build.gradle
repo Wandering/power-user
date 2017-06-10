@@ -1,9 +1,12 @@
 apply plugin: 'java'
 apply plugin: 'spring-boot'
+apply plugin: 'war'
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile "org.springframework.boot:spring-boot-starter-test:$springbootVersion"
     testCompile "org.springframework.boot:spring-boot-test:$springbootVersion"
+    testCompile "org.springframework.boot:spring-boot-starter-data-redis:$springbootVersion"
+    testCompile "org.springframework.boot:spring-boot-starter-redis:1.4.3.RELEASE"
     testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
     compile "org.springframework.boot:spring-boot-starter-freemarker:$springbootVersion"
 
