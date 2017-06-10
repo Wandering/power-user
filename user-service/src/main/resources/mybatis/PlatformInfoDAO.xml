@@ -1,0 +1,1352 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+    <mapper namespace="com.power.dao.IPlatformInfoDAO">
+
+
+
+<!--
+C
+insert
+insertMap
+R
+findOne
+findAll
+exists
+queryOne
+queryOneByWhereSql
+queryList
+queryListByWhereSql
+queryBySql
+queryBySqlCount
+U
+D
+-->
+
+
+    <sql id="Base_Column_List">
+        id as id ,
+        appId as appId ,
+        secret as secret ,
+        type as type ,
+        toUserName as toUserName ,
+        token as token ,
+        aesKey as aesKey ,
+        uniqueKey as uniqueKey ,
+        note as note ,
+        agencyId as agencyId 
+    </sql>
+
+    <!-- 插入 start-->
+
+    <insert id="insert" parameterType="PlatformInfo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO power_platform_info (
+        appId,
+        secret,
+        type,
+        toUserName,
+        token,
+        aesKey,
+        uniqueKey,
+        note,
+        agencyId
+        ) VALUES (
+        #{appId},
+        #{secret},
+        #{type},
+        #{toUserName},
+        #{token},
+        #{aesKey},
+        #{uniqueKey},
+        #{note},
+        #{agencyId}
+        )
+    </insert>
+
+
+    <insert id="insertMap" >
+        INSERT INTO power_platform_info (
+        appId,
+        secret,
+        type,
+        toUserName,
+        token,
+        aesKey,
+        uniqueKey,
+        note,
+        agencyId
+                ) VALUES (
+        #{map.appId},
+        #{map.secret},
+        #{map.type},
+        #{map.toUserName},
+        #{map.token},
+        #{map.aesKey},
+        #{map.uniqueKey},
+        #{map.note},
+        #{map.agencyId}
+                )
+    </insert>
+
+
+    <!-- 插入 end-->
+
+    <!-- 修改 start-->
+        <!-- 更新 -->
+        <update id="update" parameterType="PlatformInfo">
+        UPDATE power_platform_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="appId!=null">
+                appId = #{appId},
+            </if>
+            <if test="secret!=null">
+                secret = #{secret},
+            </if>
+            <if test="type!=null">
+                type = #{type},
+            </if>
+            <if test="toUserName!=null">
+                toUserName = #{toUserName},
+            </if>
+            <if test="token!=null">
+                token = #{token},
+            </if>
+            <if test="aesKey!=null">
+                aesKey = #{aesKey},
+            </if>
+            <if test="uniqueKey!=null">
+                uniqueKey = #{uniqueKey},
+            </if>
+            <if test="note!=null">
+                note = #{note},
+            </if>
+            <if test="agencyId!=null">
+                agencyId = #{agencyId},
+            </if>
+        </trim>
+                WHERE
+        id = #{id}
+        </update>
+
+        <update id="updateMap">
+        UPDATE power_platform_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="map.appId!=null">
+                appId = #{map.appId},
+            </if>
+            <if test="map.secret!=null">
+                secret = #{map.secret},
+            </if>
+            <if test="map.type!=null">
+                type = #{map.type},
+            </if>
+            <if test="map.toUserName!=null">
+                toUserName = #{map.toUserName},
+            </if>
+            <if test="map.token!=null">
+                token = #{map.token},
+            </if>
+            <if test="map.aesKey!=null">
+                aesKey = #{map.aesKey},
+            </if>
+            <if test="map.uniqueKey!=null">
+                uniqueKey = #{map.uniqueKey},
+            </if>
+            <if test="map.note!=null">
+                note = #{map.note},
+            </if>
+            <if test="map.agencyId!=null">
+                agencyId = #{map.agencyId},
+            </if>
+        </trim>
+        WHERE
+        id = #{map.id}
+        </update>
+
+        <update id="updateByCondition">
+        UPDATE power_platform_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="update.appId!=null">
+                appId = #{update.appId},
+            </if>
+            <if test="update.secret!=null">
+                secret = #{update.secret},
+            </if>
+            <if test="update.type!=null">
+                type = #{update.type},
+            </if>
+            <if test="update.toUserName!=null">
+                toUserName = #{update.toUserName},
+            </if>
+            <if test="update.token!=null">
+                token = #{update.token},
+            </if>
+            <if test="update.aesKey!=null">
+                aesKey = #{update.aesKey},
+            </if>
+            <if test="update.uniqueKey!=null">
+                uniqueKey = #{update.uniqueKey},
+            </if>
+            <if test="update.note!=null">
+                note = #{update.note},
+            </if>
+            <if test="update.agencyId!=null">
+                agencyId = #{update.agencyId},
+            </if>
+        </trim>
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+        <if test="condition.id!=null">
+            AND id = #{condition.id}
+        </if>
+        <if test="condition.appId!=null">
+            AND appId = #{condition.appId}
+        </if>
+        <if test="condition.secret!=null">
+            AND secret = #{condition.secret}
+        </if>
+        <if test="condition.type!=null">
+            AND type = #{condition.type}
+        </if>
+        <if test="condition.toUserName!=null">
+            AND toUserName = #{condition.toUserName}
+        </if>
+        <if test="condition.token!=null">
+            AND token = #{condition.token}
+        </if>
+        <if test="condition.aesKey!=null">
+            AND aesKey = #{condition.aesKey}
+        </if>
+        <if test="condition.uniqueKey!=null">
+            AND uniqueKey = #{condition.uniqueKey}
+        </if>
+        <if test="condition.note!=null">
+            AND note = #{condition.note}
+        </if>
+        <if test="condition.agencyId!=null">
+            AND agencyId = #{condition.agencyId}
+        </if>
+        </trim>
+        </update>
+
+        <update id="updateByWhereSql">
+        UPDATE power_platform_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="update.appId!=null">
+                appId = #{update.appId},
+            </if>
+            <if test="update.secret!=null">
+                secret = #{update.secret},
+            </if>
+            <if test="update.type!=null">
+                type = #{update.type},
+            </if>
+            <if test="update.toUserName!=null">
+                toUserName = #{update.toUserName},
+            </if>
+            <if test="update.token!=null">
+                token = #{update.token},
+            </if>
+            <if test="update.aesKey!=null">
+                aesKey = #{update.aesKey},
+            </if>
+            <if test="update.uniqueKey!=null">
+                uniqueKey = #{update.uniqueKey},
+            </if>
+            <if test="update.note!=null">
+                note = #{update.note},
+            </if>
+            <if test="update.agencyId!=null">
+                agencyId = #{update.agencyId},
+            </if>
+        </trim>
+
+
+        <if test="nativeSql!=null">
+${nativeSql}        </if>
+        </update>
+
+
+
+        <update id="updateNull" parameterType="PlatformInfo">
+        UPDATE power_platform_info
+        <trim prefix="SET" suffixOverrides=",">
+            appId = #{appId},
+            secret = #{secret},
+            type = #{type},
+            toUserName = #{toUserName},
+            token = #{token},
+            aesKey = #{aesKey},
+            uniqueKey = #{uniqueKey},
+            note = #{note},
+            agencyId = #{agencyId},
+        </trim>
+                WHERE
+        id = #{id} 
+        </update>
+    <!-- 修改 end-->
+
+    <!-- 读取数据 start-->
+        <select id="findOne" parameterType="java.lang.Long" resultType="PlatformInfo">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM power_platform_info
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+        </select>
+
+        <select id="findAll" resultType="PlatformInfo">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM power_platform_info
+        </select>
+
+        <!-- 查询 -->
+        <select id="queryOne" resultType="PlatformInfo">
+        SELECT
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                <if test="selector.id!=null">
+                    , id
+                </if>
+                <if test="selector.appId!=null">
+                    , appId
+                </if>
+                <if test="selector.secret!=null">
+                    , secret
+                </if>
+                <if test="selector.type!=null">
+                    , type
+                </if>
+                <if test="selector.toUserName!=null">
+                    , toUserName
+                </if>
+                <if test="selector.token!=null">
+                    , token
+                </if>
+                <if test="selector.aesKey!=null">
+                    , aesKey
+                </if>
+                <if test="selector.uniqueKey!=null">
+                    , uniqueKey
+                </if>
+                <if test="selector.note!=null">
+                    , note
+                </if>
+                <if test="selector.agencyId!=null">
+                    , agencyId
+                </if>
+        </trim>
+        </if>
+        <if test="selector==null">
+        <include refid="Base_Column_List" />
+        </if>
+
+                FROM power_platform_info
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+        <if test="condition.id!=null">
+
+            <if test="condition.id.op!='in' and condition.id.op!='like' and condition.id.op!='leftlike'">
+                AND   id  ${condition.id.op} #{condition.id.data}
+            </if>
+            <if test="condition.id.op=='like'">
+                AND id like CONCAT('%', #{condition.id.data} , '%')
+            </if>
+            <if test="condition.id.op=='leftlike'">
+                AND id like CONCAT(#{condition.id.data} , '%')
+            </if>
+            <if test="condition.id.op=='in'">
+                ${condition.groupOp}   id  ${condition.id.op}
+                <foreach collection="condition.id.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.appId!=null">
+
+            <if test="condition.appId.op!='in' and condition.appId.op!='like' and condition.appId.op!='leftlike'">
+                AND   appId  ${condition.appId.op} #{condition.appId.data}
+            </if>
+            <if test="condition.appId.op=='like'">
+                AND appId like CONCAT('%', #{condition.appId.data} , '%')
+            </if>
+            <if test="condition.appId.op=='leftlike'">
+                AND appId like CONCAT(#{condition.appId.data} , '%')
+            </if>
+            <if test="condition.appId.op=='in'">
+                ${condition.groupOp}   appId  ${condition.appId.op}
+                <foreach collection="condition.appId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.secret!=null">
+
+            <if test="condition.secret.op!='in' and condition.secret.op!='like' and condition.secret.op!='leftlike'">
+                AND   secret  ${condition.secret.op} #{condition.secret.data}
+            </if>
+            <if test="condition.secret.op=='like'">
+                AND secret like CONCAT('%', #{condition.secret.data} , '%')
+            </if>
+            <if test="condition.secret.op=='leftlike'">
+                AND secret like CONCAT(#{condition.secret.data} , '%')
+            </if>
+            <if test="condition.secret.op=='in'">
+                ${condition.groupOp}   secret  ${condition.secret.op}
+                <foreach collection="condition.secret.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.type!=null">
+
+            <if test="condition.type.op!='in' and condition.type.op!='like' and condition.type.op!='leftlike'">
+                AND   type  ${condition.type.op} #{condition.type.data}
+            </if>
+            <if test="condition.type.op=='like'">
+                AND type like CONCAT('%', #{condition.type.data} , '%')
+            </if>
+            <if test="condition.type.op=='leftlike'">
+                AND type like CONCAT(#{condition.type.data} , '%')
+            </if>
+            <if test="condition.type.op=='in'">
+                ${condition.groupOp}   type  ${condition.type.op}
+                <foreach collection="condition.type.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.toUserName!=null">
+
+            <if test="condition.toUserName.op!='in' and condition.toUserName.op!='like' and condition.toUserName.op!='leftlike'">
+                AND   toUserName  ${condition.toUserName.op} #{condition.toUserName.data}
+            </if>
+            <if test="condition.toUserName.op=='like'">
+                AND toUserName like CONCAT('%', #{condition.toUserName.data} , '%')
+            </if>
+            <if test="condition.toUserName.op=='leftlike'">
+                AND toUserName like CONCAT(#{condition.toUserName.data} , '%')
+            </if>
+            <if test="condition.toUserName.op=='in'">
+                ${condition.groupOp}   toUserName  ${condition.toUserName.op}
+                <foreach collection="condition.toUserName.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.token!=null">
+
+            <if test="condition.token.op!='in' and condition.token.op!='like' and condition.token.op!='leftlike'">
+                AND   token  ${condition.token.op} #{condition.token.data}
+            </if>
+            <if test="condition.token.op=='like'">
+                AND token like CONCAT('%', #{condition.token.data} , '%')
+            </if>
+            <if test="condition.token.op=='leftlike'">
+                AND token like CONCAT(#{condition.token.data} , '%')
+            </if>
+            <if test="condition.token.op=='in'">
+                ${condition.groupOp}   token  ${condition.token.op}
+                <foreach collection="condition.token.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.aesKey!=null">
+
+            <if test="condition.aesKey.op!='in' and condition.aesKey.op!='like' and condition.aesKey.op!='leftlike'">
+                AND   aesKey  ${condition.aesKey.op} #{condition.aesKey.data}
+            </if>
+            <if test="condition.aesKey.op=='like'">
+                AND aesKey like CONCAT('%', #{condition.aesKey.data} , '%')
+            </if>
+            <if test="condition.aesKey.op=='leftlike'">
+                AND aesKey like CONCAT(#{condition.aesKey.data} , '%')
+            </if>
+            <if test="condition.aesKey.op=='in'">
+                ${condition.groupOp}   aesKey  ${condition.aesKey.op}
+                <foreach collection="condition.aesKey.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.uniqueKey!=null">
+
+            <if test="condition.uniqueKey.op!='in' and condition.uniqueKey.op!='like' and condition.uniqueKey.op!='leftlike'">
+                AND   uniqueKey  ${condition.uniqueKey.op} #{condition.uniqueKey.data}
+            </if>
+            <if test="condition.uniqueKey.op=='like'">
+                AND uniqueKey like CONCAT('%', #{condition.uniqueKey.data} , '%')
+            </if>
+            <if test="condition.uniqueKey.op=='leftlike'">
+                AND uniqueKey like CONCAT(#{condition.uniqueKey.data} , '%')
+            </if>
+            <if test="condition.uniqueKey.op=='in'">
+                ${condition.groupOp}   uniqueKey  ${condition.uniqueKey.op}
+                <foreach collection="condition.uniqueKey.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.note!=null">
+
+            <if test="condition.note.op!='in' and condition.note.op!='like' and condition.note.op!='leftlike'">
+                AND   note  ${condition.note.op} #{condition.note.data}
+            </if>
+            <if test="condition.note.op=='like'">
+                AND note like CONCAT('%', #{condition.note.data} , '%')
+            </if>
+            <if test="condition.note.op=='leftlike'">
+                AND note like CONCAT(#{condition.note.data} , '%')
+            </if>
+            <if test="condition.note.op=='in'">
+                ${condition.groupOp}   note  ${condition.note.op}
+                <foreach collection="condition.note.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.agencyId!=null">
+
+            <if test="condition.agencyId.op!='in' and condition.agencyId.op!='like' and condition.agencyId.op!='leftlike'">
+                AND   agencyId  ${condition.agencyId.op} #{condition.agencyId.data}
+            </if>
+            <if test="condition.agencyId.op=='like'">
+                AND agencyId like CONCAT('%', #{condition.agencyId.data} , '%')
+            </if>
+            <if test="condition.agencyId.op=='leftlike'">
+                AND agencyId like CONCAT(#{condition.agencyId.data} , '%')
+            </if>
+            <if test="condition.agencyId.op=='in'">
+                ${condition.groupOp}   agencyId  ${condition.agencyId.op}
+                <foreach collection="condition.agencyId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+                </trim>
+
+        <if test="sorter!=null" >
+        ORDER BY
+        <foreach collection="sorter" item="sort" separator="," >
+            ${sort.field} ${sort.order}</foreach>
+        </if>
+        LIMIT 0,1
+        </select>
+
+        <!-- 查询 -->
+        <select id="queryOneByWhereSql" resultType="PlatformInfo">
+        SELECT
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                <if test="selector.id!=null">
+                    , id
+                </if>
+                <if test="selector.appId!=null">
+                    , appId
+                </if>
+                <if test="selector.secret!=null">
+                    , secret
+                </if>
+                <if test="selector.type!=null">
+                    , type
+                </if>
+                <if test="selector.toUserName!=null">
+                    , toUserName
+                </if>
+                <if test="selector.token!=null">
+                    , token
+                </if>
+                <if test="selector.aesKey!=null">
+                    , aesKey
+                </if>
+                <if test="selector.uniqueKey!=null">
+                    , uniqueKey
+                </if>
+                <if test="selector.note!=null">
+                    , note
+                </if>
+                <if test="selector.agencyId!=null">
+                    , agencyId
+                </if>
+        </trim>
+        </if>
+        <if test="selector==null">
+        <include refid="Base_Column_List" />
+        </if>
+
+        FROM power_platform_info
+
+        <if test="nativeSql!=null">
+${nativeSql}        </if>
+
+        <if test="sorter!=null" >
+        ORDER BY
+        <foreach collection="sorter" item="sort" separator="," >
+            ${sort.field} ${sort.order}</foreach>
+        </if>
+        LIMIT 0,1
+        </select>
+
+        <!-- 查询 -->
+        <select id="queryList" resultType="PlatformInfo">
+        SELECT
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                <if test="selector.id!=null">
+                    , id
+                </if>
+                <if test="selector.appId!=null">
+                    , appId
+                </if>
+                <if test="selector.secret!=null">
+                    , secret
+                </if>
+                <if test="selector.type!=null">
+                    , type
+                </if>
+                <if test="selector.toUserName!=null">
+                    , toUserName
+                </if>
+                <if test="selector.token!=null">
+                    , token
+                </if>
+                <if test="selector.aesKey!=null">
+                    , aesKey
+                </if>
+                <if test="selector.uniqueKey!=null">
+                    , uniqueKey
+                </if>
+                <if test="selector.note!=null">
+                    , note
+                </if>
+                <if test="selector.agencyId!=null">
+                    , agencyId
+                </if>
+        </trim>
+        </if>
+        <if test="selector==null">
+        <include refid="Base_Column_List" />
+        </if>
+
+        FROM power_platform_info
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+        <if test="condition.id!=null">
+
+            <if test="condition.id.op!='in' and condition.id.op!='like' and condition.id.op!='leftlike'">
+                ${condition.groupOp}   id  ${condition.id.op} #{condition.id.data}
+            </if>
+            <if test="condition.id.op=='like'">
+                AND id like CONCAT('%', #{condition.id.data} , '%')
+            </if>
+            <if test="condition.id.op=='leftlike'">
+                AND id like CONCAT(#{condition.id.data} , '%')
+            </if>
+            <if test="condition.id.op=='in'">
+                ${condition.groupOp}   id  ${condition.id.op}
+                <foreach collection="condition.id.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.appId!=null">
+
+            <if test="condition.appId.op!='in' and condition.appId.op!='like' and condition.appId.op!='leftlike'">
+                ${condition.groupOp}   appId  ${condition.appId.op} #{condition.appId.data}
+            </if>
+            <if test="condition.appId.op=='like'">
+                AND appId like CONCAT('%', #{condition.appId.data} , '%')
+            </if>
+            <if test="condition.appId.op=='leftlike'">
+                AND appId like CONCAT(#{condition.appId.data} , '%')
+            </if>
+            <if test="condition.appId.op=='in'">
+                ${condition.groupOp}   appId  ${condition.appId.op}
+                <foreach collection="condition.appId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.secret!=null">
+
+            <if test="condition.secret.op!='in' and condition.secret.op!='like' and condition.secret.op!='leftlike'">
+                ${condition.groupOp}   secret  ${condition.secret.op} #{condition.secret.data}
+            </if>
+            <if test="condition.secret.op=='like'">
+                AND secret like CONCAT('%', #{condition.secret.data} , '%')
+            </if>
+            <if test="condition.secret.op=='leftlike'">
+                AND secret like CONCAT(#{condition.secret.data} , '%')
+            </if>
+            <if test="condition.secret.op=='in'">
+                ${condition.groupOp}   secret  ${condition.secret.op}
+                <foreach collection="condition.secret.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.type!=null">
+
+            <if test="condition.type.op!='in' and condition.type.op!='like' and condition.type.op!='leftlike'">
+                ${condition.groupOp}   type  ${condition.type.op} #{condition.type.data}
+            </if>
+            <if test="condition.type.op=='like'">
+                AND type like CONCAT('%', #{condition.type.data} , '%')
+            </if>
+            <if test="condition.type.op=='leftlike'">
+                AND type like CONCAT(#{condition.type.data} , '%')
+            </if>
+            <if test="condition.type.op=='in'">
+                ${condition.groupOp}   type  ${condition.type.op}
+                <foreach collection="condition.type.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.toUserName!=null">
+
+            <if test="condition.toUserName.op!='in' and condition.toUserName.op!='like' and condition.toUserName.op!='leftlike'">
+                ${condition.groupOp}   toUserName  ${condition.toUserName.op} #{condition.toUserName.data}
+            </if>
+            <if test="condition.toUserName.op=='like'">
+                AND toUserName like CONCAT('%', #{condition.toUserName.data} , '%')
+            </if>
+            <if test="condition.toUserName.op=='leftlike'">
+                AND toUserName like CONCAT(#{condition.toUserName.data} , '%')
+            </if>
+            <if test="condition.toUserName.op=='in'">
+                ${condition.groupOp}   toUserName  ${condition.toUserName.op}
+                <foreach collection="condition.toUserName.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.token!=null">
+
+            <if test="condition.token.op!='in' and condition.token.op!='like' and condition.token.op!='leftlike'">
+                ${condition.groupOp}   token  ${condition.token.op} #{condition.token.data}
+            </if>
+            <if test="condition.token.op=='like'">
+                AND token like CONCAT('%', #{condition.token.data} , '%')
+            </if>
+            <if test="condition.token.op=='leftlike'">
+                AND token like CONCAT(#{condition.token.data} , '%')
+            </if>
+            <if test="condition.token.op=='in'">
+                ${condition.groupOp}   token  ${condition.token.op}
+                <foreach collection="condition.token.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.aesKey!=null">
+
+            <if test="condition.aesKey.op!='in' and condition.aesKey.op!='like' and condition.aesKey.op!='leftlike'">
+                ${condition.groupOp}   aesKey  ${condition.aesKey.op} #{condition.aesKey.data}
+            </if>
+            <if test="condition.aesKey.op=='like'">
+                AND aesKey like CONCAT('%', #{condition.aesKey.data} , '%')
+            </if>
+            <if test="condition.aesKey.op=='leftlike'">
+                AND aesKey like CONCAT(#{condition.aesKey.data} , '%')
+            </if>
+            <if test="condition.aesKey.op=='in'">
+                ${condition.groupOp}   aesKey  ${condition.aesKey.op}
+                <foreach collection="condition.aesKey.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.uniqueKey!=null">
+
+            <if test="condition.uniqueKey.op!='in' and condition.uniqueKey.op!='like' and condition.uniqueKey.op!='leftlike'">
+                ${condition.groupOp}   uniqueKey  ${condition.uniqueKey.op} #{condition.uniqueKey.data}
+            </if>
+            <if test="condition.uniqueKey.op=='like'">
+                AND uniqueKey like CONCAT('%', #{condition.uniqueKey.data} , '%')
+            </if>
+            <if test="condition.uniqueKey.op=='leftlike'">
+                AND uniqueKey like CONCAT(#{condition.uniqueKey.data} , '%')
+            </if>
+            <if test="condition.uniqueKey.op=='in'">
+                ${condition.groupOp}   uniqueKey  ${condition.uniqueKey.op}
+                <foreach collection="condition.uniqueKey.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.note!=null">
+
+            <if test="condition.note.op!='in' and condition.note.op!='like' and condition.note.op!='leftlike'">
+                ${condition.groupOp}   note  ${condition.note.op} #{condition.note.data}
+            </if>
+            <if test="condition.note.op=='like'">
+                AND note like CONCAT('%', #{condition.note.data} , '%')
+            </if>
+            <if test="condition.note.op=='leftlike'">
+                AND note like CONCAT(#{condition.note.data} , '%')
+            </if>
+            <if test="condition.note.op=='in'">
+                ${condition.groupOp}   note  ${condition.note.op}
+                <foreach collection="condition.note.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.agencyId!=null">
+
+            <if test="condition.agencyId.op!='in' and condition.agencyId.op!='like' and condition.agencyId.op!='leftlike'">
+                ${condition.groupOp}   agencyId  ${condition.agencyId.op} #{condition.agencyId.data}
+            </if>
+            <if test="condition.agencyId.op=='like'">
+                AND agencyId like CONCAT('%', #{condition.agencyId.data} , '%')
+            </if>
+            <if test="condition.agencyId.op=='leftlike'">
+                AND agencyId like CONCAT(#{condition.agencyId.data} , '%')
+            </if>
+            <if test="condition.agencyId.op=='in'">
+                ${condition.groupOp}   agencyId  ${condition.agencyId.op}
+                <foreach collection="condition.agencyId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        </trim>
+
+        <if test="sorter!=null" >
+        ORDER BY
+        <foreach collection="sorter" item="sort" separator="," >
+            ${sort.field} ${sort.order}</foreach>
+        </if>
+        </select>
+
+        <!-- 查询 -->
+        <select id="queryListByWhereSql" resultType="PlatformInfo">
+            SELECT
+            <if test="selector!=null">
+                <trim prefixOverrides=",">
+                    <if test="selector.id!=null">
+                        , id
+                    </if>
+                    <if test="selector.appId!=null">
+                        , appId
+                    </if>
+                    <if test="selector.secret!=null">
+                        , secret
+                    </if>
+                    <if test="selector.type!=null">
+                        , type
+                    </if>
+                    <if test="selector.toUserName!=null">
+                        , toUserName
+                    </if>
+                    <if test="selector.token!=null">
+                        , token
+                    </if>
+                    <if test="selector.aesKey!=null">
+                        , aesKey
+                    </if>
+                    <if test="selector.uniqueKey!=null">
+                        , uniqueKey
+                    </if>
+                    <if test="selector.note!=null">
+                        , note
+                    </if>
+                    <if test="selector.agencyId!=null">
+                        , agencyId
+                    </if>
+            </trim>
+        </if>
+        <if test="selector==null">
+            <include refid="Base_Column_List" />
+        </if>
+
+        FROM power_platform_info
+
+        <if test="nativeSql!=null">
+${nativeSql}        </if>
+
+        <if test="sorter!=null" >
+            ORDER BY
+            <foreach collection="sorter" item="sort" separator="," >
+                ${sort.field} ${sort.order}</foreach>
+        </if>
+        </select>
+
+        <select id="queryBySql" resultType="Map">
+${executeSql}        </select>
+
+        <select id="queryBySqlCount" resultType="java.lang.Long">
+${executeSqlCount}        </select>
+
+    <!-- 读取数据 end-->
+
+    <!-- 分页数据 start-->
+
+        <select id="queryPage" resultType="PlatformInfo">
+        SELECT
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                <if test="selector.id!=null">
+                    , id
+                </if>
+                <if test="selector.appId!=null">
+                    , appId
+                </if>
+                <if test="selector.secret!=null">
+                    , secret
+                </if>
+                <if test="selector.type!=null">
+                    , type
+                </if>
+                <if test="selector.toUserName!=null">
+                    , toUserName
+                </if>
+                <if test="selector.token!=null">
+                    , token
+                </if>
+                <if test="selector.aesKey!=null">
+                    , aesKey
+                </if>
+                <if test="selector.uniqueKey!=null">
+                    , uniqueKey
+                </if>
+                <if test="selector.note!=null">
+                    , note
+                </if>
+                <if test="selector.agencyId!=null">
+                    , agencyId
+                </if>
+        </trim>
+        </if>
+        <if test="selector==null">
+        <include refid="Base_Column_List" />
+        </if>
+                FROM power_platform_info
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+        <if test="condition.id!=null">
+
+            <if test="condition.id.op!='in' and condition.id.op!='like' and condition.id.op!='leftlike'">
+                ${condition.groupOp}   id  ${condition.id.op} #{condition.id.data}
+            </if>
+            <if test="condition.id.op=='like'">
+                AND id like CONCAT('%', #{condition.id.data} , '%')
+            </if>
+            <if test="condition.id.op=='leftlike'">
+                AND id like CONCAT(#{condition.id.data} , '%')
+            </if>
+            <if test="condition.id.op=='in'">
+                ${condition.groupOp}   id  ${condition.id.op}
+                <foreach collection="condition.id.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.appId!=null">
+
+            <if test="condition.appId.op!='in' and condition.appId.op!='like' and condition.appId.op!='leftlike'">
+                ${condition.groupOp}   appId  ${condition.appId.op} #{condition.appId.data}
+            </if>
+            <if test="condition.appId.op=='like'">
+                AND appId like CONCAT('%', #{condition.appId.data} , '%')
+            </if>
+            <if test="condition.appId.op=='leftlike'">
+                AND appId like CONCAT(#{condition.appId.data} , '%')
+            </if>
+            <if test="condition.appId.op=='in'">
+                ${condition.groupOp}   appId  ${condition.appId.op}
+                <foreach collection="condition.appId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.secret!=null">
+
+            <if test="condition.secret.op!='in' and condition.secret.op!='like' and condition.secret.op!='leftlike'">
+                ${condition.groupOp}   secret  ${condition.secret.op} #{condition.secret.data}
+            </if>
+            <if test="condition.secret.op=='like'">
+                AND secret like CONCAT('%', #{condition.secret.data} , '%')
+            </if>
+            <if test="condition.secret.op=='leftlike'">
+                AND secret like CONCAT(#{condition.secret.data} , '%')
+            </if>
+            <if test="condition.secret.op=='in'">
+                ${condition.groupOp}   secret  ${condition.secret.op}
+                <foreach collection="condition.secret.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.type!=null">
+
+            <if test="condition.type.op!='in' and condition.type.op!='like' and condition.type.op!='leftlike'">
+                ${condition.groupOp}   type  ${condition.type.op} #{condition.type.data}
+            </if>
+            <if test="condition.type.op=='like'">
+                AND type like CONCAT('%', #{condition.type.data} , '%')
+            </if>
+            <if test="condition.type.op=='leftlike'">
+                AND type like CONCAT(#{condition.type.data} , '%')
+            </if>
+            <if test="condition.type.op=='in'">
+                ${condition.groupOp}   type  ${condition.type.op}
+                <foreach collection="condition.type.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.toUserName!=null">
+
+            <if test="condition.toUserName.op!='in' and condition.toUserName.op!='like' and condition.toUserName.op!='leftlike'">
+                ${condition.groupOp}   toUserName  ${condition.toUserName.op} #{condition.toUserName.data}
+            </if>
+            <if test="condition.toUserName.op=='like'">
+                AND toUserName like CONCAT('%', #{condition.toUserName.data} , '%')
+            </if>
+            <if test="condition.toUserName.op=='leftlike'">
+                AND toUserName like CONCAT(#{condition.toUserName.data} , '%')
+            </if>
+            <if test="condition.toUserName.op=='in'">
+                ${condition.groupOp}   toUserName  ${condition.toUserName.op}
+                <foreach collection="condition.toUserName.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.token!=null">
+
+            <if test="condition.token.op!='in' and condition.token.op!='like' and condition.token.op!='leftlike'">
+                ${condition.groupOp}   token  ${condition.token.op} #{condition.token.data}
+            </if>
+            <if test="condition.token.op=='like'">
+                AND token like CONCAT('%', #{condition.token.data} , '%')
+            </if>
+            <if test="condition.token.op=='leftlike'">
+                AND token like CONCAT(#{condition.token.data} , '%')
+            </if>
+            <if test="condition.token.op=='in'">
+                ${condition.groupOp}   token  ${condition.token.op}
+                <foreach collection="condition.token.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.aesKey!=null">
+
+            <if test="condition.aesKey.op!='in' and condition.aesKey.op!='like' and condition.aesKey.op!='leftlike'">
+                ${condition.groupOp}   aesKey  ${condition.aesKey.op} #{condition.aesKey.data}
+            </if>
+            <if test="condition.aesKey.op=='like'">
+                AND aesKey like CONCAT('%', #{condition.aesKey.data} , '%')
+            </if>
+            <if test="condition.aesKey.op=='leftlike'">
+                AND aesKey like CONCAT(#{condition.aesKey.data} , '%')
+            </if>
+            <if test="condition.aesKey.op=='in'">
+                ${condition.groupOp}   aesKey  ${condition.aesKey.op}
+                <foreach collection="condition.aesKey.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.uniqueKey!=null">
+
+            <if test="condition.uniqueKey.op!='in' and condition.uniqueKey.op!='like' and condition.uniqueKey.op!='leftlike'">
+                ${condition.groupOp}   uniqueKey  ${condition.uniqueKey.op} #{condition.uniqueKey.data}
+            </if>
+            <if test="condition.uniqueKey.op=='like'">
+                AND uniqueKey like CONCAT('%', #{condition.uniqueKey.data} , '%')
+            </if>
+            <if test="condition.uniqueKey.op=='leftlike'">
+                AND uniqueKey like CONCAT(#{condition.uniqueKey.data} , '%')
+            </if>
+            <if test="condition.uniqueKey.op=='in'">
+                ${condition.groupOp}   uniqueKey  ${condition.uniqueKey.op}
+                <foreach collection="condition.uniqueKey.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.note!=null">
+
+            <if test="condition.note.op!='in' and condition.note.op!='like' and condition.note.op!='leftlike'">
+                ${condition.groupOp}   note  ${condition.note.op} #{condition.note.data}
+            </if>
+            <if test="condition.note.op=='like'">
+                AND note like CONCAT('%', #{condition.note.data} , '%')
+            </if>
+            <if test="condition.note.op=='leftlike'">
+                AND note like CONCAT(#{condition.note.data} , '%')
+            </if>
+            <if test="condition.note.op=='in'">
+                ${condition.groupOp}   note  ${condition.note.op}
+                <foreach collection="condition.note.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.agencyId!=null">
+
+            <if test="condition.agencyId.op!='in' and condition.agencyId.op!='like' and condition.agencyId.op!='leftlike'">
+                ${condition.groupOp}   agencyId  ${condition.agencyId.op} #{condition.agencyId.data}
+            </if>
+            <if test="condition.agencyId.op=='like'">
+                AND agencyId like CONCAT('%', #{condition.agencyId.data} , '%')
+            </if>
+            <if test="condition.agencyId.op=='leftlike'">
+                AND agencyId like CONCAT(#{condition.agencyId.data} , '%')
+            </if>
+            <if test="condition.agencyId.op=='in'">
+                ${condition.groupOp}   agencyId  ${condition.agencyId.op}
+                <foreach collection="condition.agencyId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        </trim>
+
+        <if test="sorter!=null" >
+        ORDER BY
+        <foreach collection="sorter" item="sort" separator="," >
+            ${sort.field} ${sort.order}</foreach>
+        </if>
+
+        <if test="offset != null">
+        limit ${offset}, ${rows}
+        </if>
+        </select>
+
+        <select id="queryPageByWhereSql" resultType="PlatformInfo">
+        SELECT
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                <if test="selector.id!=null">
+                    , id
+                </if>
+                <if test="selector.appId!=null">
+                    , appId
+                </if>
+                <if test="selector.secret!=null">
+                    , secret
+                </if>
+                <if test="selector.type!=null">
+                    , type
+                </if>
+                <if test="selector.toUserName!=null">
+                    , toUserName
+                </if>
+                <if test="selector.token!=null">
+                    , token
+                </if>
+                <if test="selector.aesKey!=null">
+                    , aesKey
+                </if>
+                <if test="selector.uniqueKey!=null">
+                    , uniqueKey
+                </if>
+                <if test="selector.note!=null">
+                    , note
+                </if>
+                <if test="selector.agencyId!=null">
+                    , agencyId
+                </if>
+        </trim>
+        </if>
+        <if test="selector==null">
+        <include refid="Base_Column_List" />
+        </if>
+                FROM power_platform_info
+
+        <if test="nativeSql!=null">
+${nativeSql}        </if>
+
+        <if test="sorter!=null" >
+        ORDER BY
+        <foreach collection="sorter" item="sort" separator="," >
+            ${sort.field} ${sort.order}</foreach>
+        </if>
+
+        <if test="offset != null">
+        limit ${offset}, ${rows}
+        </if>
+        </select>
+
+        <select id="count" resultType="java.lang.Integer">
+        SELECT count(id) FROM power_platform_info
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+
+                <if test="condition.id.op!='in' and condition.id.op!='like' and condition.id.op!='leftlike'">
+                    ${condition.groupOp}   id  ${condition.id.op} #{condition.id.data}
+                </if>
+                <if test="condition.id.op=='like'">
+                    AND id like CONCAT('%', #{condition.id.data} , '%')
+                </if>
+                <if test="condition.id.op=='leftlike'">
+                    AND id like CONCAT(#{condition.id.data} , '%')
+                </if>
+                <if test="condition.id.op=='in'">
+                    ${condition.groupOp}   id  ${condition.id.op}
+                    <foreach collection="condition.id.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.appId!=null">
+
+                <if test="condition.appId.op!='in' and condition.appId.op!='like' and condition.appId.op!='leftlike'">
+                    ${condition.groupOp}   appId  ${condition.appId.op} #{condition.appId.data}
+                </if>
+                <if test="condition.appId.op=='like'">
+                    AND appId like CONCAT('%', #{condition.appId.data} , '%')
+                </if>
+                <if test="condition.appId.op=='leftlike'">
+                    AND appId like CONCAT(#{condition.appId.data} , '%')
+                </if>
+                <if test="condition.appId.op=='in'">
+                    ${condition.groupOp}   appId  ${condition.appId.op}
+                    <foreach collection="condition.appId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.secret!=null">
+
+                <if test="condition.secret.op!='in' and condition.secret.op!='like' and condition.secret.op!='leftlike'">
+                    ${condition.groupOp}   secret  ${condition.secret.op} #{condition.secret.data}
+                </if>
+                <if test="condition.secret.op=='like'">
+                    AND secret like CONCAT('%', #{condition.secret.data} , '%')
+                </if>
+                <if test="condition.secret.op=='leftlike'">
+                    AND secret like CONCAT(#{condition.secret.data} , '%')
+                </if>
+                <if test="condition.secret.op=='in'">
+                    ${condition.groupOp}   secret  ${condition.secret.op}
+                    <foreach collection="condition.secret.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.type!=null">
+
+                <if test="condition.type.op!='in' and condition.type.op!='like' and condition.type.op!='leftlike'">
+                    ${condition.groupOp}   type  ${condition.type.op} #{condition.type.data}
+                </if>
+                <if test="condition.type.op=='like'">
+                    AND type like CONCAT('%', #{condition.type.data} , '%')
+                </if>
+                <if test="condition.type.op=='leftlike'">
+                    AND type like CONCAT(#{condition.type.data} , '%')
+                </if>
+                <if test="condition.type.op=='in'">
+                    ${condition.groupOp}   type  ${condition.type.op}
+                    <foreach collection="condition.type.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.toUserName!=null">
+
+                <if test="condition.toUserName.op!='in' and condition.toUserName.op!='like' and condition.toUserName.op!='leftlike'">
+                    ${condition.groupOp}   toUserName  ${condition.toUserName.op} #{condition.toUserName.data}
+                </if>
+                <if test="condition.toUserName.op=='like'">
+                    AND toUserName like CONCAT('%', #{condition.toUserName.data} , '%')
+                </if>
+                <if test="condition.toUserName.op=='leftlike'">
+                    AND toUserName like CONCAT(#{condition.toUserName.data} , '%')
+                </if>
+                <if test="condition.toUserName.op=='in'">
+                    ${condition.groupOp}   toUserName  ${condition.toUserName.op}
+                    <foreach collection="condition.toUserName.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.token!=null">
+
+                <if test="condition.token.op!='in' and condition.token.op!='like' and condition.token.op!='leftlike'">
+                    ${condition.groupOp}   token  ${condition.token.op} #{condition.token.data}
+                </if>
+                <if test="condition.token.op=='like'">
+                    AND token like CONCAT('%', #{condition.token.data} , '%')
+                </if>
+                <if test="condition.token.op=='leftlike'">
+                    AND token like CONCAT(#{condition.token.data} , '%')
+                </if>
+                <if test="condition.token.op=='in'">
+                    ${condition.groupOp}   token  ${condition.token.op}
+                    <foreach collection="condition.token.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.aesKey!=null">
+
+                <if test="condition.aesKey.op!='in' and condition.aesKey.op!='like' and condition.aesKey.op!='leftlike'">
+                    ${condition.groupOp}   aesKey  ${condition.aesKey.op} #{condition.aesKey.data}
+                </if>
+                <if test="condition.aesKey.op=='like'">
+                    AND aesKey like CONCAT('%', #{condition.aesKey.data} , '%')
+                </if>
+                <if test="condition.aesKey.op=='leftlike'">
+                    AND aesKey like CONCAT(#{condition.aesKey.data} , '%')
+                </if>
+                <if test="condition.aesKey.op=='in'">
+                    ${condition.groupOp}   aesKey  ${condition.aesKey.op}
+                    <foreach collection="condition.aesKey.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.uniqueKey!=null">
+
+                <if test="condition.uniqueKey.op!='in' and condition.uniqueKey.op!='like' and condition.uniqueKey.op!='leftlike'">
+                    ${condition.groupOp}   uniqueKey  ${condition.uniqueKey.op} #{condition.uniqueKey.data}
+                </if>
+                <if test="condition.uniqueKey.op=='like'">
+                    AND uniqueKey like CONCAT('%', #{condition.uniqueKey.data} , '%')
+                </if>
+                <if test="condition.uniqueKey.op=='leftlike'">
+                    AND uniqueKey like CONCAT(#{condition.uniqueKey.data} , '%')
+                </if>
+                <if test="condition.uniqueKey.op=='in'">
+                    ${condition.groupOp}   uniqueKey  ${condition.uniqueKey.op}
+                    <foreach collection="condition.uniqueKey.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.note!=null">
+
+                <if test="condition.note.op!='in' and condition.note.op!='like' and condition.note.op!='leftlike'">
+                    ${condition.groupOp}   note  ${condition.note.op} #{condition.note.data}
+                </if>
+                <if test="condition.note.op=='like'">
+                    AND note like CONCAT('%', #{condition.note.data} , '%')
+                </if>
+                <if test="condition.note.op=='leftlike'">
+                    AND note like CONCAT(#{condition.note.data} , '%')
+                </if>
+                <if test="condition.note.op=='in'">
+                    ${condition.groupOp}   note  ${condition.note.op}
+                    <foreach collection="condition.note.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.agencyId!=null">
+
+                <if test="condition.agencyId.op!='in' and condition.agencyId.op!='like' and condition.agencyId.op!='leftlike'">
+                    ${condition.groupOp}   agencyId  ${condition.agencyId.op} #{condition.agencyId.data}
+                </if>
+                <if test="condition.agencyId.op=='like'">
+                    AND agencyId like CONCAT('%', #{condition.agencyId.data} , '%')
+                </if>
+                <if test="condition.agencyId.op=='leftlike'">
+                    AND agencyId like CONCAT(#{condition.agencyId.data} , '%')
+                </if>
+                <if test="condition.agencyId.op=='in'">
+                    ${condition.groupOp}   agencyId  ${condition.agencyId.op}
+                    <foreach collection="condition.agencyId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+        </trim>
+        </select>
+
+        <select id="countByWhereSql" resultType="java.lang.Integer">
+        SELECT count(id) FROM power_platform_info
+        <if test="nativeSql!=null">
+${nativeSql}        </if>
+        </select>
+
+    <!-- 分页数据 end-->
+
+    <!-- 删除 start-->
+    <!-- 按Id删除 -->
+        <delete id="delete" parameterType="java.lang.Long">
+        DELETE FROM power_platform_info
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+        </delete>
+
+
+        <delete id="deleteByCondition" parameterType="java.util.Map">
+        DELETE FROM power_platform_info
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.appId!=null">
+                AND appId = #{condition.appId}
+            </if>
+            <if test="condition.secret!=null">
+                AND secret = #{condition.secret}
+            </if>
+            <if test="condition.type!=null">
+                AND type = #{condition.type}
+            </if>
+            <if test="condition.toUserName!=null">
+                AND toUserName = #{condition.toUserName}
+            </if>
+            <if test="condition.token!=null">
+                AND token = #{condition.token}
+            </if>
+            <if test="condition.aesKey!=null">
+                AND aesKey = #{condition.aesKey}
+            </if>
+            <if test="condition.uniqueKey!=null">
+                AND uniqueKey = #{condition.uniqueKey}
+            </if>
+            <if test="condition.note!=null">
+                AND note = #{condition.note}
+            </if>
+            <if test="condition.agencyId!=null">
+                AND agencyId = #{condition.agencyId}
+            </if>
+        </trim>
+        </delete>
+
+        <delete id="deleteByWhereSql" parameterType="java.lang.String">
+        DELETE FROM power_platform_info
+        <if test="nativeSql!=null">
+${nativeSql}        </if>
+        <if test="nativeSql==null">
+            WHERE 1=2
+        </if>
+        </delete>
+
+        <delete id="deleteAll" >
+        DELETE FROM power_platform_info
+        </delete>
+
+
+    <!-- 删除 end-->
+</mapper>
+
