@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.power.dao.ex.IUserAccountExDAO">
+
+
+    <!--
+    C
+    insert
+    insertMap
+    R
+    findOne
+    findAll
+    exists
+    queryOne
+    queryOneByWhereSql
+    queryList
+    queryListByWhereSql
+    queryBySql
+    queryBySqlCount
+    U
+    D
+    -->
+
+
+    <sql id="Base_Column_List">
+        id as id ,
+        userId as userId ,
+        agencyId as agencyId ,
+        create_dt as createDt ,
+        update_dt as updateDt ,
+        create_by as createBy ,
+        update_by as updateBy 
+    </sql>
+    <select id="queryUserByOpenId" resultType="UserAccount">
+        SELECT account.* from
+        power_user_account account
+INNER JOIN power_user puser ON puser.id = account.userId
+INNER JOIN power_platform_info platform ON platform.agencyId = account.agencyId
+INNER JOIN power_user_platform userplatform ON userplatform.platformId = platform.id AND account.userId=userplatform.userId
+            WHERE userplatform.openId = #{openId}
+            AND  platform.uniqueKey = #{uniqueKey}
+    </select>
+
+    <!-- 删除 end-->
+</mapper>
+

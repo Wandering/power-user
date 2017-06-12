@@ -5,6 +5,7 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.power.domain.PlatformInfo;
 import com.power.facade.IPlatformInfoFacade;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 public class PlatformCache {
+    Logger logger = Logger.getLogger(PlatformCache.class);
     @Autowired
     private IPlatformInfoFacade facade;
     LoadingCache<String, PlatformInfo> platformInfoLoadingCache = CacheBuilder.newBuilder()
@@ -32,9 +34,9 @@ public class PlatformCache {
     public PlatformInfo getCache(String uniqueKey) {
         try {
             return platformInfoLoadingCache.get(uniqueKey);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            logger.error("no search PlatformInfo!");
+            return null;
         }
-        return null;
     }
 }

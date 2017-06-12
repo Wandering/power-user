@@ -29,7 +29,7 @@ D
         appId as appId ,
         secret as secret ,
         type as type ,
-        toUserName as toUserName ,
+        adminUser as adminUser ,
         token as token ,
         aesKey as aesKey ,
         uniqueKey as uniqueKey ,
@@ -44,7 +44,7 @@ D
         appId,
         secret,
         type,
-        toUserName,
+        adminUser,
         token,
         aesKey,
         uniqueKey,
@@ -54,7 +54,7 @@ D
         #{appId},
         #{secret},
         #{type},
-        #{toUserName},
+        #{adminUser},
         #{token},
         #{aesKey},
         #{uniqueKey},
@@ -69,7 +69,7 @@ D
         appId,
         secret,
         type,
-        toUserName,
+        adminUser,
         token,
         aesKey,
         uniqueKey,
@@ -79,7 +79,7 @@ D
         #{map.appId},
         #{map.secret},
         #{map.type},
-        #{map.toUserName},
+        #{map.adminUser},
         #{map.token},
         #{map.aesKey},
         #{map.uniqueKey},
@@ -105,8 +105,8 @@ D
             <if test="type!=null">
                 type = #{type},
             </if>
-            <if test="toUserName!=null">
-                toUserName = #{toUserName},
+            <if test="adminUser!=null">
+                adminUser = #{adminUser},
             </if>
             <if test="token!=null">
                 token = #{token},
@@ -140,8 +140,8 @@ D
             <if test="map.type!=null">
                 type = #{map.type},
             </if>
-            <if test="map.toUserName!=null">
-                toUserName = #{map.toUserName},
+            <if test="map.adminUser!=null">
+                adminUser = #{map.adminUser},
             </if>
             <if test="map.token!=null">
                 token = #{map.token},
@@ -175,8 +175,8 @@ D
             <if test="update.type!=null">
                 type = #{update.type},
             </if>
-            <if test="update.toUserName!=null">
-                toUserName = #{update.toUserName},
+            <if test="update.adminUser!=null">
+                adminUser = #{update.adminUser},
             </if>
             <if test="update.token!=null">
                 token = #{update.token},
@@ -208,8 +208,8 @@ D
         <if test="condition.type!=null">
             AND type = #{condition.type}
         </if>
-        <if test="condition.toUserName!=null">
-            AND toUserName = #{condition.toUserName}
+        <if test="condition.adminUser!=null">
+            AND adminUser = #{condition.adminUser}
         </if>
         <if test="condition.token!=null">
             AND token = #{condition.token}
@@ -241,8 +241,8 @@ D
             <if test="update.type!=null">
                 type = #{update.type},
             </if>
-            <if test="update.toUserName!=null">
-                toUserName = #{update.toUserName},
+            <if test="update.adminUser!=null">
+                adminUser = #{update.adminUser},
             </if>
             <if test="update.token!=null">
                 token = #{update.token},
@@ -274,7 +274,7 @@ ${nativeSql}        </if>
             appId = #{appId},
             secret = #{secret},
             type = #{type},
-            toUserName = #{toUserName},
+            adminUser = #{adminUser},
             token = #{token},
             aesKey = #{aesKey},
             uniqueKey = #{uniqueKey},
@@ -319,8 +319,8 @@ ${nativeSql}        </if>
                 <if test="selector.type!=null">
                     , type
                 </if>
-                <if test="selector.toUserName!=null">
-                    , toUserName
+                <if test="selector.adminUser!=null">
+                    , adminUser
                 </if>
                 <if test="selector.token!=null">
                     , token
@@ -409,20 +409,20 @@ ${nativeSql}        </if>
                 <foreach collection="condition.type.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
             </if>
         </if>
-        <if test="condition.toUserName!=null">
+        <if test="condition.adminUser!=null">
 
-            <if test="condition.toUserName.op!='in' and condition.toUserName.op!='like' and condition.toUserName.op!='leftlike'">
-                AND   toUserName  ${condition.toUserName.op} #{condition.toUserName.data}
+            <if test="condition.adminUser.op!='in' and condition.adminUser.op!='like' and condition.adminUser.op!='leftlike'">
+                AND   adminUser  ${condition.adminUser.op} #{condition.adminUser.data}
             </if>
-            <if test="condition.toUserName.op=='like'">
-                AND toUserName like CONCAT('%', #{condition.toUserName.data} , '%')
+            <if test="condition.adminUser.op=='like'">
+                AND adminUser like CONCAT('%', #{condition.adminUser.data} , '%')
             </if>
-            <if test="condition.toUserName.op=='leftlike'">
-                AND toUserName like CONCAT(#{condition.toUserName.data} , '%')
+            <if test="condition.adminUser.op=='leftlike'">
+                AND adminUser like CONCAT(#{condition.adminUser.data} , '%')
             </if>
-            <if test="condition.toUserName.op=='in'">
-                ${condition.groupOp}   toUserName  ${condition.toUserName.op}
-                <foreach collection="condition.toUserName.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            <if test="condition.adminUser.op=='in'">
+                ${condition.groupOp}   adminUser  ${condition.adminUser.op}
+                <foreach collection="condition.adminUser.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
             </if>
         </if>
         <if test="condition.token!=null">
@@ -532,8 +532,8 @@ ${nativeSql}        </if>
                 <if test="selector.type!=null">
                     , type
                 </if>
-                <if test="selector.toUserName!=null">
-                    , toUserName
+                <if test="selector.adminUser!=null">
+                    , adminUser
                 </if>
                 <if test="selector.token!=null">
                     , token
@@ -586,8 +586,8 @@ ${nativeSql}        </if>
                 <if test="selector.type!=null">
                     , type
                 </if>
-                <if test="selector.toUserName!=null">
-                    , toUserName
+                <if test="selector.adminUser!=null">
+                    , adminUser
                 </if>
                 <if test="selector.token!=null">
                     , token
@@ -676,20 +676,20 @@ ${nativeSql}        </if>
                 <foreach collection="condition.type.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
             </if>
         </if>
-        <if test="condition.toUserName!=null">
+        <if test="condition.adminUser!=null">
 
-            <if test="condition.toUserName.op!='in' and condition.toUserName.op!='like' and condition.toUserName.op!='leftlike'">
-                ${condition.groupOp}   toUserName  ${condition.toUserName.op} #{condition.toUserName.data}
+            <if test="condition.adminUser.op!='in' and condition.adminUser.op!='like' and condition.adminUser.op!='leftlike'">
+                ${condition.groupOp}   adminUser  ${condition.adminUser.op} #{condition.adminUser.data}
             </if>
-            <if test="condition.toUserName.op=='like'">
-                AND toUserName like CONCAT('%', #{condition.toUserName.data} , '%')
+            <if test="condition.adminUser.op=='like'">
+                AND adminUser like CONCAT('%', #{condition.adminUser.data} , '%')
             </if>
-            <if test="condition.toUserName.op=='leftlike'">
-                AND toUserName like CONCAT(#{condition.toUserName.data} , '%')
+            <if test="condition.adminUser.op=='leftlike'">
+                AND adminUser like CONCAT(#{condition.adminUser.data} , '%')
             </if>
-            <if test="condition.toUserName.op=='in'">
-                ${condition.groupOp}   toUserName  ${condition.toUserName.op}
-                <foreach collection="condition.toUserName.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            <if test="condition.adminUser.op=='in'">
+                ${condition.groupOp}   adminUser  ${condition.adminUser.op}
+                <foreach collection="condition.adminUser.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
             </if>
         </if>
         <if test="condition.token!=null">
@@ -798,8 +798,8 @@ ${nativeSql}        </if>
                     <if test="selector.type!=null">
                         , type
                     </if>
-                    <if test="selector.toUserName!=null">
-                        , toUserName
+                    <if test="selector.adminUser!=null">
+                        , adminUser
                     </if>
                     <if test="selector.token!=null">
                         , token
@@ -860,8 +860,8 @@ ${executeSqlCount}        </select>
                 <if test="selector.type!=null">
                     , type
                 </if>
-                <if test="selector.toUserName!=null">
-                    , toUserName
+                <if test="selector.adminUser!=null">
+                    , adminUser
                 </if>
                 <if test="selector.token!=null">
                     , token
@@ -949,20 +949,20 @@ ${executeSqlCount}        </select>
                 <foreach collection="condition.type.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
             </if>
         </if>
-        <if test="condition.toUserName!=null">
+        <if test="condition.adminUser!=null">
 
-            <if test="condition.toUserName.op!='in' and condition.toUserName.op!='like' and condition.toUserName.op!='leftlike'">
-                ${condition.groupOp}   toUserName  ${condition.toUserName.op} #{condition.toUserName.data}
+            <if test="condition.adminUser.op!='in' and condition.adminUser.op!='like' and condition.adminUser.op!='leftlike'">
+                ${condition.groupOp}   adminUser  ${condition.adminUser.op} #{condition.adminUser.data}
             </if>
-            <if test="condition.toUserName.op=='like'">
-                AND toUserName like CONCAT('%', #{condition.toUserName.data} , '%')
+            <if test="condition.adminUser.op=='like'">
+                AND adminUser like CONCAT('%', #{condition.adminUser.data} , '%')
             </if>
-            <if test="condition.toUserName.op=='leftlike'">
-                AND toUserName like CONCAT(#{condition.toUserName.data} , '%')
+            <if test="condition.adminUser.op=='leftlike'">
+                AND adminUser like CONCAT(#{condition.adminUser.data} , '%')
             </if>
-            <if test="condition.toUserName.op=='in'">
-                ${condition.groupOp}   toUserName  ${condition.toUserName.op}
-                <foreach collection="condition.toUserName.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            <if test="condition.adminUser.op=='in'">
+                ${condition.groupOp}   adminUser  ${condition.adminUser.op}
+                <foreach collection="condition.adminUser.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
             </if>
         </if>
         <if test="condition.token!=null">
@@ -1074,8 +1074,8 @@ ${executeSqlCount}        </select>
                 <if test="selector.type!=null">
                     , type
                 </if>
-                <if test="selector.toUserName!=null">
-                    , toUserName
+                <if test="selector.adminUser!=null">
+                    , adminUser
                 </if>
                 <if test="selector.token!=null">
                     , token
@@ -1180,20 +1180,20 @@ ${nativeSql}        </if>
                     <foreach collection="condition.type.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
                 </if>
             </if>
-            <if test="condition.toUserName!=null">
+            <if test="condition.adminUser!=null">
 
-                <if test="condition.toUserName.op!='in' and condition.toUserName.op!='like' and condition.toUserName.op!='leftlike'">
-                    ${condition.groupOp}   toUserName  ${condition.toUserName.op} #{condition.toUserName.data}
+                <if test="condition.adminUser.op!='in' and condition.adminUser.op!='like' and condition.adminUser.op!='leftlike'">
+                    ${condition.groupOp}   adminUser  ${condition.adminUser.op} #{condition.adminUser.data}
                 </if>
-                <if test="condition.toUserName.op=='like'">
-                    AND toUserName like CONCAT('%', #{condition.toUserName.data} , '%')
+                <if test="condition.adminUser.op=='like'">
+                    AND adminUser like CONCAT('%', #{condition.adminUser.data} , '%')
                 </if>
-                <if test="condition.toUserName.op=='leftlike'">
-                    AND toUserName like CONCAT(#{condition.toUserName.data} , '%')
+                <if test="condition.adminUser.op=='leftlike'">
+                    AND adminUser like CONCAT(#{condition.adminUser.data} , '%')
                 </if>
-                <if test="condition.toUserName.op=='in'">
-                    ${condition.groupOp}   toUserName  ${condition.toUserName.op}
-                    <foreach collection="condition.toUserName.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                <if test="condition.adminUser.op=='in'">
+                    ${condition.groupOp}   adminUser  ${condition.adminUser.op}
+                    <foreach collection="condition.adminUser.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
                 </if>
             </if>
             <if test="condition.token!=null">
@@ -1312,8 +1312,8 @@ ${nativeSql}        </if>
             <if test="condition.type!=null">
                 AND type = #{condition.type}
             </if>
-            <if test="condition.toUserName!=null">
-                AND toUserName = #{condition.toUserName}
+            <if test="condition.adminUser!=null">
+                AND adminUser = #{condition.adminUser}
             </if>
             <if test="condition.token!=null">
                 AND token = #{condition.token}

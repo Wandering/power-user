@@ -12,6 +12,9 @@ import com.power.domain.Agencies;
 import com.power.domain.PlatformInfo;
 import com.power.domain.UserAccount;
 
+import java.util.Map;
+
 public interface IUserAccountFacade extends IPersistenceProvider {
     Agencies queryUserAgencyInfo(Long userId);
+    Map<String,Object> login(String openId,String uniqueKey);
 }

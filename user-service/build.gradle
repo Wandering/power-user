@@ -1,8 +1,12 @@
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '1.5.4.RELEASE'
+    testCompile "org.springframework.boot:spring-boot-test:$springbootVersion"
+    testCompile "org.springframework.boot:spring-boot-starter-data-redis:$springbootVersion"
     compile "com.alibaba:druid:$druidVersion"
     compile "mysql:mysql-connector-java:$mysqlConnectorVersion"
     // https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter
     compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:$MybatisSpringBoot"
+
     compile project(":user-domain")
 }

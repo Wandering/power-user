@@ -2,8 +2,9 @@ package com.power.core.dao;
 
 import com.power.core.domain.BaseDomain;
 import com.power.core.domain.Sorter;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
+
 
 import java.io.Serializable;
 import java.util.List;

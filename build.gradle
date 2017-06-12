@@ -108,11 +108,6 @@ subprojects {
         file("src/test/resources/spring.xml").createNewFile()
     }
 
-    /** 有时候会报错，但需要执行 */
-//    task createREADME(){
-//        file("README.md").createNewFile()
-//    }
-
     configurations {
         provided
         compile.extendsFrom provided

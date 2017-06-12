@@ -8,18 +8,16 @@
  * Copyright (c) 2013-2014, starteasy Inc. All Rights Reserved.
  * 
  * Project Name: codegen
- * $Id:  2017-06-10 09:21:12 $ 
+ * $Id:  2017-06-10 16:53:07 $ 
  */
 package com.power.domain;
-import com.power.core.domain.BaseDomain;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import com.power.core.domain.BaseDomain;;
 
-import java.util.*;
-
-public class PlatformInfo extends BaseDomain<Long> {
+public class PlatformInfo extends BaseDomain<Long>{
     /** 生活号/服务号ID */
     private String appId;
     /** 密钥 */
@@ -27,7 +25,7 @@ public class PlatformInfo extends BaseDomain<Long> {
     /** 1:微信公众号2支付宝服务窗 */
     private Integer type;
     /** 开发者微信号 */
-    private String toUserName;
+    private String adminUser;
     /** 微信token */
     private String token;
     /** aesKey */
@@ -62,12 +60,12 @@ public class PlatformInfo extends BaseDomain<Long> {
     public Integer getType() {
         return this.type;
     }
-    public void setToUserName(String value) {
-        this.toUserName = value;
+    public void setAdminUser(String value) {
+        this.adminUser = value;
     }
 
-    public String getToUserName() {
-        return this.toUserName;
+    public String getAdminUser() {
+        return this.adminUser;
     }
     public void setToken(String value) {
         this.token = value;
@@ -111,7 +109,7 @@ public class PlatformInfo extends BaseDomain<Long> {
 			.append("AppId",getAppId())
 			.append("Secret",getSecret())
 			.append("Type",getType())
-			.append("ToUserName",getToUserName())
+			.append("AdminUser",getAdminUser())
 			.append("Token",getToken())
 			.append("AesKey",getAesKey())
 			.append("UniqueKey",getUniqueKey())

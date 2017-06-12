@@ -9,10 +9,16 @@
 
 package com.power.service.ex.impl;
 
+import com.google.common.collect.Maps;
+import com.power.core.domain.SearchField;
+import com.power.core.domain.wrapper.SearchEnum;
 import com.power.dao.IPlatformInfoDAO;
+import com.power.domain.PlatformInfo;
 import com.power.service.ex.IPlatformInfoExService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service
 public class PlatformInfoExServiceImpl implements IPlatformInfoExService{
@@ -20,4 +26,14 @@ public class PlatformInfoExServiceImpl implements IPlatformInfoExService{
     @Autowired
     IPlatformInfoDAO platformInfoDAO;
 
+    @Override
+    public PlatformInfo getPlatformInfoByUniqueKey(String uniqueKey) {
+        Map<String,Object> condition = Maps.newHashMap();
+        SearchField searchField = new SearchField();
+        searchField.setField("uniqueKey");
+        searchField.setData(uniqueKey);
+        searchField.setOp(SearchEnum.eq.getValue());
+        condition.put("uniqueKey",searchField);
+        return platformInfoDAO.queryOne(null,condition,null);
+    }
 }

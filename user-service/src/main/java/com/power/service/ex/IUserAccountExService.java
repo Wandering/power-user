@@ -9,6 +9,11 @@
 
 package com.power.service.ex;
 
+
+import com.power.domain.UserAccount;
+
+import java.util.Map;
+
 public interface IUserAccountExService{
-//    subscribe();
+    UserAccount queryUserByOpenId(String openId, String uniqueKey);
 }

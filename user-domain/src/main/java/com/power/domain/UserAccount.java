@@ -23,11 +23,11 @@ public class UserAccount extends BaseDomain<Long> {
     /** 用户ID */
     private Long userId;
     /** 运营商Id */
-    private Integer agencyId;
+    private Long agencyId;
     /** 创建时间 */
-    private Date createDt;
+    private Date createDt = new Date();
     /** 更新时间 */
-    private Date updateDt;
+    private Date updateDt = new Date();
     /** 创建者 */
     private Long createBy;
     /** 更改时间 */
@@ -42,12 +42,13 @@ public class UserAccount extends BaseDomain<Long> {
     public Long getUserId() {
         return this.userId;
     }
-    public void setAgencyId(Integer value) {
-        this.agencyId = value;
+
+    public Long getAgencyId() {
+        return agencyId;
     }
 
-    public Integer getAgencyId() {
-        return this.agencyId;
+    public void setAgencyId(Long agencyId) {
+        this.agencyId = agencyId;
     }
 
     public void setCreateDt(Date value) {
