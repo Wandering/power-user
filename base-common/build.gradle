@@ -9,12 +9,13 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-logging:$springbootVersion"
     compile "org.springframework.boot:spring-boot-starter-aop:$springbootVersion"
     compile "org.springframework.boot:spring-boot-starter-web:$springbootVersion"
+    compile "org.springframework.boot:spring-boot-starter-web:$springbootVersion"
+    compile "org.springframework.boot:spring-boot-starter-data-redis:$springbootVersion"
     compile "cz.jirutka.spring:spring-rest-exception-handler:$exceptionHandleVersion"
     compile "com.alibaba:fastjson:$fastjsonVersion"
     compile "org.mybatis:mybatis:$mybatisVersion"
     compile "commons-codec:commons-codec:1.10"
-// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-redis
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-redis', version: '1.4.7.RELEASE'
 
+// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-redis
 
 }

@@ -7,6 +7,7 @@
         package com.power.facade.impl;
 
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import com.power.core.cache.RedisRepository;
 import com.power.core.exception.BizException;
@@ -43,11 +44,7 @@ public class UserAccountFacadeImpl extends AbstractPersistenceProvider implement
     @Autowired
     private RedisRepository<String,String> repository;
 
-//    @Transactional(propagation = Propagation.REQUIRED)
-//    @Override
-//    public void add() {
-//        userAccountService.add();
-//    }
+    private static final String USER_INFO = "user_info_";
 
     @Override
     public IUserAccountService getMainService() {
@@ -68,9 +65,9 @@ public class UserAccountFacadeImpl extends AbstractPersistenceProvider implement
         }
         String loginKey  = USER_TOKEN+userAccount.getUserId();
         String token = null;
-//        if (repository.exists(loginKey)){
-//            token = repository.get(loginKey);
-//        }else {
+        if (repository.exists(loginKey)){
+            token = repository.get(loginKey);
+        }else {
             String tokenKey = DESUtil.getEightByteMultypleStr(userAccount.getUserId(),userAccount.getAgencyId(),openId);
             try {
                 token = DESUtil.encrypt(tokenKey,DESUtil.key);
@@ -78,8 +75,11 @@ public class UserAccountFacadeImpl extends AbstractPersistenceProvider implement
                 e.printStackTrace();
             }
             repository.set(loginKey, token);
+            repository.set(token, JSON.toJSONString(userAccount));
             repository.expire(loginKey,2, TimeUnit.HOURS);
-//        }
+            repository.expire(USER_INFO+token,2, TimeUnit.HOURS);
+
+        }
         Map<String,Object> rtnMap = Maps.newHashMap();
         rtnMap.put("token",token);
         rtnMap.put("userId",userAccount.getAgencyId());

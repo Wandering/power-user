@@ -2,6 +2,10 @@ rootProject.name = 'power-user'
 include 'user-domain'
 include 'user-service'
 include 'user-client-war'
-include 'user-common'
+include 'base-common'
 include 'user-wechat'
+include 'sms-api'
+include 'sms-domain'
+include 'sms-service'
+
 

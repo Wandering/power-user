@@ -1,5 +1,5 @@
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.5'
-    compile project(":user-common")
+    compile project(":base-common")
 }

@@ -9,10 +9,15 @@ buildscript{
         mavenLocal()
         mavenCentral()
         maven { url 'http://repository.jboss.com/maven2/' }
+        maven { url 'http://repo.qtonecloud.cn/content/groups/public/' }
+        maven { url 'https://repo.eclipse.org/content/repositories/paho-releases/'}
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots'}
         jcenter()
         maven { url "http://repo.spring.io/plugins-release" }
         maven { url "http://repo.spring.io/milestone" }
         maven { url "https://plugins.gradle.org/m2/" }
+        maven { url 'https://repo.eclipse.org/content/repositories/paho-releases/'}
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots'}
     }
     dependencies {
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.0.1"
