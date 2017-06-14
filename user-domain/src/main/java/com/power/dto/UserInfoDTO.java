@@ -13,10 +13,6 @@ import java.util.Map;
 public class UserInfoDTO {
     /**用户全系统ID**/
     private Long userId;
-    /**用户业务系统Key为业务系统的平台id**/
-    Map<String,UserPlatform> userPlatformMap = Maps.newConcurrentMap();
-    /**用户所属运营商信息Key为业务系统的平台id**/
-    Map<String,UserAccount> userAccountMap = Maps.newConcurrentMap();
     /**昵称**/
     private String nickname;
     /**头像**/
@@ -29,6 +25,12 @@ public class UserInfoDTO {
     private String country;
     /**省份**/
     private String province;
+
+    private Long agencyId;
+
+    private Long accountId;
+
+    private String phone;
 
     public Long getUserId() {
         return userId;
@@ -88,19 +90,27 @@ public class UserInfoDTO {
         this.province = province;
     }
 
-    public Map<String, UserPlatform> getUserPlatformMap() {
-        return userPlatformMap;
+    public Long getAgencyId() {
+        return agencyId;
     }
 
-    public void setUserPlatformMap(Map<String, UserPlatform> userPlatformMap) {
-        this.userPlatformMap = userPlatformMap;
+    public void setAgencyId(Long agencyId) {
+        this.agencyId = agencyId;
     }
 
-    public Map<String, UserAccount> getUserAccountMap() {
-        return userAccountMap;
+    public Long getAccountId() {
+        return accountId;
     }
 
-    public void setUserAccountMap(Map<String, UserAccount> userAccountMap) {
-        this.userAccountMap = userAccountMap;
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

@@ -76,8 +76,7 @@ public class UserAccountFacadeImpl extends AbstractPersistenceProvider implement
         if (userAccount == null) {
             throw new BizException(ERRORCODE.USER_IS_NULL.getCode(),ERRORCODE.USER_IS_NULL.getMessage());
         }
-        String loginKey  = USER_TOKEN+userAccount.getUserId();
-        String userInfoKey = USER_INFO+userId;
+        String loginKey  = USER_TOKEN+userAccount.getUserId()+"_"+userAccount.getAgencyId();
 
         String token = null;
         if (repository.exists(loginKey)){
@@ -92,31 +91,27 @@ public class UserAccountFacadeImpl extends AbstractPersistenceProvider implement
 
             //token存放用户信息的key
             repository.set(loginKey, token);
-            repository.set(token,userInfoKey);
             UserInfoDTO userInfoDTO;
-            if (repository.exists(userInfoKey)){
-                userInfoDTO = JSON.parseObject(repository.get(userInfoKey),UserInfoDTO.class);
+            if (repository.exists(token)){
+                userInfoDTO = JSON.parseObject(repository.get(token),UserInfoDTO.class);
             }else{
                 UserExpand userExpand = userExpandService.view(userId);
                 //注入用户信息
                 userInfoDTO = new UserInfoDTO();
-                userInfoDTO.setUserId(userId);
                 BeanUtils.copyProperties(userExpand,userInfoDTO);
-            }
-            if (!userInfoDTO.getUserAccountMap().containsKey(uniqueKey)){
-                userInfoDTO.getUserAccountMap().put(uniqueKey,userAccount);
-                PlatformInfo platformInfo = platformCache.getCache(uniqueKey);
-                UserPlatform userPlatform = userPlatformExService.queryUserPlatformByPlatformId(platformInfo.getId());
-                userInfoDTO.getUserPlatformMap().put(uniqueKey,userPlatform);
+                userInfoDTO.setUserId(userId);
+                userInfoDTO.setAccountId(userExpand.getUserId());
+                User user = userService.view(userId);
+                userInfoDTO.setPhone(user.getPhone());
+
                 //重写线上数据
-                repository.set(userInfoKey,JSON.toJSONString(userInfoDTO));
+                repository.set(token,JSON.toJSONString(userInfoDTO));
                 repository.expire(loginKey,TOKEN_TIME_OUT, TimeUnit.DAYS);
-            };
+                //用户信息保持7天
+                repository.expire(token,USER_INFO_TIME_OUT, TimeUnit.DAYS);
+            }
             //放入当前内存中
             UserContext.setCurrentUser(userInfoDTO);
-
-            //用户信息保持7天  如果有人登录 续期为3天
-            repository.expire(userInfoKey,USER_INFO_TIME_OUT, TimeUnit.DAYS);
         }
         Map<String,Object> rtnMap = Maps.newHashMap();
         rtnMap.put("token",token);

@@ -144,13 +144,14 @@ public class PlatformInfoFacadeImpl extends AbstractPersistenceProvider implemen
                 Long userId = user.getId();
                 //添加用户拓展信息
                 UserExpand userExpand = new UserExpand();
-                userExpand.setId(userId);
+                userExpand.setUserId(userId);
                 userExpand.setSex(Integer.valueOf(wechat.get("sex").toString()));
                 userExpand.setCity((String) wechat.get("city"));
                 userExpand.setProvince(wechat.get("province").toString());
                 userExpand.setCountry(wechat.get("country").toString());
                 userExpand.setNickname(wechat.get("nickname").toString());
                 userExpand.setHeadimgurl(wechat.get("headimgurl").toString());
+                userExpand.setAgencyId(platformInfo.getAgencyId());
                 userExpandService.create(userExpand);
 
                 //添加用户公众号对应关系

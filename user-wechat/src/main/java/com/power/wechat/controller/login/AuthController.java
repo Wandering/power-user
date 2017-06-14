@@ -88,8 +88,7 @@ public class AuthController {
             String code = repository.get(redisKey);
             if (code.equals(checkCode)){
                 //TODO 待优化至拦截器
-                String userInfoKey = repository.get(token);
-                UserInfoDTO userInfoDTO = JSON.parseObject(repository.get(userInfoKey), UserInfoDTO.class);
+                UserInfoDTO userInfoDTO = JSON.parseObject(repository.get(token), UserInfoDTO.class);
                 User user = (User) userFacade.getMainService().view(userInfoDTO.getUserId());
                 user.setPhone(phone);
                 userFacade.getMainService().create(user);

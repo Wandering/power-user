@@ -8,18 +8,18 @@
  * Copyright (c) 2013-2014, starteasy Inc. All Rights Reserved.
  * 
  * Project Name: codegen
- * $Id:  2017-06-09 22:36:04 $ 
+ * $Id:  2017-06-14 20:09:24 $ 
  */
 package com.power.domain;
-import com.power.core.domain.BaseDomain;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import com.power.core.domain.BaseDomain;;
 
 import java.util.*;
 
-public class UserExpand extends BaseDomain<Long> {
+public class UserExpand extends BaseDomain<Long>{
     /** 昵称 */
     private String nickname;
     /** 头像 */
@@ -34,6 +34,10 @@ public class UserExpand extends BaseDomain<Long> {
     private String province;
     /** 微信号 */
     private String weixin;
+    /** 运营商ID */
+    private Long agencyId;
+    /** 用户ID */
+    private Long userId;
 
 	public UserExpand(){
 	}
@@ -86,6 +90,20 @@ public class UserExpand extends BaseDomain<Long> {
     public String getWeixin() {
         return this.weixin;
     }
+    public void setAgencyId(Long value) {
+        this.agencyId = value;
+    }
+
+    public Long getAgencyId() {
+        return this.agencyId;
+    }
+    public void setUserId(Long value) {
+        this.userId = value;
+    }
+
+    public Long getUserId() {
+        return this.userId;
+    }
 
 	public String toString() {
 		return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -97,6 +115,8 @@ public class UserExpand extends BaseDomain<Long> {
 			.append("Country",getCountry())
 			.append("Province",getProvince())
 			.append("Weixin",getWeixin())
+			.append("AgencyId",getAgencyId())
+			.append("UserId",getUserId())
 			.toString();
 	}
 	
