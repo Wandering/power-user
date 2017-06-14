@@ -9,11 +9,12 @@ spring:
     profiles : dev
   redis:
     host: r-wz9c6872083f2214.redis.rds.aliyuncs.com
+    database: 2
     port: 6379
     password: Redis2017
   datasource:
-    name: test
-    url: jdbc:mysql://r-wz9c6872083f2214.redis.rds.aliyuncs.com:3306/power?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+    name: power
+    url: jdbc:mysql://rm-wz9l231c0r69dm78d.mysql.rds.aliyuncs.com:3306/power?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
     username: power_root
     password: power#root@2017
     # 使用druid数据源
