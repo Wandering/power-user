@@ -53,8 +53,8 @@ public class UserAccountFacadeImpl extends AbstractPersistenceProvider implement
 
     private static  final String USER_TOKEN = "user_token_";
     private static final String USER_INFO = "user_info_";
-    private static final int TOKEN_TIME_OUT = 2;//2小时
-    private static final int USER_INFO_TIME_OUT = 3;//3天
+    private static final int TOKEN_TIME_OUT = 7;//7天
+    private static final int USER_INFO_TIME_OUT = 8;//8天
 
 
 
@@ -74,7 +74,7 @@ public class UserAccountFacadeImpl extends AbstractPersistenceProvider implement
         UserAccount userAccount = userAccountExService.queryUserByOpenId(openId,uniqueKey);
         Long userId = userAccount.getUserId();
         if (userAccount == null) {
-            throw new BizException("error","非法用户");
+            throw new BizException(ERRORCODE.USER_IS_NULL.getCode(),ERRORCODE.USER_IS_NULL.getMessage());
         }
         String loginKey  = USER_TOKEN+userAccount.getUserId();
         String userInfoKey = USER_INFO+userId;
@@ -83,9 +83,9 @@ public class UserAccountFacadeImpl extends AbstractPersistenceProvider implement
         if (repository.exists(loginKey)){
             token = repository.get(loginKey);
         }else {
-            String tokenKey = UUID.randomUUID().toString();
+            String tokenKey = DESUtil.getEightByteMultypleStr(userAccount.getUserId(),userAccount.getAgencyId(),openId);
             try {
-                token = DESUtil.encrypt(tokenKey,DESUtil.key);
+                token = UUID.nameUUIDFromBytes(tokenKey.getBytes()).toString();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -103,18 +103,18 @@ public class UserAccountFacadeImpl extends AbstractPersistenceProvider implement
                 userInfoDTO.setUserId(userId);
                 BeanUtils.copyProperties(userExpand,userInfoDTO);
             }
-            if (userInfoDTO.getUserAccountMap().containsKey(uniqueKey)){
+            if (!userInfoDTO.getUserAccountMap().containsKey(uniqueKey)){
                 userInfoDTO.getUserAccountMap().put(uniqueKey,userAccount);
                 PlatformInfo platformInfo = platformCache.getCache(uniqueKey);
                 UserPlatform userPlatform = userPlatformExService.queryUserPlatformByPlatformId(platformInfo.getId());
                 userInfoDTO.getUserPlatformMap().put(uniqueKey,userPlatform);
                 //重写线上数据
                 repository.set(userInfoKey,JSON.toJSONString(userInfoDTO));
+                repository.expire(loginKey,TOKEN_TIME_OUT, TimeUnit.DAYS);
             };
             //放入当前内存中
             UserContext.setCurrentUser(userInfoDTO);
-            //设置失效时间3天
-            repository.expire(loginKey,TOKEN_TIME_OUT, TimeUnit.HOURS);
+
             //用户信息保持7天  如果有人登录 续期为3天
             repository.expire(userInfoKey,USER_INFO_TIME_OUT, TimeUnit.DAYS);
         }

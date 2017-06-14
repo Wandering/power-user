@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
  * 认证用户手机号码
  */
 @RestController
-@RequestMapping("/wechat/auth")
+@RequestMapping("/user/wechat/auth")
 public class AuthController {
     @Autowired
     private SMSService smsService;
@@ -65,13 +65,13 @@ public class AuthController {
                 //存储锁
                 repository.set(redisLockKey, code);
                 repository.expire(redisLockKey, TIME_OUT_LOCK, TIME_UNIT);
+                return true;
             }else {
                 throw new BizException(ERRORCODE.SMS_CHECK_FAIL.getCode(),ERRORCODE.SMS_CHECK_FAIL.getMessage());
             }
         }else {
             throw new BizException(ERRORCODE.SMS_CHECK_EXIST.getCode(),ERRORCODE.SMS_CHECK_EXIST.getMessage());
         }
-        return false;
     }
 
     @RequestMapping(value = "/{uniqueKey}/captcha/checkSms")

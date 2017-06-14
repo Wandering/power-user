@@ -8,14 +8,15 @@ spring:
       force: true
     profiles : dev
   redis:
-    host: r-wz9c6872083f2214.redis.rds.aliyuncs.com
+    host: 139.224.16.177
     port: 6379
-    password: Redis2017
+    database: 2
+    password: power1234
   datasource:
     name: test
-    url: jdbc:mysql://r-wz9c6872083f2214.redis.rds.aliyuncs.com:3306/power?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
-    username: power_root
-    password: power#root@2017
+    url: jdbc:mysql://139.224.16.177:5522/power?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+    username: poweruser
+    password: password
     # 使用druid数据源
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver

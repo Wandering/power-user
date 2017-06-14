@@ -33,7 +33,9 @@ public enum  ERRORCODE {
     /////////////////////////////业务系统相关业务异常/////////////////////////
 
 
-    PLATFORM_IS_NULL("5000001","服务号不存在" );
+    PLATFORM_IS_NULL("5000001","服务号不存在" ),
+    USER_IS_NULL("5000002","非法用户" )
+    ;
     /////////////////////////////业务系统相关业务异常/////////////////////////
     private final String code;
     private final String message;
