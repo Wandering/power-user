@@ -20,6 +20,9 @@ public enum  ERRORCODE {
     SMS_CHECK_ERROR("2000002","验证码校验失败，请重新输入！"),
     SMS_CHECK_FAIL("2000003","验证码发送失败，请稍后再试！"),
     SMS_CHECK_PHONE("2000004","不是标准的手机号码，请输入正确的手机号码！"),
+    TOKEN_CANNOT_NULL("2000005","token不能为空"),
+    TOKEN_INVALID_OR_NOTHINGNESS("2000005","token失效或不存在"),
+
 
     /////////////////////////////系统业务异常/////////////////////////
 

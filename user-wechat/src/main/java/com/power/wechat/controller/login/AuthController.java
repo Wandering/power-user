@@ -6,6 +6,7 @@ import com.power.core.exception.BizException;
 import com.power.domain.ERRORCODE;
 import com.power.domain.User;
 import com.power.domain.UserAccount;
+import com.power.dto.UserInfoDTO;
 import com.power.facade.IUserFacade;
 import com.power.sms.api.SMSService;
 import com.power.sms.domain.SMSCheckCode;
@@ -41,7 +42,7 @@ public class AuthController {
     @Autowired
     private IUserFacade userFacade;
 
-    @RequestMapping(value = "/{uniqueKey}/user/sendSms")
+    @RequestMapping(value = "/{uniqueKey}/captcha/sendSms")
     @ResponseBody
     public boolean sendSms(@RequestParam("phone") String phone){
         if (!PHONE_CHECK.matcher(phone).matches()){
@@ -54,7 +55,7 @@ public class AuthController {
 
             SMSCheckCode smsCheckCode = new SMSCheckCode();
             smsCheckCode.setPhone(phone);
-            String code = String.valueOf((Math.random() * 9 + 1) * 100000);
+            String code = String.valueOf((int)((Math.random() * 9 + 1) * 100000));
             smsCheckCode.setCheckCode(code);
             boolean flag = smsService.sendSMS(smsCheckCode, false);
             if (flag) {
@@ -73,7 +74,7 @@ public class AuthController {
         return false;
     }
 
-    @RequestMapping(value = "/{uniqueKey}/user/checkSms")
+    @RequestMapping(value = "/{uniqueKey}/captcha/checkSms")
     @ResponseBody
     public boolean checkSms(@PathVariable("uniqueKey")String uniqueKey,
                             @RequestParam String phone,
@@ -87,10 +88,12 @@ public class AuthController {
             String code = repository.get(redisKey);
             if (code.equals(checkCode)){
                 //TODO 待优化至拦截器
-                UserAccount userAccount = JSON.parseObject(repository.get(token),UserAccount.class);
-                User user = (User)userFacade.getMainService().view(userAccount.getUserId());
+                String userInfoKey = repository.get(token);
+                UserInfoDTO userInfoDTO = JSON.parseObject(repository.get(userInfoKey), UserInfoDTO.class);
+                User user = (User) userFacade.getMainService().view(userInfoDTO.getUserId());
                 user.setPhone(phone);
-
+                userFacade.getMainService().create(user);
+                repository.del(redisKey);
                 return true;
             }
             throw new BizException(ERRORCODE.SMS_CHECK_ERROR.getCode(),ERRORCODE.SMS_CHECK_ERROR.getMessage());

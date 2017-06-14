@@ -1,13 +1,9 @@
 package com.power.wechat.controller.callback;
 
 import com.google.common.collect.Maps;
-import com.power.domain.PlatformInfo;
 import com.power.facade.IPlatformInfoFacade;
-import com.power.wechat.util.PlatformCache;
 import com.power.wechat.util.WxMpServiceUtil;
 import me.chanjar.weixin.common.exception.WxErrorException;
-import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
-import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;

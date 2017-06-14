@@ -87,4 +87,20 @@ public class UserInfoDTO {
     public void setProvince(String province) {
         this.province = province;
     }
+
+    public Map<String, UserPlatform> getUserPlatformMap() {
+        return userPlatformMap;
+    }
+
+    public void setUserPlatformMap(Map<String, UserPlatform> userPlatformMap) {
+        this.userPlatformMap = userPlatformMap;
+    }
+
+    public Map<String, UserAccount> getUserAccountMap() {
+        return userAccountMap;
+    }
+
+    public void setUserAccountMap(Map<String, UserAccount> userAccountMap) {
+        this.userAccountMap = userAccountMap;
+    }
 }
