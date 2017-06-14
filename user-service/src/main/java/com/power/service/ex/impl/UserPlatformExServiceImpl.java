@@ -15,7 +15,10 @@ import com.power.core.domain.SearchField;
 import com.power.core.domain.wrapper.SearchEnum;
 import com.power.core.service.impl.AbstractPageService;
 import com.power.dao.IUserPlatformDAO;
+import com.power.dao.ex.IUserPlatformExDAO;
+import com.power.domain.PlatformInfo;
 import com.power.domain.UserPlatform;
+import com.power.dto.UserPlatformDTO;
 import com.power.service.IUserPlatformService;
 import com.power.service.ex.IUserPlatformExService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +31,8 @@ import java.util.Map;
 public class UserPlatformExServiceImpl implements IUserPlatformExService {
     @Autowired
     private IUserPlatformDAO userPlatformDAO;
-
+    @Autowired
+    private IUserPlatformExDAO userPlatformExDAO;
 
     @Override
     public UserPlatform queryUserPlatformByPlatformId(Long platformId) {
@@ -39,5 +43,11 @@ public class UserPlatformExServiceImpl implements IUserPlatformExService {
         searchField.setOp(SearchEnum.eq.getValue());
         condition.put("platformId",searchField);
         return userPlatformDAO.queryOne(null,condition,null);
+    }
+
+    @Override
+    public UserPlatformDTO queryPlatformByPlatformId(Long agencyId, Integer type, String openId) {
+
+        return userPlatformExDAO.getPlatformByOpenIdAndType(agencyId,type,openId);
     }
 }

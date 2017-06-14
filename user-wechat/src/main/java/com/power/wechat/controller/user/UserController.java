@@ -1,0 +1,55 @@
+package com.power.wechat.controller.user;
+
+import com.alibaba.fastjson.JSON;
+import com.power.core.cache.RedisRepository;
+import com.power.core.exception.BizException;
+import com.power.domain.ERRORCODE;
+import com.power.domain.PlatformInfo;
+import com.power.domain.User;
+import com.power.dto.UserInfoDTO;
+import com.power.facade.IUserFacade;
+import com.power.facade.IUserPlatformFacade;
+import com.power.service.IUserPlatformService;
+import com.power.sms.api.SMSService;
+import com.power.sms.domain.SMSCheckCode;
+import com.sun.org.apache.regexp.internal.RE;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
+
+/**
+ * Created by Administrator on 2017/6/13.
+ * 认证用户手机号码
+ */
+@RestController
+@RequestMapping("/user/wechat/info")
+public class UserController {
+    @Autowired
+    private SMSService smsService;
+
+    @Autowired
+    private RedisRepository<String,String> repository;
+
+    private final static String USER_SMS = "USER_SMS_";
+    private final static String USER_SMS_IN_USE_TAG = "USER_SMS__IN_USE_TAG_";
+
+    private final static int TIME_OUT = 5 * 60;
+    private final static int TIME_OUT_LOCK = 60;
+
+    private final static TimeUnit TIME_UNIT = TimeUnit.SECONDS;
+    private final static Pattern PHONE_CHECK = Pattern.compile("^[1][3,4,5,7,8][0-9]{9}$"); // 验证手机号
+
+    @Autowired
+    private IUserFacade userFacade;
+    @Autowired
+    private IUserPlatformFacade userPlatformFacade;
+
+    @RequestMapping(value = "/queryUserByOpenId")
+    @ResponseBody
+    public PlatformInfo queryWxPlatform(@RequestParam("openId") String openId, @RequestParam("agencyId")Long agencyId){
+        return userPlatformFacade.getWxPlatformByOpenId(openId,agencyId);
+    }
+
+}

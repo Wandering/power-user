@@ -8,7 +8,7 @@
  * Copyright (c) 2013-2014, starteasy Inc. All Rights Reserved.
  * 
  * Project Name: codegen
- * $Id:  2017-06-10 16:53:07 $ 
+ * $Id:  2017-06-14 22:13:09 $ 
  */
 package com.power.domain;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -16,6 +16,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.power.core.domain.BaseDomain;;
+
+import java.util.*;
 
 public class PlatformInfo extends BaseDomain<Long>{
     /** 生活号/服务号ID */
@@ -36,6 +38,10 @@ public class PlatformInfo extends BaseDomain<Long>{
     private String note;
     /** 运营商id */
     private Long agencyId;
+    /** 地图页面 */
+    private String mainUrl;
+    /** 关注页面 */
+    private String subUrl;
 
 	public PlatformInfo(){
 	}
@@ -102,6 +108,20 @@ public class PlatformInfo extends BaseDomain<Long>{
     public Long getAgencyId() {
         return this.agencyId;
     }
+    public void setMainUrl(String value) {
+        this.mainUrl = value;
+    }
+
+    public String getMainUrl() {
+        return this.mainUrl;
+    }
+    public void setSubUrl(String value) {
+        this.subUrl = value;
+    }
+
+    public String getSubUrl() {
+        return this.subUrl;
+    }
 
 	public String toString() {
 		return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -115,6 +135,8 @@ public class PlatformInfo extends BaseDomain<Long>{
 			.append("UniqueKey",getUniqueKey())
 			.append("Note",getNote())
 			.append("AgencyId",getAgencyId())
+			.append("MainUrl",getMainUrl())
+			.append("SubUrl",getSubUrl())
 			.toString();
 	}
 	
