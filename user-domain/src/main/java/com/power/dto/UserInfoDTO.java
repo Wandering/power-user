@@ -18,7 +18,7 @@ public class UserInfoDTO {
     /**头像**/
     private String headimgurl;
     /**性别**/
-    private String sex;
+    private Integer sex;
     /**城市**/
     private String city;
     /**国家**/
@@ -58,11 +58,11 @@ public class UserInfoDTO {
         this.headimgurl = headimgurl;
     }
 
-    public String getSex() {
+    public Integer getSex() {
         return sex;
     }
 
-    public void setSex(String sex) {
+    public void setSex(Integer sex) {
         this.sex = sex;
     }
 

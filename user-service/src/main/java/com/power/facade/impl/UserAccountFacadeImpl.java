@@ -72,10 +72,10 @@ public class UserAccountFacadeImpl extends AbstractPersistenceProvider implement
     @Override
     public Map<String,Object> login(String openId, String uniqueKey) {
         UserAccount userAccount = userAccountExService.queryUserByOpenId(openId,uniqueKey);
-        Long userId = userAccount.getUserId();
         if (userAccount == null) {
             throw new BizException(ERRORCODE.USER_IS_NULL.getCode(),ERRORCODE.USER_IS_NULL.getMessage());
         }
+        Long userId = userAccount.getUserId();
         String loginKey  = USER_TOKEN+userAccount.getUserId()+"_"+userAccount.getAgencyId();
 
         String token = null;
@@ -98,7 +98,13 @@ public class UserAccountFacadeImpl extends AbstractPersistenceProvider implement
                 UserExpand userExpand = userExpandService.view(userId);
                 //注入用户信息
                 userInfoDTO = new UserInfoDTO();
-                BeanUtils.copyProperties(userExpand,userInfoDTO);
+                userInfoDTO.setCity(userExpand.getCity());
+                userInfoDTO.setCountry(userExpand.getCountry());
+                userInfoDTO.setHeadimgurl(userExpand.getHeadimgurl());
+                userInfoDTO.setProvince(userExpand.getProvince());
+                userInfoDTO.setNickname(userExpand.getNickname());
+                userInfoDTO.setAgencyId(userExpand.getAgencyId());
+                userInfoDTO.setSex(userExpand.getSex());
                 userInfoDTO.setUserId(userId);
                 userInfoDTO.setAccountId(userExpand.getUserId());
                 User user = userService.view(userId);

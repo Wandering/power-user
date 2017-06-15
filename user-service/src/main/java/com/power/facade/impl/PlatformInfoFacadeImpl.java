@@ -7,6 +7,7 @@
         package com.power.facade.impl;
 
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.power.core.domain.OrderField;
@@ -21,6 +22,7 @@ import com.power.domain.*;
 import com.power.facade.IPlatformInfoFacade;
 import com.power.service.*;
 import com.power.service.ex.IPlatformInfoExService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +53,8 @@ public class PlatformInfoFacadeImpl extends AbstractPersistenceProvider implemen
 //    public void add() {
 //        platformInfoService.add();
 //    }
+
+    private static  final Logger logger = Logger.getLogger(PlatformInfoFacadeImpl.class);
 
     @Override
     public IBaseService getMainService() {
@@ -207,6 +211,7 @@ public class PlatformInfoFacadeImpl extends AbstractPersistenceProvider implemen
         UserPlatform userPlatform = userPlatformService.viewOne(null,condition,null);
         userPlatform.setStatus(0);
         userPlatformService.edit(userPlatform);
+        logger.info(JSON.toJSON(userPlatform));
         return true;
     }
 }

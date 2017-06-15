@@ -1,16 +1,9 @@
-apply plugin: 'java'
-apply plugin: 'application'
-apply plugin: "sonar-runner"
-apply plugin: 'spring-boot'
-
-sourceCompatibility = 1.8
-buildscript{
+buildscript {
     repositories {
         mavenCentral()
         mavenLocal()
         mavenCentral()
         maven { url 'http://repository.jboss.com/maven2/' }
-        maven { url 'http://repo.qtonecloud.cn/content/groups/public/' }
         maven { url 'https://repo.eclipse.org/content/repositories/paho-releases/'}
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots'}
         jcenter()
@@ -29,7 +22,6 @@ buildscript{
         classpath "io.spring.gradle:dependency-management-plugin:0.5.6.RELEASE"
         //jhipster-needle-gradle-buildscript-dependency - JHipster will add additional gradle build script plugins here
         classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.4'
-        classpath 'org.hibernate.build.gradle:gradle-maven-publish-auth:2.0.1+'
     }
 }
 
@@ -58,24 +50,40 @@ task testReport(type: TestReport) {
     reportOn test
 }
 
+
+
 /** 此闭包内的声明子类皆可使用 */
 allprojects {
     group = 'com.power'
     version = '0.0.1-SNAPSHOT'
+
     apply plugin: 'java'
+    sourceCompatibility=1.8
+    targetCompatibility=1.8
+    apply plugin: 'maven'
+    apply plugin: 'propdeps'
+    apply plugin: 'io.spring.dependency-management'
+
+
     apply plugin: 'idea'
-    apply plugin: 'spring-boot'
+    apply plugin: 'eclipse'
 
     repositories {
-        mavenCentral()
         mavenLocal()
-        mavenCentral()
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         maven { url 'http://repository.jboss.com/maven2/' }
+        mavenCentral()
         jcenter()
         maven { url "http://repo.spring.io/plugins-release" }
-        maven { url "http://repo.spring.io/milestone" }
-        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url 'http://repo.spring.io/milestone' }
+        maven { url 'http://repo.spring.io/snapshot' }
+        maven { url 'https://repository.jboss.org/nexus/content/repositories/releases' }
+        maven { url 'https://oss.sonatype.org/content/repositories/releases' }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+        maven { url 'http://repo.maven.apache.org/maven2' }
     }
+
+
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
     }
@@ -114,6 +122,11 @@ subprojects {
         file("src/test/resources/spring.xml").createNewFile()
     }
 
+    /** 有时候会报错，但需要执行 */
+//    task createREADME(){
+//        file("README.md").createNewFile()
+//    }
+
     configurations {
         provided
         compile.extendsFrom provided
@@ -125,11 +138,11 @@ subprojects {
     }
 }
 
-configure(subprojects.findAll { it.name.contains('war') }) {
-    apply plugin: 'war'
-
-    task createWebProject(dependsOn: 'createJavaProject') << {
-        def webAppDir = file("$webAppDirName")
-        webAppDir.mkdirs()
-    }
-}
+//configure(subprojects.findAll { it.name.contains('war') }) {
+//    apply plugin: 'war'
+//
+//    task createWebProject(dependsOn: 'createJavaProject') << {
+//        def webAppDir = file("$webAppDirName")
+//        webAppDir.mkdirs()
+//    }
+//}

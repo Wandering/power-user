@@ -119,10 +119,12 @@ public class CallbackController {
         //判定关注类型
         switch (enevt){
             case "subscribe":
+                logger.info("用户关注："+wxMpUser.getOpenId());
                 //关注
                 flag =  platformInfoFacade.wxSubscribe(wechat,uniqueKey);
                 break;
             case "unsubscribe":
+                logger.info("用户取消关注："+wxMpUser.getOpenId());
                 //取消关注
                 flag = platformInfoFacade.wxUnSubscribe(wechat,uniqueKey);
                 break;
