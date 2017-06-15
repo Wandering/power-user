@@ -17,4 +17,5 @@ import com.power.domain.PlatformInfo;
 
 public interface IPlatformInfoExService{
     PlatformInfo getPlatformInfoByUniqueKey(String uniqueKey);
+    PlatformInfo getPlatformInfoByAgencyAndType(Long agencyId,Integer type);
 }

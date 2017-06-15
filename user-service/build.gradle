@@ -7,6 +7,7 @@ dependencies {
     compile "mysql:mysql-connector-java:$mysqlConnectorVersion"
     // https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter
     compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:$MybatisSpringBoot"
+            exclo
 
     compile project(":user-domain")
 }

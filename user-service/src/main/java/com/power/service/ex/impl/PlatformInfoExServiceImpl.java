@@ -36,4 +36,20 @@ public class PlatformInfoExServiceImpl implements IPlatformInfoExService{
         condition.put("uniqueKey",searchField);
         return platformInfoDAO.queryOne(null,condition,null);
     }
+
+    @Override
+    public PlatformInfo getPlatformInfoByAgencyAndType(Long agencyId, Integer type) {
+        Map<String,Object> condition = Maps.newHashMap();
+        SearchField searchField = new SearchField();
+        searchField.setField("agencyId");
+        searchField.setData(agencyId);
+        searchField.setOp(SearchEnum.eq.getValue());
+        condition.put("agencyId",searchField);
+        searchField = new SearchField();
+        searchField.setField("type");
+        searchField.setData(type);
+        searchField.setOp(SearchEnum.eq.getValue());
+        condition.put("type",searchField);
+        return platformInfoDAO.queryOne(null,condition,null);
+    }
 }

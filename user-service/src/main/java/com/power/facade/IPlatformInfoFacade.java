@@ -37,11 +37,11 @@ public interface IPlatformInfoFacade extends IPersistenceProvider {
     List<PlatformInfo> getPlatformInfoByUserName(String userName);
 
     /**
-     * 根据微信号获取公众号列表
+     * 根据运营商获取公众号列表 一个运营商只有一个公众号
      * @param agencyId
      * @return
      */
-    List<PlatformInfo> getPlatformInfoByAgencyId(Long agencyId);
+    PlatformInfo getWxPlatformInfoByAgencyId(Long agencyId);
 
     /**
      * 用户关注公众号

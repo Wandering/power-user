@@ -38,6 +38,8 @@ public class UserPlatformFacadeImpl extends AbstractPersistenceProvider implemen
 
     @Override
     public UserPlatformDTO getWxPlatformByOpenId(String openId, Long agencyId) {
-        return userPlatformExService.queryPlatformByPlatformId(agencyId, PlatformEnum.WX.getCode(),openId);
+        UserPlatformDTO userPlatformDTO = userPlatformExService.queryPlatformByPlatformId(agencyId, PlatformEnum.WX.getCode(),openId);
+        userPlatformDTO.setOpenId(openId);
+        return userPlatformDTO;
     }
 }

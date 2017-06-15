@@ -19,6 +19,7 @@ import com.power.domain.UserPlatform;
 public class UserPlatformDTO extends PlatformInfo {
 
     private Integer status;
+    private String openId;
 
     public Integer getStatus() {
         return status;
@@ -26,6 +27,14 @@ public class UserPlatformDTO extends PlatformInfo {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
     }
 }
 

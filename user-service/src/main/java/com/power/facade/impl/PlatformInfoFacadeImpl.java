@@ -10,6 +10,7 @@
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.power.common.PlatformEnum;
 import com.power.core.domain.OrderField;
 import com.power.core.domain.SearchField;
 import com.power.core.domain.Sorter;
@@ -77,9 +78,9 @@ public class PlatformInfoFacadeImpl extends AbstractPersistenceProvider implemen
     }
 
     @Override
-    public List<PlatformInfo> getPlatformInfoByAgencyId(Long agencyId) {
+    public PlatformInfo getWxPlatformInfoByAgencyId(Long agencyId) {
 
-        return null;
+        return platformInfoExService.getPlatformInfoByAgencyAndType(agencyId, PlatformEnum.WX.getCode());
     }
 
     @Override
