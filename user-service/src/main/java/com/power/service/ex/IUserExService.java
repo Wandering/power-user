@@ -15,6 +15,9 @@ import com.power.core.service.IPageService;
 import com.power.dao.IUserDAO;
 import com.power.domain.User;
 import com.power.domain.UserAccount;
+import com.power.dto.UserInfoDTO;
 
 public interface IUserExService{
+
+    UserInfoDTO getUserInfoByAccount(Long accountId,Integer type);
 }

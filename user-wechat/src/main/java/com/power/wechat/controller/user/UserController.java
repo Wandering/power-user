@@ -69,4 +69,9 @@ public class UserController {
         return userPlatformFacade.getWxPlatformByOpenId(openId,agencyId);
     }
 
+    @RequestMapping(value = "/queryOpenIdByAccountId")
+    @ResponseBody
+    public UserInfoDTO queryWxPlatform(@RequestParam("accountId") Long accountId){
+        return userFacade.getWxUserInfoByAccount(accountId);
+    }
 }

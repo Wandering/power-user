@@ -7,10 +7,13 @@
         package com.power.facade.impl;
 
 
+import com.power.common.PlatformEnum;
 import com.power.core.service.IBaseService;
 import com.power.core.service.impl.AbstractPersistenceProvider;
+import com.power.dto.UserInfoDTO;
 import com.power.facade.IUserFacade;
 import com.power.service.IUserService;
+import com.power.service.ex.IUserExService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +22,8 @@ public class UserFacadeImpl extends AbstractPersistenceProvider implements IUser
     @Autowired
     private IUserService userService;
 
-
+    @Autowired
+    private IUserExService userExService;
 //    @Transactional(propagation = Propagation.REQUIRED)
 //    @Override
 //    public void add() {
@@ -29,5 +33,10 @@ public class UserFacadeImpl extends AbstractPersistenceProvider implements IUser
     @Override
     public IBaseService getMainService() {
         return userService;
+    }
+
+    @Override
+    public UserInfoDTO getWxUserInfoByAccount(Long accountId) {
+        return userExService.getUserInfoByAccount(accountId, PlatformEnum.WX.getCode());
     }
 }

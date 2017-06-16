@@ -32,6 +32,8 @@ public class UserInfoDTO {
 
     private String phone;
 
+    private String openId;
+
     public Long getUserId() {
         return userId;
     }
@@ -112,5 +114,13 @@ public class UserInfoDTO {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
     }
 }
