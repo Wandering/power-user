@@ -38,5 +38,6 @@ mybatis:
   typeAliasesPackage: com.power.domain,com.power.dto
 logging:
   level:
-    com.power.dao: debug
+    com.power: debug
+  file: ./springboot.log
 

@@ -23,6 +23,7 @@ import com.power.service.IUserAccountService;
 import com.power.service.IUserExpandService;
 import com.power.service.IUserService;
 import com.power.service.ex.IUserAccountExService;
+import com.power.service.ex.IUserExpandExService;
 import com.power.service.ex.IUserPlatformExService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,9 @@ public class UserAccountFacadeImpl extends AbstractPersistenceProvider implement
     private RedisRepository<String,String> repository;
     @Autowired
     private PlatformCache platformCache;
+
+    @Autowired
+    private IUserExpandExService userExpandExService;
 
     private static  final String USER_TOKEN = "user_token_";
     private static final String USER_INFO = "user_info_";
@@ -95,7 +99,7 @@ public class UserAccountFacadeImpl extends AbstractPersistenceProvider implement
             if (repository.exists(token)){
                 userInfoDTO = JSON.parseObject(repository.get(token),UserInfoDTO.class);
             }else{
-                UserExpand userExpand = userExpandService.view(userId);
+                UserExpand userExpand = userExpandExService.queryByUserIdAndAgencyId(userId,userAccount.getAgencyId());
                 //注入用户信息
                 userInfoDTO = new UserInfoDTO();
                 userInfoDTO.setCity(userExpand.getCity());
@@ -121,7 +125,8 @@ public class UserAccountFacadeImpl extends AbstractPersistenceProvider implement
         }
         Map<String,Object> rtnMap = Maps.newHashMap();
         rtnMap.put("token",token);
-        rtnMap.put("userId",userAccount.getAgencyId());
+        //业务ID
+        rtnMap.put("userId",userAccount.getId());
         return rtnMap;
     }
 }

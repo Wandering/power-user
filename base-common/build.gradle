@@ -7,6 +7,8 @@ dependencies {
     compile "org.springframework.boot:spring-boot-autoconfigure:$springbootVersion"
     compile "org.springframework.boot:spring-boot-loader-tools:$springbootVersion"
     compile "org.springframework.boot:spring-boot-starter-logging:$springbootVersion"
+//    compile "org.springframework.boot:spring-boot-starter-log4j2:$springbootVersion"
+
     compile "org.springframework.boot:spring-boot-starter-aop:$springbootVersion"
     compile "org.springframework.boot:spring-boot-starter-data-redis:$springbootVersion"
     compile "cz.jirutka.spring:spring-rest-exception-handler:$exceptionHandleVersion"

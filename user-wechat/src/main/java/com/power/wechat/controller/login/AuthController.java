@@ -91,6 +91,8 @@ public class AuthController {
                 UserInfoDTO userInfoDTO = JSON.parseObject(repository.get(token), UserInfoDTO.class);
                 User user = (User) userFacade.getMainService().view(userInfoDTO.getUserId());
                 user.setPhone(phone);
+                //刷新缓存
+                repository.set(token,JSON.toJSONString(userInfoDTO));
                 userFacade.getMainService().create(user);
                 repository.del(redisKey);
                 return true;

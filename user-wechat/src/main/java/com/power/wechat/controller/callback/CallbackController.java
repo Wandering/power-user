@@ -2,13 +2,14 @@ package com.power.wechat.controller.callback;
 
 import com.google.common.collect.Maps;
 import com.power.facade.IPlatformInfoFacade;
+import com.power.wechat.controller.login.LoginController;
 import com.power.wechat.util.WxMpServiceUtil;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,7 @@ public class CallbackController {
     @Autowired
     private IPlatformInfoFacade platformInfoFacade;
 
-    Logger logger = Logger.getLogger(CallbackController.class);
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 //    /**
 //     * @param adminUser 开发者微信号
