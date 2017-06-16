@@ -1,6 +1,7 @@
 package com.power.wechat.controller.login;
 
 import com.alibaba.fastjson.JSON;
+import com.power.common.UserRedisCache;
 import com.power.core.cache.RedisRepository;
 import com.power.core.exception.BizException;
 import com.power.domain.ERRORCODE;
@@ -10,6 +11,8 @@ import com.power.dto.UserInfoDTO;
 import com.power.facade.IUserFacade;
 import com.power.sms.api.SMSService;
 import com.power.sms.domain.SMSCheckCode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +41,9 @@ public class AuthController {
 
     private final static TimeUnit TIME_UNIT = TimeUnit.SECONDS;
     private final static Pattern PHONE_CHECK = Pattern.compile("^[1][3,4,5,7,8][0-9]{9}$"); // 验证手机号
-
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+    @Autowired
+    private UserRedisCache userRedisCache;
     @Autowired
     private IUserFacade userFacade;
 
@@ -91,8 +96,10 @@ public class AuthController {
                 UserInfoDTO userInfoDTO = JSON.parseObject(repository.get(token), UserInfoDTO.class);
                 User user = (User) userFacade.getMainService().view(userInfoDTO.getUserId());
                 user.setPhone(phone);
+                userInfoDTO.setPhone(phone);
                 //刷新缓存
-                repository.set(token,JSON.toJSONString(userInfoDTO));
+                userRedisCache.putUserInfoDto(token,userInfoDTO);
+                logger.debug(JSON.toJSONString(repository.get(token)));
                 userFacade.getMainService().create(user);
                 repository.del(redisKey);
                 return true;

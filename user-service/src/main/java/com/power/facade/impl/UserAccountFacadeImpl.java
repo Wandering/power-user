@@ -10,6 +10,7 @@
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import com.power.common.PlatformCache;
+import com.power.common.UserRedisCache;
 import com.power.context.UserContext;
 import com.power.core.cache.RedisRepository;
 import com.power.core.exception.BizException;
@@ -55,10 +56,12 @@ public class UserAccountFacadeImpl extends AbstractPersistenceProvider implement
     @Autowired
     private IUserExpandExService userExpandExService;
 
+    @Autowired
+    private UserRedisCache userRedisCache;
     private static  final String USER_TOKEN = "user_token_";
     private static final String USER_INFO = "user_info_";
     private static final int TOKEN_TIME_OUT = 7;//7天
-    private static final int USER_INFO_TIME_OUT = 8;//8天
+
 
 
 
@@ -115,10 +118,8 @@ public class UserAccountFacadeImpl extends AbstractPersistenceProvider implement
                 userInfoDTO.setPhone(user.getPhone());
 
                 //重写线上数据
-                repository.set(token,JSON.toJSONString(userInfoDTO));
                 repository.expire(loginKey,TOKEN_TIME_OUT, TimeUnit.DAYS);
-                //用户信息保持7天
-                repository.expire(token,USER_INFO_TIME_OUT, TimeUnit.DAYS);
+                userRedisCache.putUserInfoDto(token,userInfoDTO);
             }
             //放入当前内存中
             UserContext.setCurrentUser(userInfoDTO);
