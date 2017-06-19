@@ -17,8 +17,12 @@ public class UserRedisCache {
     private RedisRepository<String,String> redis;
     private static final int USER_INFO_TIME_OUT = 8;//8天
     public void putUserInfoDto(String token, UserInfoDTO userInfoDTO){
-        redis.set(token, JSON.toJSONString(userInfoDTO));
-        //用户信息保持7天
-        redis.expire(token,USER_INFO_TIME_OUT, TimeUnit.DAYS);
+        if (!redis.exists(token)) {
+            redis.set(token, JSON.toJSONString(userInfoDTO));
+            //用户信息保持7天
+            redis.expire(token, USER_INFO_TIME_OUT, TimeUnit.DAYS);
+        }else {
+            redis.getSet(token, JSON.toJSONString(userInfoDTO));
+        }
     }
 }

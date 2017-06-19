@@ -94,13 +94,16 @@ public class AuthController {
             if (code.equals(checkCode)){
                 //TODO 待优化至拦截器
                 UserInfoDTO userInfoDTO = JSON.parseObject(repository.get(token), UserInfoDTO.class);
+                if (userInfoDTO==null){
+                    throw new BizException(ERRORCODE.TOKEN_INVALID_OR_NOTHINGNESS.getCode(),ERRORCODE.TOKEN_INVALID_OR_NOTHINGNESS.getMessage());
+                }
                 User user = (User) userFacade.getMainService().view(userInfoDTO.getUserId());
                 user.setPhone(phone);
                 userInfoDTO.setPhone(phone);
                 //刷新缓存
                 userRedisCache.putUserInfoDto(token,userInfoDTO);
                 logger.debug(JSON.toJSONString(repository.get(token)));
-                userFacade.getMainService().create(user);
+                userFacade.getMainService().edit(user);
                 repository.del(redisKey);
                 return true;
             }

@@ -39,7 +39,7 @@ public class LoginController {
             //获取微信openId
             WxMpOAuth2AccessToken wxMpOAuth2AccessToken  = wxMpService.oauth2getAccessToken(code);
             openId = wxMpOAuth2AccessToken.getOpenId();
-            logger.info(openId);
+            logger.debug(openId);
         } catch (WxErrorException e) {
             throw new BizException(ERRORCODE.CODE_BEEN_USED.getCode(),ERRORCODE.CODE_BEEN_USED.getMessage());
         }

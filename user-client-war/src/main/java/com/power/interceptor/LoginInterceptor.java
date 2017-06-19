@@ -7,7 +7,6 @@ import com.power.core.cache.RedisRepository;
 import com.power.core.exception.BizException;
 import com.power.domain.ERRORCODE;
 import com.power.dto.UserInfoDTO;
-import freemarker.template.utility.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;

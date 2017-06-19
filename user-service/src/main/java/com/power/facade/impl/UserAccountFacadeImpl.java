@@ -113,7 +113,7 @@ public class UserAccountFacadeImpl extends AbstractPersistenceProvider implement
                 userInfoDTO.setAgencyId(userExpand.getAgencyId());
                 userInfoDTO.setSex(userExpand.getSex());
                 userInfoDTO.setUserId(userId);
-                userInfoDTO.setAccountId(userExpand.getUserId());
+                userInfoDTO.setAccountId(userAccount.getId());
                 User user = userService.view(userId);
                 userInfoDTO.setPhone(user.getPhone());
 

@@ -32,21 +32,6 @@ import java.util.regex.Pattern;
 @RequestMapping("/user/wechat/info")
 public class UserController {
     @Autowired
-    private SMSService smsService;
-
-    @Autowired
-    private RedisRepository<String,String> repository;
-
-    private final static String USER_SMS = "USER_SMS_";
-    private final static String USER_SMS_IN_USE_TAG = "USER_SMS__IN_USE_TAG_";
-
-    private final static int TIME_OUT = 5 * 60;
-    private final static int TIME_OUT_LOCK = 60;
-
-    private final static TimeUnit TIME_UNIT = TimeUnit.SECONDS;
-    private final static Pattern PHONE_CHECK = Pattern.compile("^[1][3,4,5,7,8][0-9]{9}$"); // 验证手机号
-
-    @Autowired
     private IUserFacade userFacade;
     @Autowired
     private IUserPlatformFacade userPlatformFacade;
