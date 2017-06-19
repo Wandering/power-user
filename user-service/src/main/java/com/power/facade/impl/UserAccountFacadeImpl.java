@@ -116,7 +116,7 @@ public class UserAccountFacadeImpl extends AbstractPersistenceProvider implement
                 userInfoDTO.setAccountId(userAccount.getId());
                 User user = userService.view(userId);
                 userInfoDTO.setPhone(user.getPhone());
-
+                userInfoDTO.setOpenId(openId);
                 //重写线上数据
                 repository.expire(loginKey,TOKEN_TIME_OUT, TimeUnit.DAYS);
                 userRedisCache.putUserInfoDto(token,userInfoDTO);

@@ -2,39 +2,26 @@ package com.power.test.web;
 
 import com.alibaba.fastjson.JSON;
 import com.power.core.cache.RedisRepository;
-import com.power.core.protocol.RequestT;
 import com.power.core.protocol.ResponseT;
 import com.power.domain.ERRORCODE;
 import com.power.dto.UserInfoDTO;
-import com.power.wechat.controller.user.UserController;
-import com.power.wechat.util.WxMpServiceUtil;
 import junit.framework.TestCase;
-import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
-import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.util.Assert;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
 import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.mockito.BDDMockito.*;
 /**
  * Created by Administrator on 2017/6/13.
  */
@@ -56,7 +43,7 @@ public class UserInfoTest extends TestCase{
     private static final String openId = "o9P_pv2gzYtOm6V_sDNhZ7HLWHyY";
     private static final String agencyId = "1";
     private static final String accountId = "59";
-    private static final String userId = "10";
+    private static final String userId = "23";
     private static final String ok_rtn = "0000000";
 
     /**
@@ -110,8 +97,8 @@ public class UserInfoTest extends TestCase{
         Assert.isTrue(!redis.exists(checkKey),"验证码未清除");
         UserInfoDTO userInfoDTO = JSON.parseObject(redis.get(token),UserInfoDTO.class);
         Assert.isTrue(userInfoDTO!=null,"用户对象为空");
-        Assert.isTrue(userInfoDTO.getAccountId().equals(Integer.valueOf(accountId)),"accountId错误");
-        Assert.isTrue(userInfoDTO.getPhone()==null,"用户手机号码为空");
+        Assert.isTrue(userInfoDTO.getAccountId().equals(Long.valueOf(accountId)),"accountId错误");
+        Assert.isTrue(userInfoDTO.getPhone()!=null,"用户手机号码为空");
         Assert.isTrue(userInfoDTO.getPhone().equals(phone),"用户手机号码错误");
         Assert.isTrue(!userInfoDTO.getHeadimgurl().isEmpty(),"用户头像空");
         Assert.isTrue(!userInfoDTO.getNickname().isEmpty(),"用户昵称为空");
@@ -123,7 +110,7 @@ public class UserInfoTest extends TestCase{
     public void testQueryWxPlatform() throws Exception {
 
         String token = login(openId,agencyId,accountId);
-        this.mvc.perform(get("/user/wechat/info/queryUserByOpenId").accept(MediaType.APPLICATION_JSON_UTF8)
+        this.mvc.perform(get("/user/wechat/info/queryOpenIdByAccountId").accept(MediaType.APPLICATION_JSON_UTF8)
                 .param("accountId",accountId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.rtnCode").value(ok_rtn))
@@ -134,15 +121,9 @@ public class UserInfoTest extends TestCase{
                 .andExpect(jsonPath("$.bizData.accountId").value(accountId))
                 .andExpect(jsonPath("$.bizData.headimgurl").isNotEmpty())
                 .andExpect(jsonPath("$.bizData.nickname").isNotEmpty())
+                .andExpect(jsonPath("$.bizData.phone").value(phone))
         ;
-        UserInfoDTO userInfoDTO = JSON.parseObject(redis.get(token),UserInfoDTO.class);
-        Assert.isTrue(userInfoDTO!=null,"用户对象为空");
-        Assert.isTrue(userInfoDTO.getAccountId().equals(Integer.valueOf(accountId)),"accountId错误");
-        Assert.isTrue(userInfoDTO.getPhone()==null,"用户手机号码为空");
-        Assert.isTrue(userInfoDTO.getPhone().equals(phone),"用户手机号码错误");
-        Assert.isTrue(!userInfoDTO.getHeadimgurl().isEmpty(),"用户头像空");
-        Assert.isTrue(!userInfoDTO.getNickname().isEmpty(),"用户昵称为空");
-        Assert.isTrue(userInfoDTO.getOpenId().equals(openId),"openId错误");
+
     }
 
     private String login(String openId,String agencyId,String accountId) throws Exception {
@@ -157,6 +138,14 @@ public class UserInfoTest extends TestCase{
         ResponseT responseT = JSON.parseObject(rtn, ResponseT.class);
         String token = ((Map<String,Object>)responseT.getBizData()).get("token").toString();
         Assert.isTrue(token!=null,"token为空");
+        UserInfoDTO userInfoDTO = JSON.parseObject(redis.get(token),UserInfoDTO.class);
+        Assert.isTrue(userInfoDTO!=null,"用户对象为空");
+        Assert.isTrue(userInfoDTO.getAccountId().equals(Long.valueOf(accountId)),"accountId错误");
+        Assert.isTrue(userInfoDTO.getPhone()!=null,"用户手机号码为空");
+        Assert.isTrue(userInfoDTO.getPhone().equals(phone),"用户手机号码错误");
+        Assert.isTrue(!userInfoDTO.getHeadimgurl().isEmpty(),"用户头像空");
+        Assert.isTrue(!userInfoDTO.getNickname().isEmpty(),"用户昵称为空");
+        Assert.isTrue(userInfoDTO.getOpenId().equals(openId),"openId错误");
         return token;
     }
 }

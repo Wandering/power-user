@@ -1,12 +1,12 @@
 server:
   port: 8081
 spring:
-    profiles: dev
   http:
     encoding:
       charset: UTF-8
       enabled: true
       force: true
+    profiles: dev
   redis:
     host: 139.224.16.177
     port: 6379

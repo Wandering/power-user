@@ -1,12 +1,12 @@
-server:
-  port: 8081
 spring:
-    profiles : prod
+  server:
+      port: 8081
   http:
     encoding:
       charset: UTF-8
       enabled: true
       force: true
+    profiles : prod
   redis:
     host: r-wz9c6872083f2214.redis.rds.aliyuncs.com
     port: 6379

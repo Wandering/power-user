@@ -35,9 +35,9 @@
     <select id="queryUserByOpenId" resultType="UserAccount">
         SELECT account.* from
         power_user_account account
-INNER JOIN power_user puser ON puser.id = account.userId
-INNER JOIN power_platform_info platform ON platform.agencyId = account.agencyId
-INNER JOIN power_user_platform userplatform ON userplatform.platformId = platform.id AND account.userId=userplatform.userId
+        INNER JOIN power_user puser ON puser.id = account.userId
+                INNER JOIN power_platform_info platform ON platform.agencyId = account.agencyId
+                INNER JOIN power_user_platform userplatform ON userplatform.platformId = platform.id AND account.userId=userplatform.userId
             WHERE userplatform.openId = #{openId}
             AND  platform.uniqueKey = #{uniqueKey}
     </select>
