@@ -34,7 +34,6 @@ apply plugin: 'propdeps'
 apply plugin: 'io.spring.dependency-management'
 
 
-
 test {
     include '**/*UnitTest*'
     include '**/*IntTest*'
@@ -84,6 +83,7 @@ allprojects {
     }
 
 
+
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
     }
@@ -130,14 +130,12 @@ subprojects {
     configurations {
         provided
         compile.extendsFrom provided
-
         all*.exclude group: 'org.springframework', module: 'spring'
         all*.exclude group: 'asm', module: 'asm'
         all*.exclude group: 'log4j', module: 'log4j'
         all*.exclude group: 'org.slf4j', module: 'slf4j-log4j12'
     }
 }
-
 //configure(subprojects.findAll { it.name.contains('war') }) {
 //    apply plugin: 'war'
 //
