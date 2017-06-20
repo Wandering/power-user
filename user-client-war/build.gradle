@@ -3,6 +3,9 @@ apply plugin: 'application'
 applicationDefaultJvmArgs = [
         "-Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8083,suspend=n"
 ]
+springBoot {
+    executable = true
+}
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'

@@ -71,7 +71,7 @@ public class CallbackController {
             String msgType= wxMpXmlMessage.getMsgType();
             String rtnMsg = "";
         switch (msgType){
-            case "event":
+            case WxConsts.XML_MSG_EVENT:
                 String enevt= wxMpXmlMessage.getEvent();
                 rtnMsg = event(adminUser,openId,createTime,msgType,enevt,uniqueKey);
                 if (msgType.equals(WxConsts.EVT_SUBSCRIBE)){
@@ -83,7 +83,8 @@ public class CallbackController {
                 break;
 
         }
-            out.print(XStreamTransformer.toXml(WxMpXmlMessage.class,wxMpXmlMessage));
+            String rtnXml = XStreamTransformer.toXml(WxMpXmlMessage.class,wxMpXmlMessage);
+            out.print(rtnXml);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -59,7 +59,7 @@
             </encoder>
         </appender>
 
-        <root level="debug">
+        <root level="DEBUG">
             <appender-ref ref="FILE" />
         </root>
     </springProfile>
@@ -80,7 +80,7 @@
             </encoder>
         </appender>
 
-        <root level="debug">
+        <root level="WARN">
             <appender-ref ref="FILE" />
         </root>
     </springProfile>
@@ -117,9 +117,5 @@
     <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
         <resetJUL>true</resetJUL>
     </contextListener>
-
-    <root level="#logback.loglevel#">
-        <appender-ref ref="CONSOLE"/>
-    </root>
 
 </configuration>

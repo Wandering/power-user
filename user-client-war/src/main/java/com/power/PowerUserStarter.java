@@ -19,8 +19,6 @@ public class PowerUserStarter extends SpringBootServletInitializer {
     }
 
     public static void main(String[] args) throws Exception {
-        SpringApplication application = new SpringApplication(PowerUserStarter.class);
-        application.addListeners(new ApplicationPidFileWriter("./power-user.pid"));
-        application.run(PowerUserStarter.class, args);
+        SpringApplication.run(PowerUserStarter.class, args);
     }
 }
