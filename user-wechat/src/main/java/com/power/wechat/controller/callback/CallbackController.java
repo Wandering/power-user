@@ -4,10 +4,14 @@ import com.google.common.collect.Maps;
 import com.power.facade.IPlatformInfoFacade;
 import com.power.wechat.controller.login.LoginController;
 import com.power.wechat.util.WxMpServiceUtil;
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.WxMpMassOpenIdsMessage;
+import me.chanjar.weixin.mp.bean.WxMpMassTagMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
+import me.chanjar.weixin.mp.util.xml.XStreamTransformer;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,17 +69,21 @@ public class CallbackController {
             String openId= wxMpXmlMessage.getFromUser();
             Long createTime= wxMpXmlMessage.getCreateTime();
             String msgType= wxMpXmlMessage.getMsgType();
-            String rtnMsg  = "感谢使用PP充电";
+            String rtnMsg = "";
         switch (msgType){
             case "event":
                 String enevt= wxMpXmlMessage.getEvent();
                 rtnMsg = event(adminUser,openId,createTime,msgType,enevt,uniqueKey);
+                if (msgType.equals(WxConsts.EVT_SUBSCRIBE)){
+                    wxMpXmlMessage.setContent(rtnMsg);
+                    wxMpXmlMessage.setMsgType(WxConsts.XML_MSG_TEXT);
+                }
                 break;
             default:
                 break;
 
         }
-            out.print(rtnMsg);
+            out.print(XStreamTransformer.toXml(WxMpXmlMessage.class,wxMpXmlMessage));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -119,12 +127,12 @@ public class CallbackController {
         boolean flag = false;
         //判定关注类型
         switch (enevt){
-            case "subscribe":
+            case WxConsts.EVT_SUBSCRIBE:
                 logger.info("用户关注："+wxMpUser.getOpenId());
                 //关注
-                flag =  platformInfoFacade.wxSubscribe(wechat,uniqueKey);
-                break;
-            case "unsubscribe":
+                String rtnMsg =  platformInfoFacade.wxSubscribe(wechat,uniqueKey);
+                return rtnMsg;
+            case WxConsts.EVT_UNSUBSCRIBE:
                 logger.info("用户取消关注："+wxMpUser.getOpenId());
                 //取消关注
                 flag = platformInfoFacade.wxUnSubscribe(wechat,uniqueKey);

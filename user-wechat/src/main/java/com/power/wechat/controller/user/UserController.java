@@ -1,7 +1,5 @@
 package com.power.wechat.controller.user;
 
-import com.alibaba.fastjson.JSON;
-import com.power.core.cache.RedisRepository;
 import com.power.core.exception.BizException;
 import com.power.domain.ERRORCODE;
 import com.power.domain.PlatformInfo;
@@ -10,19 +8,12 @@ import com.power.dto.UserInfoDTO;
 import com.power.facade.IPlatformInfoFacade;
 import com.power.facade.IUserFacade;
 import com.power.facade.IUserPlatformFacade;
-import com.power.service.IUserPlatformService;
-import com.power.sms.api.SMSService;
-import com.power.sms.domain.SMSCheckCode;
 import com.power.wechat.util.WxMpServiceUtil;
-import com.sun.org.apache.regexp.internal.RE;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Pattern;
 
 /**
  * Created by Administrator on 2017/6/13.

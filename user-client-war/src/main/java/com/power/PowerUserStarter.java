@@ -4,6 +4,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.system.ApplicationPidFileWriter;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 /**
@@ -18,6 +19,8 @@ public class PowerUserStarter extends SpringBootServletInitializer {
     }
 
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(PowerUserStarter.class, args);
+        SpringApplication application = new SpringApplication(PowerUserStarter.class);
+        application.addListeners(new ApplicationPidFileWriter("./power-user.pid"));
+        application.run(PowerUserStarter.class, args);
     }
 }

@@ -84,7 +84,7 @@ public class PlatformInfoFacadeImpl extends AbstractPersistenceProvider implemen
     }
 
     @Override
-    public boolean wxSubscribe(Map<String,Object> wechat, String uniqueKey) {
+    public String wxSubscribe(Map<String,Object> wechat, String uniqueKey) {
         //查询公众号
         PlatformInfo platformInfo = getPlatformInfoByUniqueKey(uniqueKey);
         if (platformInfo == null){
@@ -177,7 +177,7 @@ public class PlatformInfoFacadeImpl extends AbstractPersistenceProvider implemen
             }
         }
 
-        return true;
+        return platformInfo.getMessage();
     }
 
     @Override

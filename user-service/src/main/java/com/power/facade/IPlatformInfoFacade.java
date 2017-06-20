@@ -49,7 +49,7 @@ public interface IPlatformInfoFacade extends IPersistenceProvider {
      * @param uniqueKey
      * @return
      */
-    boolean wxSubscribe(Map<String,Object> fromUserName, String uniqueKey);
+    String wxSubscribe(Map<String,Object> fromUserName, String uniqueKey);
 
     /**
      * 用户取消关注公众号
