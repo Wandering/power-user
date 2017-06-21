@@ -84,6 +84,7 @@ public class CallbackController {
 
         }
             String rtnXml = XStreamTransformer.toXml(WxMpXmlMessage.class,wxMpXmlMessage);
+        logger.debug(rtnMsg);
             out.print(rtnXml);
         } catch (IOException e) {
             e.printStackTrace();

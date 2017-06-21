@@ -80,7 +80,7 @@
             </encoder>
         </appender>
 
-        <root level="WARN">
+        <root level="debug">
             <appender-ref ref="FILE" />
         </root>
     </springProfile>
