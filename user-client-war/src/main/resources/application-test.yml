@@ -1,19 +1,19 @@
 spring:
-    profiles : test
   server:
-    port: 8081
+      port: 8081
   http:
     encoding:
       charset: UTF-8
       enabled: true
       force: true
+    profiles : test
   redis:
     host: r-wz9c6872083f2214.redis.rds.aliyuncs.com
     port: 6379
     password: Redis2017
     database: 0
   datasource:
-    name: prod
+    name: test
     url: jdbc:mysql://rdspower.mysql.rds.aliyuncs.com:3306/power?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
     username: power_root
     password: power#root@2017
@@ -33,3 +33,6 @@ spring:
     testOnReturn: false
     poolPreparedStatements: true
     maxOpenPreparedStatements: 20
+mybatis:
+  mapperLocations: classpath*:/mybatis/**/**/*.xml
+  typeAliasesPackage: com.power.domain,com.power.dto
