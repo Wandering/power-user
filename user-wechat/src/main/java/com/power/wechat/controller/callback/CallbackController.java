@@ -75,6 +75,9 @@ public class CallbackController {
                 String enevt= wxMpXmlMessage.getEvent();
                 rtnMsg = event(adminUser,openId,createTime,msgType,enevt,uniqueKey);
                 if (enevt.equals(WxConsts.EVT_SUBSCRIBE)){
+                    wxMpXmlMessage= new WxMpXmlMessage();
+                    wxMpXmlMessage.setToUser(openId);
+                    wxMpXmlMessage.setFromUser(adminUser);
                     wxMpXmlMessage.setCreateTime(System.currentTimeMillis()/1000);
                     wxMpXmlMessage.setSendLocationInfo(null);
                     wxMpXmlMessage.setScanCodeInfo(null);
