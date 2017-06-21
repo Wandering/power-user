@@ -75,6 +75,11 @@ public class CallbackController {
                 String enevt= wxMpXmlMessage.getEvent();
                 rtnMsg = event(adminUser,openId,createTime,msgType,enevt,uniqueKey);
                 if (msgType.equals(WxConsts.EVT_SUBSCRIBE)){
+                    wxMpXmlMessage.setCreateTime(System.currentTimeMillis()/1000);
+                    wxMpXmlMessage.setSendLocationInfo(null);
+                    wxMpXmlMessage.setScanCodeInfo(null);
+                    wxMpXmlMessage.setSendPicsInfo(null);
+                    wxMpXmlMessage.setHardWare(null);
                     wxMpXmlMessage.setContent(rtnMsg);
                     wxMpXmlMessage.setMsgType(WxConsts.XML_MSG_TEXT);
                 }
@@ -84,7 +89,7 @@ public class CallbackController {
 
         }
             String rtnXml = XStreamTransformer.toXml(WxMpXmlMessage.class,wxMpXmlMessage);
-        logger.debug(rtnMsg);
+        logger.debug(rtnXml);
             out.print(rtnXml);
         } catch (IOException e) {
             e.printStackTrace();
@@ -142,7 +147,7 @@ public class CallbackController {
             default:
                 break;
         }
-        return "感谢关注PP充电";
+        return "";
     }
 
 
@@ -166,4 +171,18 @@ public class CallbackController {
         return null;
     }
 
+    public static void main(String[] args) {
+        WxMpXmlMessage wxMpXmlMessage = new WxMpXmlMessage();
+        wxMpXmlMessage.setMsgType(WxConsts.XML_MSG_TEXT);
+        wxMpXmlMessage.setContent("这是反馈");
+        wxMpXmlMessage.setFromUser("来源");
+        wxMpXmlMessage.setToUser("openId");
+        wxMpXmlMessage.setCreateTime(System.currentTimeMillis()/1000);
+        wxMpXmlMessage.setSendLocationInfo(null);
+        wxMpXmlMessage.setScanCodeInfo(null);
+        wxMpXmlMessage.setSendPicsInfo(null);
+        wxMpXmlMessage.setHardWare(null);
+        String rtnXml = XStreamTransformer.toXml(WxMpXmlMessage.class,wxMpXmlMessage);
+        System.out.println(rtnXml);
+    }
 }
