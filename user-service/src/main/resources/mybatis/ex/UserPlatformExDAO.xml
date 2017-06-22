@@ -22,12 +22,12 @@ queryBySqlCount
 U
 D
 -->
-
+<!--规定一个运营商只有一个公众号-->
     <select id="getPlatformByOpenIdAndType" resultType="UserPlatformDTO">
 
-        SELECT platform.*,userPlatform.status from power_platform_info platform
-        INNER JOIN power_user_platform userPlatform ON userPlatform.platformId = platform.id
-        WHERE platform.agencyId = #{agencyId} and platform.type = #{type} AND userPlatform.openId = #{openId}
+        SELECT platform.*,IFNULL(userPlatform.status,0) as status from power_platform_info platform
+        LEFT JOIN power_user_platform userPlatform ON userPlatform.platformId = platform.id AND userPlatform.openId = #{openId}
+        WHERE platform.agencyId = #{agencyId} and platform.type = #{type}
 
     </select>
 

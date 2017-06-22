@@ -12,6 +12,8 @@ import com.power.wechat.util.WxMpServiceUtil;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +30,7 @@ public class UserController {
     private IUserPlatformFacade userPlatformFacade;
     @Autowired
     private IPlatformInfoFacade platformInfoFacade;
+    private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @RequestMapping(value = "/queryUserByOpenId")
     @ResponseBody
@@ -42,6 +45,7 @@ public class UserController {
         } catch (WxErrorException e) {
             throw new BizException(ERRORCODE.CODE_BEEN_USED.getCode(),ERRORCODE.CODE_BEEN_USED.getMessage());
         }
+        logger.debug("queryWxPlatform:%s",openId);
         return userPlatformFacade.getWxPlatformByOpenId(openId,agencyId);
     }
 
