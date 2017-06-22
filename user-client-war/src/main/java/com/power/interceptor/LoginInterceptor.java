@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 跨域拦截器
  */
-@WebServlet
 @Component
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
