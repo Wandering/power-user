@@ -12,12 +12,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  * 跨域拦截器
  */
+@WebServlet
 @Component
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
@@ -40,8 +42,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         }
         //当token存在一定有用户信息存在
         if (UserContext.getCurrentUser() == null) {
-            String userInfoKey = redis.get(token);
-            UserInfoDTO userInfoDTO = JSON.parseObject(redis.get(userInfoKey), UserInfoDTO.class);
+            //抓取用户上下文对象
+            UserInfoDTO userInfoDTO = JSON.parseObject(redis.get(token), UserInfoDTO.class);
             UserContext.setCurrentUser(userInfoDTO);
         }
         return true;

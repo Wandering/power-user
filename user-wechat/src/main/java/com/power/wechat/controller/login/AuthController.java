@@ -2,6 +2,7 @@ package com.power.wechat.controller.login;
 
 import com.alibaba.fastjson.JSON;
 import com.power.common.UserRedisCache;
+import com.power.context.UserContext;
 import com.power.core.cache.RedisRepository;
 import com.power.core.exception.BizException;
 import com.power.domain.ERRORCODE;
@@ -93,7 +94,7 @@ public class AuthController {
             String code = repository.get(redisKey);
             if (code.equals(checkCode)){
                 //TODO 待优化至拦截器
-                UserInfoDTO userInfoDTO = JSON.parseObject(repository.get(token), UserInfoDTO.class);
+                UserInfoDTO userInfoDTO = UserContext.getCurrentUser();
                 if (userInfoDTO==null){
                     throw new BizException(ERRORCODE.TOKEN_INVALID_OR_NOTHINGNESS.getCode(),ERRORCODE.TOKEN_INVALID_OR_NOTHINGNESS.getMessage());
                 }

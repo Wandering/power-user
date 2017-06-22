@@ -1,5 +1,6 @@
 package com.power.interceptor;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 跨域拦截器
  */
+@Component
 public class CrossInterceptor extends HandlerInterceptorAdapter {
 
     public CrossInterceptor()

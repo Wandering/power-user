@@ -15,22 +15,19 @@ public class InterceptorContextConfig extends WebMvcConfigurerAdapter {
 
     @Autowired
     private CrossInterceptor crossInterceptor;
-
-    @Bean
-    public CrossInterceptor genCrossInterceptor(){
-        return new CrossInterceptor();
-    }
     @Autowired
     private LoginInterceptor loginInterceptor;
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //所有请求适配跨域处理
         registry.addInterceptor(crossInterceptor)
-                .addPathPatterns("/");
+                .addPathPatterns("/**");
         //登录处理
         registry.addInterceptor(loginInterceptor)
-                .addPathPatterns("/")
-                .excludePathPatterns("/wechat/login/**");
+                .addPathPatterns("/**")
+                .excludePathPatterns("/user/wechat/login/**")
+                .excludePathPatterns("/user/wechat/info/**")
+        ;
     }
 
 
