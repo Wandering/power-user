@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class UserRedisCache {
     @Autowired
     private RedisRepository<String,String> redis;
-    private static final int USER_INFO_TIME_OUT = 8;//8天
+    private static final int USER_INFO_TIME_OUT = 7;//7天
     public void putUserInfoDto(String token, UserInfoDTO userInfoDTO){
         if (!redis.exists(token)) {
             redis.set(token, JSON.toJSONString(userInfoDTO));

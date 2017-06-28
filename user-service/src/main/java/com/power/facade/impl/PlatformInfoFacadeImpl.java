@@ -21,11 +21,13 @@ import com.power.core.service.IBaseService;
 import com.power.core.service.impl.AbstractPersistenceProvider;
 import com.power.domain.*;
 import com.power.facade.IPlatformInfoFacade;
+import com.power.http.BizHttpClient;
 import com.power.service.*;
 import com.power.service.ex.IPlatformInfoExService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,11 +51,9 @@ public class PlatformInfoFacadeImpl extends AbstractPersistenceProvider implemen
 
     @Autowired
     private IUserExpandService userExpandService;
-//    @Transactional(propagation = Propagation.REQUIRED)
-//    @Override
-//    public void add() {
-//        platformInfoService.add();
-//    }
+
+    @Autowired
+    BizHttpClient bizHttpClient;
 
     private static  final Logger logger = Logger.getLogger(PlatformInfoFacadeImpl.class);
 
@@ -83,6 +83,7 @@ public class PlatformInfoFacadeImpl extends AbstractPersistenceProvider implemen
         return platformInfoExService.getPlatformInfoByAgencyAndType(agencyId, PlatformEnum.WX.getCode());
     }
 
+    @Transactional
     @Override
     public String wxSubscribe(Map<String,Object> wechat, String uniqueKey) {
         //查询公众号
@@ -136,9 +137,9 @@ public class PlatformInfoFacadeImpl extends AbstractPersistenceProvider implemen
             userPlatform = userPlatformService.viewOne(null,condition,null);
             //假如不为空 说明在其他平台关注了  取到userId
             if (userPlatform !=null) {
-                //清空ID和openId作为一个新对象保存
-                userPlatform.setUserId(null);
+                //清空公众号ID和openId作为一个新对象保存
                 userPlatform.setOpenId(openId);
+                userPlatform.setPlatformId(platformInfo.getId());
                 userPlatform.setStatus(1);
                 userPlatformService.create(userPlatform);
             }else {
@@ -168,13 +169,16 @@ public class PlatformInfoFacadeImpl extends AbstractPersistenceProvider implemen
                 userPlatform.setUserId(userId);
                 userPlatform.setCreateTime(System.currentTimeMillis()/1000);
                 userPlatformService.create(userPlatform);
-
-                //添加用户运营商对应关系
-                UserAccount userAccount = new UserAccount();
-                userAccount.setAgencyId(platformInfo.getAgencyId());
-                userAccount.setUserId(userId);
-                userAccountService.create(userAccount);
             }
+            //添加用户运营商对应关系
+            UserAccount userAccount = new UserAccount();
+            userAccount.setAgencyId(platformInfo.getAgencyId());
+            userAccount.setUserId(userPlatform.getUserId());
+            userAccountService.create(userAccount);
+            try{
+                //通知业务系统保存当前用户ID
+                bizHttpClient.syncRegUserToBiz(userAccount.getId());
+            }catch (Exception e){}
         }
 
         return platformInfo.getMessage();
