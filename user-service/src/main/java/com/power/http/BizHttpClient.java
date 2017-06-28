@@ -21,8 +21,8 @@ import java.net.URISyntaxException;
  */
 @Component
 public class BizHttpClient {
-    @Value("${spring.profiles.active}")
-    private String active;
+//    @Value("${spring.profiles.active}")
+//    private String active;
 
     private  static  final Logger logger = LoggerFactory.getLogger(BizHttpClient.class);
     private  static  final  String PRO_BASE_URL = "http://www.popularpowers.com";
@@ -34,7 +34,8 @@ public class BizHttpClient {
 
     @PostConstruct
     public void init(){
-        BASE_URL = active.startsWith("dev")?DEV_BASE_URL:PRO_BASE_URL;
+//        BASE_URL = active.startsWith("dev")?DEV_BASE_URL:PRO_BASE_URL;
+        BASE_URL = PRO_BASE_URL;
     }
 
     public void syncRegUserToBiz(Long accountId){
