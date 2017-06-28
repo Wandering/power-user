@@ -45,7 +45,7 @@ public class UserController {
         } catch (WxErrorException e) {
             throw new BizException(ERRORCODE.CODE_BEEN_USED.getCode(),ERRORCODE.CODE_BEEN_USED.getMessage());
         }
-        logger.debug("queryWxPlatform:%s",openId);
+        logger.debug("queryWxPlatform:{}",openId);
         return userPlatformFacade.getWxPlatformByOpenId(openId,agencyId);
     }
 

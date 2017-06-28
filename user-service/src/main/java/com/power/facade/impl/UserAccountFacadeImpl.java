@@ -26,6 +26,7 @@ import com.power.service.IUserService;
 import com.power.service.ex.IUserAccountExService;
 import com.power.service.ex.IUserExpandExService;
 import com.power.service.ex.IUserPlatformExService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -85,10 +86,8 @@ public class UserAccountFacadeImpl extends AbstractPersistenceProvider implement
         Long userId = userAccount.getUserId();
         String loginKey  = USER_TOKEN+userAccount.getUserId()+"_"+userAccount.getAgencyId();
 
-        String token = null;
-        if (repository.exists(loginKey)){
-            token = repository.get(loginKey);
-        }else {
+        String token = repository.get(loginKey);
+        if (StringUtils.isEmpty(token)){
             String tokenKey = DESUtil.getEightByteMultypleStr(userAccount.getUserId(),userAccount.getAgencyId(),openId);
             try {
                 token = UUID.nameUUIDFromBytes(tokenKey.getBytes()).toString();
@@ -98,10 +97,12 @@ public class UserAccountFacadeImpl extends AbstractPersistenceProvider implement
 
             //token存放用户信息的key
             repository.set(loginKey, token);
-            UserInfoDTO userInfoDTO;
-            if (repository.exists(token)){
-                userInfoDTO = JSON.parseObject(repository.get(token),UserInfoDTO.class);
-            }else{
+            String json = repository.get(token);
+            UserInfoDTO userInfoDTO = null;
+            if (StringUtils.isNotEmpty(json)) {
+                userInfoDTO = JSON.parseObject(json, UserInfoDTO.class);
+            }
+            if (userInfoDTO == null){
                 UserExpand userExpand = userExpandExService.queryByUserIdAndAgencyId(userId,userAccount.getAgencyId());
                 //注入用户信息
                 userInfoDTO = new UserInfoDTO();
