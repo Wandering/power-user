@@ -40,8 +40,8 @@ public class BizHttpClient {
 
     @PostConstruct
     public void init(){
-        BASE_URL = active.startsWith("dev")?DEV_BASE_URL:PRO_BASE_URL;
-//        BASE_URL = PRO_BASE_URL;
+//        BASE_URL = active.startsWith("dev")?DEV_BASE_URL:PRO_BASE_URL;
+        BASE_URL = PRO_BASE_URL;
     }
 
     public void syncRegUserToBiz(Long accountId){
