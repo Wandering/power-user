@@ -25,8 +25,6 @@ public class InterceptorContextConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(crossInterceptor)
-                .addPathPatterns("/**");
         //登录处理
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/**")
