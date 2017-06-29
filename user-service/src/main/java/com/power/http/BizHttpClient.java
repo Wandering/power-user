@@ -27,8 +27,8 @@ import java.util.Map;
  */
 @Component
 public class BizHttpClient {
-    @Value("${spring.profiles.active}")
-    private String active;
+//    @Value("${spring.profiles.active}")
+//    private String active;
 
     private  static  final Logger logger = LoggerFactory.getLogger(BizHttpClient.class);
     private  static  final  String PRO_BASE_URL = "http://www.popularpowers.com";
