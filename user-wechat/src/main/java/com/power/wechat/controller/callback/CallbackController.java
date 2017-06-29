@@ -69,10 +69,17 @@ public class CallbackController {
             String openId= wxMpXmlMessage.getFromUser();
             Long createTime= wxMpXmlMessage.getCreateTime();
             String msgType= wxMpXmlMessage.getMsgType();
+            /////////////////////////////////////////////////
+//            String adminUser= "";
+//            String openId= "";
+//            Long createTime= 1l;
+//            String msgType= WxConsts.XML_MSG_EVENT;
+            //////////////////////////////////////////
             String rtnMsg = "";
         switch (msgType){
             case WxConsts.XML_MSG_EVENT:
                 String enevt= wxMpXmlMessage.getEvent();
+//                String enevt= WxConsts.EVT_SUBSCRIBE;
                 rtnMsg = event(adminUser,openId,createTime,msgType,enevt,uniqueKey);
                 if (enevt.equals(WxConsts.EVT_SUBSCRIBE)){
                     wxMpXmlMessage= new WxMpXmlMessage();
@@ -114,6 +121,7 @@ public class CallbackController {
 //            wxMpUser.setOpenId("1233123123");
 //            wxMpUser.setNickname("我是测试用户");
 //            wxMpUser.setSex("1");
+//            wxMpUser.setSexId(1);
 //            wxMpUser.setUnionId("11231231");
 //            wxMpUser.setHeadImgUrl("headimgurl");
             /////////////////////////////////////////

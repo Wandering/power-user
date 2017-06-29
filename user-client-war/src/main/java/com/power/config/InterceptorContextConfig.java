@@ -24,10 +24,11 @@ public class InterceptorContextConfig extends WebMvcConfigurerAdapter {
                 .addPathPatterns("/*");
         //登录处理
         registry.addInterceptor(loginInterceptor)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/user/wechat/login/**")
-                .excludePathPatterns("/wechat/callback/**")
-                .excludePathPatterns("/user/wechat/info/**")
+                .addPathPatterns("/*")
+                .excludePathPatterns("/user/wechat/login/**/**")
+                .excludePathPatterns("/wechat/callback/**/**")
+                .excludePathPatterns("/user/wechat/info/**/**")
+                .excludePathPatterns("/error")
         ;
     }
 

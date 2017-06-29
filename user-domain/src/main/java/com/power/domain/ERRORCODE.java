@@ -6,6 +6,7 @@ package com.power.domain;
 public enum  ERRORCODE {
     /////////////////////////////第三方平台异常/////////////////////////
     CODE_BEEN_USED("4000001","code been used"),
+    SERVICE_ERROR("4000002","服务异常"),
     /////////////////////////////第三方平台异常/////////////////////////
 
 
