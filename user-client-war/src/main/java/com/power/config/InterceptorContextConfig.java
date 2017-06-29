@@ -21,10 +21,10 @@ public class InterceptorContextConfig extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         //所有请求适配跨域处理
         registry.addInterceptor(crossInterceptor)
-                .addPathPatterns("/*");
+                .addPathPatterns("/**");
         //登录处理
         registry.addInterceptor(loginInterceptor)
-                .addPathPatterns("/*")
+                .addPathPatterns("/**")
                 .excludePathPatterns("/user/wechat/login/**/**")
                 .excludePathPatterns("/wechat/callback/**/**")
                 .excludePathPatterns("/user/wechat/info/**/**")
