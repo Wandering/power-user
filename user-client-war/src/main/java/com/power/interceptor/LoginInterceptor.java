@@ -41,11 +41,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             throw new BizException(ERRORCODE.TOKEN_INVALID_OR_NOTHINGNESS.getCode(),ERRORCODE.TOKEN_INVALID_OR_NOTHINGNESS.getMessage());
         }
         //当token存在一定有用户信息存在
-        if (UserContext.getCurrentUser() == null) {
             //抓取用户上下文对象
-            UserInfoDTO userInfoDTO = JSON.parseObject(redis.get(token), UserInfoDTO.class);
-            UserContext.setCurrentUser(userInfoDTO);
-        }
+        UserInfoDTO userInfoDTO = JSON.parseObject(redis.get(token), UserInfoDTO.class);
+        UserContext.setCurrentUser(userInfoDTO);
         return true;
     }
 
