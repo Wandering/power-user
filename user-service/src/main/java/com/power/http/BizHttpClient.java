@@ -43,7 +43,7 @@ public class BizHttpClient {
     public void init(){
         String[] activeProfiles = context.getEnvironment().getActiveProfiles();
         StringUtils.arrayToCommaDelimitedString(activeProfiles);
-        BASE_URL = StringUtils.arrayToCommaDelimitedString(activeProfiles).startsWith("pord")?PRO_BASE_URL:DEV_BASE_URL;
+        BASE_URL = StringUtils.arrayToCommaDelimitedString(activeProfiles).startsWith("prod")?PRO_BASE_URL:DEV_BASE_URL;
     }
 
     public void syncRegUserToBiz(Long accountId){
