@@ -3,10 +3,13 @@ package com.power.core.service.impl;
 //import org.springframework.cache.annotation.CacheConfig;
 //import org.springframework.cache.annotation.CacheEvict;
 //import org.springframework.cache.annotation.Cacheable;
+import com.google.common.collect.Maps;
 import com.power.core.dao.IBaseDAO;
 import com.power.core.domain.BaseDomain;
 import com.power.core.domain.CreateBaseDomain;
+import com.power.core.domain.SearchField;
 import com.power.core.domain.Sorter;
+import com.power.core.domain.wrapper.SearchEnum;
 import com.power.core.service.IBaseService;
 import com.power.core.service.IDaoAware;
 import org.springframework.util.StringUtils;
@@ -110,6 +113,19 @@ public abstract class AbstractBaseService<ID extends Serializable, D extends IBa
     @Override
     public T viewOne(Map<String, Object> selector, Map<String, Object> condition, List<Sorter> sorter) {
         return (T) getDao().queryOne(selector, condition, sorter);
+    }
+
+    @Override
+    public T viewOne(Map<String, Object> params) {
+        Map<String,Object> condition = Maps.newHashMap();
+        for (Map.Entry<String,Object> entry : params.entrySet()) {
+            SearchField searchField = new SearchField();
+            searchField.setField(entry.getKey());
+            searchField.setData(entry.getValue());
+            searchField.setOp(SearchEnum.eq.getValue());
+            condition.put(entry.getKey(), searchField);
+        }
+        return (T) getDao().queryOne(null, condition, null);
     }
 
     @Override

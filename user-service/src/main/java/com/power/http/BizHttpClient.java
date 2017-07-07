@@ -1,19 +1,19 @@
 package com.power.http;
 
-import com.alibaba.fastjson.JSON;
 import com.power.core.exception.BizException;
 import com.power.domain.ERRORCODE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpRequest;
 import org.springframework.http.client.ClientHttpResponse;
-import org.springframework.http.client.OkHttpClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -27,8 +27,9 @@ import java.util.Map;
  */
 @Component
 public class BizHttpClient {
-//    @Value("${spring.profiles.active}")
-//    private String active;
+
+    @Autowired
+    private ConfigurableApplicationContext context;
 
     private  static  final Logger logger = LoggerFactory.getLogger(BizHttpClient.class);
     private  static  final  String PRO_BASE_URL = "http://www.popularpowers.com";
@@ -40,8 +41,9 @@ public class BizHttpClient {
 
     @PostConstruct
     public void init(){
-//        BASE_URL = active.startsWith("dev")?DEV_BASE_URL:PRO_BASE_URL;
-        BASE_URL = PRO_BASE_URL;
+        String[] activeProfiles = context.getEnvironment().getActiveProfiles();
+        StringUtils.arrayToCommaDelimitedString(activeProfiles);
+        BASE_URL = StringUtils.arrayToCommaDelimitedString(activeProfiles).startsWith("pord")?PRO_BASE_URL:DEV_BASE_URL;
     }
 
     public void syncRegUserToBiz(Long accountId){
