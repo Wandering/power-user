@@ -14,7 +14,7 @@ spring:
     database: 0
   datasource:
     name: test
-    url: jdbc:mysql://rdspower.mysql.rds.aliyuncs.com:3306/power?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+    url: jdbc:mysql://rdspower.mysql.rds.aliyuncs.com:3306/power?autoReconnect=true&zeroDateTimeBehavior=convertToNull
     username: power_root
     password: power#root@2017
     # 使用druid数据源
