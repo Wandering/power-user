@@ -1,5 +1,6 @@
 package com.power.wechat.controller.callback;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import com.power.facade.IPlatformInfoFacade;
 import com.power.wechat.controller.login.LoginController;
@@ -109,6 +110,7 @@ public class CallbackController {
 
     private String event(String adminUser,String openId, Long createTime,String msgType,String enevt, @PathVariable String uniqueKey){
         WxMpService wxMpService = WxMpServiceUtil.getWxMpService(uniqueKey);
+        logger.debug("===============openId:{}=================",openId);
         WxMpUser wxMpUser = null;
         try {
 //            String wxAccessToken = wxMpService.getAccessToken();
@@ -129,6 +131,7 @@ public class CallbackController {
         } catch (WxErrorException e) {
             e.printStackTrace();
         }
+        logger.debug("===============wxMpUser:{}=================", JSON.toJSONString(wxMpUser));
         //微信远程查询账号信息
         Map<String,Object> wechat = Maps.newHashMap();
         {

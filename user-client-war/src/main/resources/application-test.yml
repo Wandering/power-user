@@ -36,3 +36,4 @@ spring:
 mybatis:
   mapperLocations: classpath*:/mybatis/**/**/*.xml
   typeAliasesPackage: com.power.domain,com.power.dto
+
