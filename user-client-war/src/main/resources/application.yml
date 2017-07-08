@@ -36,4 +36,6 @@ spring:
 mybatis:
   mapperLocations: classpath*:/mybatis/**/**/*.xml
   typeAliasesPackage: com.power.domain,com.power.dto
+env:
+   JAVA_OPTS: "-Xdebug -Xrunjdwp:server=y,transport=dt_socket,suspend=n,address=20001"
 
