@@ -5,6 +5,10 @@ import com.power.core.cache.RedisRepository;
 import com.power.core.protocol.ResponseT;
 import com.power.domain.ERRORCODE;
 import com.power.dto.UserInfoDTO;
+import com.power.wechat.util.WxMpServiceUtil;
+import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -147,5 +151,16 @@ public class UserInfoTest{
         Assert.isTrue(!userInfoDTO.getNickname().isEmpty(),"用户昵称为空");
         Assert.isTrue(userInfoDTO.getOpenId().equals(openId),"openId错误");
         return token;
+    }
+
+
+    @Test
+    public void testCallback(){
+//        WxMpService wxMpService = WxMpServiceUtil.getWxMpService("powertest");
+//        try {
+//            WxMpUser wxMpUser = wxMpService.getUserService().userInfo("oqoGE0UJGJSuFrSbJX-SwcpVhLYY");
+//        } catch (WxErrorException e) {
+//            e.printStackTrace();
+//        }
     }
 }

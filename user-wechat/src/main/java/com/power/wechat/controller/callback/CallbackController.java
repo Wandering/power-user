@@ -113,6 +113,8 @@ public class CallbackController {
         logger.debug("===============openId:{}=================",openId);
         WxMpUser wxMpUser = null;
         try {
+            logger.debug("=============wxMpService========");
+            logger.debug(JSON.toJSONString(wxMpService.getWxMpConfigStorage().getToken()));
 //            String wxAccessToken = wxMpService.getAccessToken();
             wxMpUser = wxMpService.getUserService().userInfo(openId);
             /////////////////////////////////////////
