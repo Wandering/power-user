@@ -32,19 +32,19 @@ public class TestWechat extends BaseTest{
     private MockMvc mvc;
 
     private static final String ok_rtn = "0000000";
-
-    @Test
-    public void testWechat() throws Exception {
-        String json = this.mvc.perform(post("/platform/wechat/{uniqueKey}/jsApi?url={url}",uniqueKey,url).accept(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.rtnCode").value(ok_rtn))
-                .andReturn().getResponse().getContentAsString();
-
-        WxJsapiSignature wxJsapiSignature = JSON.parseObject(JSON.parseObject(json, ResponseT.class).getBizData().toString(),WxJsapiSignature.class);
-        WxMpService wxMpService = WxMpServiceUtil.getWxMpService(uniqueKey);
-        Assert.isTrue(wxJsapiSignature.getSignature().equals(SHA1.genWithAmple("jsapi_ticket=" + wxMpService.getJsapiTicket(false),
-                "noncestr=" + wxJsapiSignature.getNonceStr(), "timestamp=" + wxJsapiSignature.getTimestamp(), "url=" + url)),"微信jsAPI校验错误");
-    }
+//
+//    @Test
+//    public void testWechat() throws Exception {
+//        String json = this.mvc.perform(post("/platform/wechat/{uniqueKey}/jsApi?url={url}",uniqueKey,url).accept(MediaType.APPLICATION_JSON_UTF8))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.rtnCode").value(ok_rtn))
+//                .andReturn().getResponse().getContentAsString();
+//
+//        WxJsapiSignature wxJsapiSignature = JSON.parseObject(JSON.parseObject(json, ResponseT.class).getBizData().toString(),WxJsapiSignature.class);
+//        WxMpService wxMpService = WxMpServiceUtil.getWxMpService(uniqueKey);
+//        Assert.isTrue(wxJsapiSignature.getSignature().equals(SHA1.genWithAmple("jsapi_ticket=" + wxMpService.getJsapiTicket(false),
+//                "noncestr=" + wxJsapiSignature.getNonceStr(), "timestamp=" + wxJsapiSignature.getTimestamp(), "url=" + url)),"微信jsAPI校验错误");
+//    }
 
     /**
      * 测试获取JSAPI权限
