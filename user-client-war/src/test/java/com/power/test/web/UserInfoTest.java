@@ -42,13 +42,14 @@ public class UserInfoTest extends BaseTest{
     private RedisRepository<String,String> redis;
 
 
-    private static final String phone = "18665601516";
+    private static final String phone = "17602903609";
     private static final String checkKey = USER_SMS+phone;
-    private static final String openId = "o9P_pv2gzYtOm6V_sDNhZ7HLWHyY";
-    private static final String agencyId = "1";
-    private static final String accountId = "59";
-    private static final String userId = "23";
+    private static final String openId = "oqoGE0UJGJSuFrSbJX-SwcpVhLYY";
+    private static final String agencyId = "3";
+    private static final String accountId = "1";
+    private static final String userId = "1";
     private static final String ok_rtn = "0000000";
+    private static final String uniqueKey = "powertest";
 
     /**
      * 登录
@@ -71,7 +72,7 @@ public class UserInfoTest extends BaseTest{
 //        given(wxMpService.oauth2getAccessToken("123")).willReturn(wxMpOAuth2AccessToken);
 
         String token = login(openId,agencyId,accountId);
-        this.mvc.perform(get("/user/wechat/auth/ppower/captcha/sendSms").accept(MediaType.APPLICATION_JSON_UTF8)
+        this.mvc.perform(get("/user/wechat/auth/{uniqueKey}/captcha/sendSms",uniqueKey).accept(MediaType.APPLICATION_JSON_UTF8)
                 .param("phone",phone)
                 .param("token",token))
                 .andExpect(status().isOk())
@@ -79,19 +80,19 @@ public class UserInfoTest extends BaseTest{
                 .andExpect(jsonPath("$.bizData").value("true"))
         ;
         String checkCode = redis.get(checkKey);
-        this.mvc.perform(get("/user/wechat/auth/ppower/captcha/checkSms").accept(MediaType.APPLICATION_JSON_UTF8)
+        this.mvc.perform(get("/user/wechat/auth/{uniqueKey}/captcha/checkSms",uniqueKey).accept(MediaType.APPLICATION_JSON_UTF8)
                 .param("phone",phone)
                 .param("checkCode",checkCode)
                 .param("token", UUID.randomUUID().toString()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.rtnCode").value(ERRORCODE.TOKEN_INVALID_OR_NOTHINGNESS.getCode()));
-        this.mvc.perform(get("/user/wechat/auth/ppower/captcha/checkSms").accept(MediaType.APPLICATION_JSON_UTF8)
+        this.mvc.perform(get("/user/wechat/auth/{uniqueKey}/captcha/checkSms",uniqueKey).accept(MediaType.APPLICATION_JSON_UTF8)
                 .param("phone",phone)
                 .param("checkCode","123")
                 .param("token",token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.rtnCode").value(ERRORCODE.SMS_CHECK_ERROR.getCode()));
-        this.mvc.perform(get("/user/wechat/auth/ppower/captcha/checkSms").accept(MediaType.APPLICATION_JSON_UTF8)
+        this.mvc.perform(get("/user/wechat/auth/{uniqueKey}/captcha/checkSms",uniqueKey).accept(MediaType.APPLICATION_JSON_UTF8)
                 .param("phone",phone)
                 .param("checkCode",checkCode)
                 .param("token",token))
@@ -120,7 +121,7 @@ public class UserInfoTest extends BaseTest{
                 .andExpect(jsonPath("$.rtnCode").value(ok_rtn))
                 .andExpect(jsonPath("$.bizData").isNotEmpty())
                 .andExpect(jsonPath("$.bizData.userId").value(userId))
-                .andExpect(jsonPath("$.bizData.openId").value("o9P_pv2gzYtOm6V_sDNhZ7HLWHyY"))
+                .andExpect(jsonPath("$.bizData.openId").value(openId))
 //                .andExpect(jsonPath("$.bizData.phone").value("17602903609"))
                 .andExpect(jsonPath("$.bizData.accountId").value(accountId))
                 .andExpect(jsonPath("$.bizData.headimgurl").isNotEmpty())
@@ -131,7 +132,7 @@ public class UserInfoTest extends BaseTest{
     }
 
     private String login(String openId,String agencyId,String accountId) throws Exception {
-        String rtn = this.mvc.perform(get("/user/wechat/login/ppower/open").accept(MediaType.APPLICATION_JSON_UTF8)
+        String rtn = this.mvc.perform(get("/user/wechat/login/{uniqueKey}/open",uniqueKey).accept(MediaType.APPLICATION_JSON_UTF8)
                 .param("openId",openId)
                 .param("agencyId",agencyId))
                 .andExpect(status().isOk())
@@ -170,7 +171,7 @@ public class UserInfoTest extends BaseTest{
         String nonce = "123344";
         WxMpService wxMpService = WxMpServiceUtil.getWxMpService(uniqueKey);
         String signature = SHA1.gen(wxMpService.getWxMpConfigStorage().getToken(), timestamp, nonce);
-        this.mvc.perform(post("/wechat/callback/powertest/callback")
+        this.mvc.perform(post("/wechat/callback/{uniqueKey}/callback",uniqueKey)
                 .param("nonce", nonce)
                 .param("timestamp",timestamp)
                 .param("signature",signature)
