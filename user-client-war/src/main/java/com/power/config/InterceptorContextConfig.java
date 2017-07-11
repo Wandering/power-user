@@ -28,6 +28,7 @@ public class InterceptorContextConfig extends WebMvcConfigurerAdapter {
                 .addPathPatterns("/**")
                 .excludePathPatterns("/user/wechat/login/**/**")
                 .excludePathPatterns("/wechat/callback/**/**")
+                .excludePathPatterns("/platform/wechat/**/**")
                 .excludePathPatterns("/user/wechat/info/**/**")
                 .excludePathPatterns("/error")
         ;

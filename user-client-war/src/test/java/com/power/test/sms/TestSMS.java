@@ -2,6 +2,7 @@ package com.power.test.sms;
 
 import com.power.sms.api.SMSService;
 import com.power.sms.domain.SMSCheckCode;
+import com.power.test.BaseTest;
 import junit.framework.TestCase;
 import org.apache.log4j.Logger;
 import org.junit.Test;
@@ -16,10 +17,7 @@ import org.springframework.util.Assert;
 /**
  * Created by Administrator on 2017/6/13.
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@ContextConfiguration
-public class TestSMS extends TestCase{
+public class TestSMS extends BaseTest {
     @Autowired
     SMSService smsService;
     Logger logger = Logger.getLogger(TestSMS.class);

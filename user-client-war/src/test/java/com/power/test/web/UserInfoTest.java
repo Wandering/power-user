@@ -5,8 +5,10 @@ import com.power.core.cache.RedisRepository;
 import com.power.core.protocol.ResponseT;
 import com.power.domain.ERRORCODE;
 import com.power.dto.UserInfoDTO;
+import com.power.test.BaseTest;
 import com.power.wechat.util.WxMpServiceUtil;
 import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.util.crypto.SHA1;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.apache.log4j.Logger;
@@ -15,7 +17,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -25,14 +26,13 @@ import java.util.Map;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 /**
  * Created by Administrator on 2017/6/13.
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@AutoConfigureMockMvc
-public class UserInfoTest{
+
+public class UserInfoTest extends BaseTest{
 
     Logger logger = Logger.getLogger(UserInfoTest.class);
     private final static String USER_SMS = "USER_SMS_";
@@ -155,12 +155,26 @@ public class UserInfoTest{
 
 
     @Test
-    public void testCallback(){
-//        WxMpService wxMpService = WxMpServiceUtil.getWxMpService("powertest");
-//        try {
-//            WxMpUser wxMpUser = wxMpService.getUserService().userInfo("oqoGE0UJGJSuFrSbJX-SwcpVhLYY");
-//        } catch (WxErrorException e) {
-//            e.printStackTrace();
-//        }
+    public void testCallback() throws Exception {
+
+        String msg = "<xml>\n" +
+                "<ToUserName><![CDATA[123]]></ToUserName>\n" +
+                "<FromUserName><![CDATA[oqoGE0UJGJSuFrSbJX-SwcpVhLYY]]></FromUserName>\n" +
+                "<CreateTime>123456789</CreateTime>\n" +
+                "<MsgType><![CDATA[event]]></MsgType>\n" +
+                "<Event><![CDATA[subscribe]]></Event>\n" +
+                "</xml>";
+
+        String uniqueKey = "powertest";
+        String timestamp = "123344";
+        String nonce = "123344";
+        WxMpService wxMpService = WxMpServiceUtil.getWxMpService(uniqueKey);
+        String signature = SHA1.gen(wxMpService.getWxMpConfigStorage().getToken(), timestamp, nonce);
+        this.mvc.perform(post("/wechat/callback/powertest/callback")
+                .param("nonce", nonce)
+                .param("timestamp",timestamp)
+                .param("signature",signature)
+                .content(msg)
+        ).andExpect(status().isOk());
     }
 }
