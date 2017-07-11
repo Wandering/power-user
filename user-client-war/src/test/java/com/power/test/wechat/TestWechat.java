@@ -17,6 +17,7 @@ import org.springframework.util.Assert;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -33,7 +34,7 @@ public class TestWechat extends BaseTest{
     private static final String ok_rtn = "0000000";
     @Test
     public void testWechat() throws Exception {
-        String json = this.mvc.perform(get("/platform/wechat/{uniqueKey}/jsApi?url={url}",uniqueKey,url).accept(MediaType.APPLICATION_JSON_UTF8))
+        String json = this.mvc.perform(post("/platform/wechat/{uniqueKey}/jsApi?url={url}",uniqueKey,url).accept(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.rtnCode").value(ok_rtn))
                 .andReturn().getResponse().getContentAsString();

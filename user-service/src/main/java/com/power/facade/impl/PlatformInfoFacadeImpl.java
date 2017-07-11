@@ -97,42 +97,18 @@ public class PlatformInfoFacadeImpl extends AbstractPersistenceProvider implemen
 
         //查询公众号对应的用户
         Map<String,Object> condition = Maps.newHashMap();
-        SearchField searchField = new SearchField();
-        searchField.setField("platformId");
-        searchField.setOp(SearchEnum.eq.getValue());
-        searchField.setData(platformInfo.getId().toString());
-        condition.put("platformId",searchField);
+        condition.put("platformId",platformInfo.getId());
+        condition.put("openId",openId);
+        UserPlatform userPlatform = userPlatformService.viewOne(condition);
 
-        searchField = new SearchField();
-        searchField.setField("unionId");
-        searchField.setOp(SearchEnum.eq.getValue());
-        searchField.setData(unionId);
-        condition.put("unionId",searchField);
-
-        searchField = new SearchField();
-        searchField.setField("openId");
-        searchField.setOp(SearchEnum.eq.getValue());
-        searchField.setData(openId);
-        condition.put("openId",searchField);
-
-        UserPlatform userPlatform = userPlatformService.viewOne(null,condition,null);
         //如果存在 置状态为关注 如果不存在 进入添加用户流程 1关注  0 未关注
         if (userPlatform != null){
             userPlatform.setStatus(1);
             userPlatformService.edit(userPlatform);
         }else {
             condition = Maps.newHashMap();
-            searchField = new SearchField();
-            searchField.setField("platformId");
-            searchField.setOp(SearchEnum.eq.getValue());
-            searchField.setData(platformInfo.getId().toString());
-            condition.put("platformId",searchField);
-
-            searchField = new SearchField();
-            searchField.setField("unionId");
-            searchField.setOp(SearchEnum.eq.getValue());
-            searchField.setData(unionId);
-            condition.put("unionId",searchField);
+            condition.put("platformId",platformInfo.getId());
+            condition.put("unionId",unionId);
             //判断是否是其他平台下用户  只取其中一个 目的为了取到用户ID
             userPlatform = userPlatformService.viewOne(null,condition,null);
             //假如不为空 说明在其他平台关注了  取到userId
