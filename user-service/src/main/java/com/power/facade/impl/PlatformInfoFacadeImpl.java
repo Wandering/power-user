@@ -110,7 +110,7 @@ public class PlatformInfoFacadeImpl extends AbstractPersistenceProvider implemen
             condition.put("platformId",platformInfo.getId());
             condition.put("unionId",unionId);
             //判断是否是其他平台下用户  只取其中一个 目的为了取到用户ID
-            userPlatform = userPlatformService.viewOne(null,condition,null);
+            userPlatform = userPlatformService.viewOne(condition);
             //假如不为空 说明在其他平台关注了  取到userId
             if (userPlatform !=null) {
                 //清空公众号ID和openId作为一个新对象保存
@@ -168,28 +168,13 @@ public class PlatformInfoFacadeImpl extends AbstractPersistenceProvider implemen
             throw new BizException("error","公众号/生活号不存在");
         }
         String openId = (String) wechat.get("openid");
-        String unionId = (String) wechat.get("unionid");
 
         //查询公众号对应的用户
         Map<String,Object> condition = Maps.newHashMap();
-        SearchField searchField = new SearchField();
-        searchField.setField("platformId");
-        searchField.setOp(SearchEnum.eq.getValue());
-        searchField.setData(platformInfo.getId().toString());
-        condition.put("platformId",searchField);
+        condition.put("platformId",platformInfo.getId());
+        condition.put("openId",openId);
 
-        searchField = new SearchField();
-        searchField.setField("unionId");
-        searchField.setOp(SearchEnum.eq.getValue());
-        searchField.setData(unionId);
-        condition.put("unionId",searchField);
-
-        searchField = new SearchField();
-        searchField.setField("openId");
-        searchField.setOp(SearchEnum.eq.getValue());
-        searchField.setData(openId);
-        condition.put("openId",searchField);
-        UserPlatform userPlatform = userPlatformService.viewOne(null,condition,null);
+        UserPlatform userPlatform = userPlatformService.viewOne(condition);
         userPlatform.setStatus(0);
         userPlatformService.edit(userPlatform);
         logger.info(JSON.toJSON(userPlatform));

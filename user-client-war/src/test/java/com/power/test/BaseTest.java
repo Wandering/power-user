@@ -15,5 +15,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class BaseTest {
     @Test
     public void baseTest() throws Exception {
+
     }
 }

@@ -117,15 +117,7 @@ public abstract class AbstractBaseService<ID extends Serializable, D extends IBa
 
     @Override
     public T viewOne(Map<String, Object> params) {
-        Map<String,Object> condition = Maps.newHashMap();
-        for (Map.Entry<String,Object> entry : params.entrySet()) {
-            SearchField searchField = new SearchField();
-            searchField.setField(entry.getKey());
-            searchField.setData(entry.getValue());
-            searchField.setOp(SearchEnum.eq.getValue());
-            condition.put(entry.getKey(), searchField);
-        }
-        return (T) getDao().queryOne(null, condition, null);
+        return (T) getDao().queryOne(null, genQueryCondition(params), null);
     }
 
     @Override
@@ -136,6 +128,12 @@ public abstract class AbstractBaseService<ID extends Serializable, D extends IBa
     @Override
     public List<T> viewList(Map<String, Object> selector, Map<String, Object> condition, List<Sorter> sorter) {
         return getDao().queryList(selector, condition, sorter);
+    }
+
+    @Override
+    public List<T> viewList(Map<String, Object> params) {
+
+        return getDao().queryList(null, genQueryCondition(params), null);
     }
 
     @Override
@@ -186,5 +184,18 @@ public abstract class AbstractBaseService<ID extends Serializable, D extends IBa
         entityMap.put("createDate", System.currentTimeMillis());
 
         return entityMap;
+    }
+
+    private final Map genQueryCondition(Map<String, Object> params){
+        Map<String,Object> condition = Maps.newHashMap();
+        for (Map.Entry<String,Object> entry : params.entrySet()) {
+            SearchField searchField = new SearchField();
+            searchField.setField(entry.getKey());
+            searchField.setData(entry.getValue());
+            searchField.setOp(SearchEnum.eq.getValue());
+            condition.put(entry.getKey(), searchField);
+            condition.put("groupOp", "AND");
+        }
+        return condition;
     }
 }

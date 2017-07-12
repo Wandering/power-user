@@ -65,6 +65,7 @@ public interface IBaseService<ID extends Serializable, D extends IBaseDAO,T exte
 
     public T viewOneByWhereSql(Map<String, Object> selector, String nativeSql, List<Sorter> sorter);
     public List<T> viewList(Map<String, Object> selector, Map<String, Object> condition, List<Sorter> sorter);
+    public List<T> viewList(Map<String, Object> condition);
     public List<T> viewListByWhereSql(Map<String, Object> selector, String nativeSql, List<Sorter> sorter);
 
 

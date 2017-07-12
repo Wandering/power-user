@@ -187,18 +187,4 @@ public class CallbackController {
         return null;
     }
 
-    public static void main(String[] args) {
-        WxMpXmlMessage wxMpXmlMessage = new WxMpXmlMessage();
-        wxMpXmlMessage.setMsgType(WxConsts.XML_MSG_TEXT);
-        wxMpXmlMessage.setContent("这是反馈");
-        wxMpXmlMessage.setFromUser("来源");
-        wxMpXmlMessage.setToUser("openId");
-        wxMpXmlMessage.setCreateTime(System.currentTimeMillis()/1000);
-        wxMpXmlMessage.setSendLocationInfo(null);
-        wxMpXmlMessage.setScanCodeInfo(null);
-        wxMpXmlMessage.setSendPicsInfo(null);
-        wxMpXmlMessage.setHardWare(null);
-        String rtnXml = XStreamTransformer.toXml(WxMpXmlMessage.class,wxMpXmlMessage);
-        System.out.println(rtnXml);
-    }
 }
