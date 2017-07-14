@@ -39,6 +39,12 @@ public class PlatformController {
     private static final Logger logger = LoggerFactory.getLogger(PlatformController.class);
 
 
+    /**
+     * jsApi权限获取
+     * @param uniqueKey
+     * @param url
+     * @return
+     */
     @PostMapping("/{uniqueKey}/jsApi")
     public WxJsapiSignature syncWxUser(@PathVariable String uniqueKey,@RequestParam String url){
         WxMpService wxMpService = WxMpServiceUtil.getWxMpService(uniqueKey);
