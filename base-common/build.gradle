@@ -2,7 +2,10 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile "com.google.guava:guava:$guava_version"
     compile "org.springframework.data:spring-data-commons:$springdataVersion"
-    compile "org.springframework.boot:spring-boot-starter-web:$springbootVersion"
+    compile ("org.springframework.boot:spring-boot-starter-web:$springbootVersion"){
+        exclude module: "spring-boot-starter-tomcat"
+    }
+    compile "org.springframework.boot:spring-boot-starter-undertow:$springbootVersion"
     compile "org.springframework.boot:spring-boot-actuator:$springbootVersion"
     compile "org.springframework.boot:spring-boot-autoconfigure:$springbootVersion"
     compile "org.springframework.boot:spring-boot-loader-tools:$springbootVersion"
