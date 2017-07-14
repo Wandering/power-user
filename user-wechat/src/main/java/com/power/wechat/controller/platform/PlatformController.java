@@ -2,6 +2,8 @@ package com.power.wechat.controller.platform;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
+import com.power.core.exception.BizException;
+import com.power.domain.ERRORCODE;
 import com.power.domain.PlatformInfo;
 import com.power.domain.UserAccount;
 import com.power.domain.UserPlatform;
@@ -15,6 +17,7 @@ import com.power.wechat.util.WxMpServiceUtil;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import me.chanjar.weixin.mp.bean.result.WxMpUserList;
 import org.slf4j.Logger;
@@ -47,5 +50,27 @@ public class PlatformController {
         }
         logger.debug("wxJsapiSignature",JSON.toJSONString(wxJsapiSignature));
         return wxJsapiSignature;
+    }
+
+
+
+    /**
+     * 根据code去换取支付openId
+     * @param code
+     * @return
+     */
+    @RequestMapping(value = "/payOpenIdByCode")
+    @ResponseBody
+    public String payWxPlatform(@RequestParam("code") String code){
+        WxMpService wxMpService = WxMpServiceUtil.getWxMpService("ppower");
+        String openId = null;
+        try {
+            //获取微信openId
+            WxMpOAuth2AccessToken wxMpOAuth2AccessToken  = wxMpService.oauth2getAccessToken(code);
+            openId = wxMpOAuth2AccessToken.getOpenId();
+        } catch (WxErrorException e) {
+            throw new BizException(ERRORCODE.CODE_BEEN_USED.getCode(),ERRORCODE.CODE_BEEN_USED.getMessage());
+        }
+        return openId;
     }
 }

@@ -32,6 +32,12 @@ public class UserController {
     private IPlatformInfoFacade platformInfoFacade;
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
+    /**
+     * 根据code和agencyId去换取openId
+     * @param code
+     * @param agencyId
+     * @return
+     */
     @RequestMapping(value = "/queryUserByOpenId")
     @ResponseBody
     public PlatformInfo queryWxPlatform(@RequestParam("code") String code, @RequestParam("agencyId")Long agencyId){
@@ -49,20 +55,6 @@ public class UserController {
         return userPlatformFacade.getWxPlatformByOpenId(openId,agencyId);
     }
 
-    @RequestMapping(value = "/payOpenIdByCode")
-    @ResponseBody
-    public String payWxPlatform(@RequestParam("code") String code){
-        WxMpService wxMpService = WxMpServiceUtil.getWxMpService("ppower");
-        String openId = null;
-        try {
-            //获取微信openId
-            WxMpOAuth2AccessToken wxMpOAuth2AccessToken  = wxMpService.oauth2getAccessToken(code);
-            openId = wxMpOAuth2AccessToken.getOpenId();
-        } catch (WxErrorException e) {
-            throw new BizException(ERRORCODE.CODE_BEEN_USED.getCode(),ERRORCODE.CODE_BEEN_USED.getMessage());
-        }
-        return openId;
-    }
 
     @RequestMapping(value = "/queryOpenIdByAccountId")
     @ResponseBody
