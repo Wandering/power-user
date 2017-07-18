@@ -1,16 +1,10 @@
 package com.power.test.wechat;
 
 import com.alibaba.fastjson.JSON;
-import com.power.core.protocol.ResponseT;
 import com.power.test.BaseTest;
 import com.power.wechat.util.WxMpServiceUtil;
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.bean.WxJsapiSignature;
-import me.chanjar.weixin.common.util.crypto.SHA1;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.bean.WxMpMassNews;
-import me.chanjar.weixin.mp.bean.WxMpMassOpenIdsMessage;
-import me.chanjar.weixin.mp.bean.WxMpMassTagMessage;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialFileBatchGetResult;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialNews;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
@@ -19,15 +13,7 @@ import me.chanjar.weixin.mp.builder.outxml.NewsBuilder;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.MediaType;
-import org.springframework.util.Assert;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Created by Administrator on 2017/7/18.
@@ -63,7 +49,7 @@ public class TestPushMessage extends BaseTest {
     @Test
     public void testGenMsg() throws Exception {
         WxMpService wxMpService = WxMpServiceUtil.getWxMpService("ppower");
-        WxMpMaterialFileBatchGetResult wxMpMaterialFileBatchGetResult = wxMpService.getMaterialService().materialFileBatchGet(WxConsts.MATERIAL_NEWS,0,1);
+        WxMpMaterialFileBatchGetResult wxMpMaterialFileBatchGetResult = wxMpService.getMaterialService().materialFileBatchGet(WxConsts.MATERIAL_NEWS,0,10);
         if (wxMpMaterialFileBatchGetResult.getTotalCount()>0){
             WxMpMaterialFileBatchGetResult.WxMaterialFileBatchGetNewsItem batchGetNewsItem = wxMpMaterialFileBatchGetResult.getItems().get(0);
             String mediaId = batchGetNewsItem.getMediaId();
@@ -91,7 +77,7 @@ public class TestPushMessage extends BaseTest {
                 for (WxMpMaterialNews.WxMpMaterialNewsArticle newsArticle : wxMpMaterialNews.getArticles()) {
                     WxMpXmlOutNewsMessage.Item item = new WxMpXmlOutNewsMessage.Item();
                     WxMpMaterialNews.WxMpMaterialNewsArticle wxMpMaterialNewsArticle = wxMpMaterialNews.getArticles().get(0);
-                    item.setDescription(newsArticle.getContent());
+                    item.setDescription(newsArticle.getDigest());
                     item.setPicUrl(newsArticle.getThumbUrl());
                     item.setTitle(newsArticle.getTitle());
                     item.setUrl(newsArticle.getUrl());

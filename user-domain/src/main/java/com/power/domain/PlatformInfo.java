@@ -8,7 +8,7 @@
  * Copyright (c) 2013-2014, starteasy Inc. All Rights Reserved.
  * 
  * Project Name: codegen
- * $Id:  2017-06-20 15:26:29 $ 
+ * $Id:  2017-07-18 20:04:25 $ 
  */
 package com.power.domain;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -46,6 +46,8 @@ public class PlatformInfo extends BaseDomain<Long>{
     private String name;
     /** 关注事件推送消息 */
     private String message;
+    /** 首关图文消息微信ID */
+    private String firstMediaId;
 
 	public PlatformInfo(){
 	}
@@ -140,6 +142,13 @@ public class PlatformInfo extends BaseDomain<Long>{
     public String getMessage() {
         return this.message;
     }
+    public void setFirstMediaId(String value) {
+        this.firstMediaId = value;
+    }
+
+    public String getFirstMediaId() {
+        return this.firstMediaId;
+    }
 
 	public String toString() {
 		return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -157,6 +166,7 @@ public class PlatformInfo extends BaseDomain<Long>{
 			.append("SubUrl",getSubUrl())
 			.append("Name",getName())
 			.append("Message",getMessage())
+			.append("FirstMediaId",getFirstMediaId())
 			.toString();
 	}
 	

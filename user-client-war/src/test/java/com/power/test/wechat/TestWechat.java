@@ -75,7 +75,7 @@ public class TestWechat extends BaseTest{
         String timestamp = String.valueOf(System.currentTimeMillis()/1000);
         String nonce = "123";
 
-        String rtnString = this.mvc.perform(post("http://localhost:8081/wechat/callback/{uniqueKey}/callback",uniqueKey)
+        String rtnString = this.mvc.perform(post("/wechat/callback/{uniqueKey}/callback",uniqueKey)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .param("signature",SHA1.gen(wxMpService.getWxMpConfigStorage().getToken(),timestamp,nonce))
                 .param("timestamp",timestamp)
@@ -113,7 +113,7 @@ public class TestWechat extends BaseTest{
         String timestamp = String.valueOf(System.currentTimeMillis()/1000);
         String nonce = "123";
 
-        String rtnString = this.mvc.perform(post("http://localhost:8081/wechat/callback/{uniqueKey}/callback",uniqueKey)
+        String rtnString = this.mvc.perform(post("/wechat/callback/{uniqueKey}/callback",uniqueKey)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .param("signature",SHA1.gen(wxMpService.getWxMpConfigStorage().getToken(),timestamp,nonce))
                 .param("timestamp",timestamp)

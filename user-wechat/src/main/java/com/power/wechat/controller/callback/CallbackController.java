@@ -2,6 +2,7 @@ package com.power.wechat.controller.callback;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
+import com.power.domain.PlatformInfo;
 import com.power.facade.IPlatformInfoFacade;
 import com.power.wechat.controller.login.LoginController;
 import com.power.wechat.util.WxMpServiceUtil;
@@ -144,6 +145,7 @@ public class CallbackController {
         }
 
         boolean flag = false;
+        PlatformInfo platformInfo = platformInfoFacade.getPlatformInfoByUniqueKey(uniqueKey);
         //判定关注类型
         switch (enevt){
             case WxConsts.EVT_SUBSCRIBE:
@@ -153,12 +155,9 @@ public class CallbackController {
                 //消息推送
                 WxMpMaterialFileBatchGetResult wxMpMaterialFileBatchGetResult = null;
                     wxMpMaterialFileBatchGetResult = wxMpService.getMaterialService().materialFileBatchGet(WxConsts.MATERIAL_NEWS,0,1);
-
-                    if (wxMpMaterialFileBatchGetResult.getTotalCount() > 0) {
-                        WxMpMaterialFileBatchGetResult.WxMaterialFileBatchGetNewsItem batchGetNewsItem = wxMpMaterialFileBatchGetResult.getItems().get(0);
-                        String mediaId = batchGetNewsItem.getMediaId();
+                    if (platformInfo.getFirstMediaId() !=null) {
                         WxMpMaterialNews wxMpMaterialNews = null;
-                        wxMpMaterialNews = wxMpService.getMaterialService().materialNewsInfo(mediaId);
+                        wxMpMaterialNews = wxMpService.getMaterialService().materialNewsInfo(platformInfo.getFirstMediaId());
                         if (!wxMpMaterialNews.isEmpty()) {
                             NewsBuilder builder = WxMpXmlOutMessage.NEWS().fromUser(adminUser)
                                     .toUser(openId);

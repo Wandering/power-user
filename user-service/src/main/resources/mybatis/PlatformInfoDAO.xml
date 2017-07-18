@@ -38,7 +38,8 @@ D
         mainUrl as mainUrl ,
         subUrl as subUrl ,
         name as name ,
-        message as message 
+        message as message ,
+        firstMediaId as firstMediaId 
     </sql>
 
     <!-- 插入 start-->
@@ -57,7 +58,8 @@ D
         mainUrl,
         subUrl,
         name,
-        message
+        message,
+        firstMediaId
         ) VALUES (
         #{appId},
         #{secret},
@@ -71,7 +73,8 @@ D
         #{mainUrl},
         #{subUrl},
         #{name},
-        #{message}
+        #{message},
+        #{firstMediaId}
         )
     </insert>
 
@@ -90,7 +93,8 @@ D
         mainUrl,
         subUrl,
         name,
-        message
+        message,
+        firstMediaId
                 ) VALUES (
         #{map.appId},
         #{map.secret},
@@ -104,7 +108,8 @@ D
         #{map.mainUrl},
         #{map.subUrl},
         #{map.name},
-        #{map.message}
+        #{map.message},
+        #{map.firstMediaId}
                 )
     </insert>
 
@@ -155,6 +160,9 @@ D
             <if test="message!=null">
                 message = #{message},
             </if>
+            <if test="firstMediaId!=null">
+                firstMediaId = #{firstMediaId},
+            </if>
         </trim>
                 WHERE
         id = #{id}
@@ -201,6 +209,9 @@ D
             </if>
             <if test="map.message!=null">
                 message = #{map.message},
+            </if>
+            <if test="map.firstMediaId!=null">
+                firstMediaId = #{map.firstMediaId},
             </if>
         </trim>
         WHERE
@@ -249,6 +260,9 @@ D
             <if test="update.message!=null">
                 message = #{update.message},
             </if>
+            <if test="update.firstMediaId!=null">
+                firstMediaId = #{update.firstMediaId},
+            </if>
         </trim>
 
         <trim prefix="WHERE" prefixOverrides="AND | OR">
@@ -293,6 +307,9 @@ D
         </if>
         <if test="condition.message!=null">
             AND message = #{condition.message}
+        </if>
+        <if test="condition.firstMediaId!=null">
+            AND firstMediaId = #{condition.firstMediaId}
         </if>
         </trim>
         </update>
@@ -339,6 +356,9 @@ D
             <if test="update.message!=null">
                 message = #{update.message},
             </if>
+            <if test="update.firstMediaId!=null">
+                firstMediaId = #{update.firstMediaId},
+            </if>
         </trim>
 
 
@@ -364,6 +384,7 @@ ${nativeSql}        </if>
             subUrl = #{subUrl},
             name = #{name},
             message = #{message},
+            firstMediaId = #{firstMediaId},
         </trim>
                 WHERE
         id = #{id} 
@@ -432,6 +453,9 @@ ${nativeSql}        </if>
                 </if>
                 <if test="selector.message!=null">
                     , message
+                </if>
+                <if test="selector.firstMediaId!=null">
+                    , firstMediaId
                 </if>
         </trim>
         </if>
@@ -665,6 +689,22 @@ ${nativeSql}        </if>
                 <foreach collection="condition.message.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
             </if>
         </if>
+        <if test="condition.firstMediaId!=null">
+
+            <if test="condition.firstMediaId.op!='in' and condition.firstMediaId.op!='like' and condition.firstMediaId.op!='leftlike'">
+                AND   firstMediaId  ${condition.firstMediaId.op} #{condition.firstMediaId.data}
+            </if>
+            <if test="condition.firstMediaId.op=='like'">
+                AND firstMediaId like CONCAT('%', #{condition.firstMediaId.data} , '%')
+            </if>
+            <if test="condition.firstMediaId.op=='leftlike'">
+                AND firstMediaId like CONCAT(#{condition.firstMediaId.data} , '%')
+            </if>
+            <if test="condition.firstMediaId.op=='in'">
+                ${condition.groupOp}   firstMediaId  ${condition.firstMediaId.op}
+                <foreach collection="condition.firstMediaId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
                 </trim>
 
         <if test="sorter!=null" >
@@ -721,6 +761,9 @@ ${nativeSql}        </if>
                 </if>
                 <if test="selector.message!=null">
                     , message
+                </if>
+                <if test="selector.firstMediaId!=null">
+                    , firstMediaId
                 </if>
         </trim>
         </if>
@@ -787,6 +830,9 @@ ${nativeSql}        </if>
                 </if>
                 <if test="selector.message!=null">
                     , message
+                </if>
+                <if test="selector.firstMediaId!=null">
+                    , firstMediaId
                 </if>
         </trim>
         </if>
@@ -1020,6 +1066,22 @@ ${nativeSql}        </if>
                 <foreach collection="condition.message.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
             </if>
         </if>
+        <if test="condition.firstMediaId!=null">
+
+            <if test="condition.firstMediaId.op!='in' and condition.firstMediaId.op!='like' and condition.firstMediaId.op!='leftlike'">
+                ${condition.groupOp}   firstMediaId  ${condition.firstMediaId.op} #{condition.firstMediaId.data}
+            </if>
+            <if test="condition.firstMediaId.op=='like'">
+                AND firstMediaId like CONCAT('%', #{condition.firstMediaId.data} , '%')
+            </if>
+            <if test="condition.firstMediaId.op=='leftlike'">
+                AND firstMediaId like CONCAT(#{condition.firstMediaId.data} , '%')
+            </if>
+            <if test="condition.firstMediaId.op=='in'">
+                ${condition.groupOp}   firstMediaId  ${condition.firstMediaId.op}
+                <foreach collection="condition.firstMediaId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
         </trim>
 
         <if test="sorter!=null" >
@@ -1075,6 +1137,9 @@ ${nativeSql}        </if>
                     </if>
                     <if test="selector.message!=null">
                         , message
+                    </if>
+                    <if test="selector.firstMediaId!=null">
+                        , firstMediaId
                     </if>
             </trim>
         </if>
@@ -1149,6 +1214,9 @@ ${executeSqlCount}        </select>
                 </if>
                 <if test="selector.message!=null">
                     , message
+                </if>
+                <if test="selector.firstMediaId!=null">
+                    , firstMediaId
                 </if>
         </trim>
         </if>
@@ -1381,6 +1449,22 @@ ${executeSqlCount}        </select>
                 <foreach collection="condition.message.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
             </if>
         </if>
+        <if test="condition.firstMediaId!=null">
+
+            <if test="condition.firstMediaId.op!='in' and condition.firstMediaId.op!='like' and condition.firstMediaId.op!='leftlike'">
+                ${condition.groupOp}   firstMediaId  ${condition.firstMediaId.op} #{condition.firstMediaId.data}
+            </if>
+            <if test="condition.firstMediaId.op=='like'">
+                AND firstMediaId like CONCAT('%', #{condition.firstMediaId.data} , '%')
+            </if>
+            <if test="condition.firstMediaId.op=='leftlike'">
+                AND firstMediaId like CONCAT(#{condition.firstMediaId.data} , '%')
+            </if>
+            <if test="condition.firstMediaId.op=='in'">
+                ${condition.groupOp}   firstMediaId  ${condition.firstMediaId.op}
+                <foreach collection="condition.firstMediaId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
         </trim>
 
         <if test="sorter!=null" >
@@ -1439,6 +1523,9 @@ ${executeSqlCount}        </select>
                 </if>
                 <if test="selector.message!=null">
                     , message
+                </if>
+                <if test="selector.firstMediaId!=null">
+                    , firstMediaId
                 </if>
         </trim>
         </if>
@@ -1688,6 +1775,22 @@ ${nativeSql}        </if>
                     <foreach collection="condition.message.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
                 </if>
             </if>
+            <if test="condition.firstMediaId!=null">
+
+                <if test="condition.firstMediaId.op!='in' and condition.firstMediaId.op!='like' and condition.firstMediaId.op!='leftlike'">
+                    ${condition.groupOp}   firstMediaId  ${condition.firstMediaId.op} #{condition.firstMediaId.data}
+                </if>
+                <if test="condition.firstMediaId.op=='like'">
+                    AND firstMediaId like CONCAT('%', #{condition.firstMediaId.data} , '%')
+                </if>
+                <if test="condition.firstMediaId.op=='leftlike'">
+                    AND firstMediaId like CONCAT(#{condition.firstMediaId.data} , '%')
+                </if>
+                <if test="condition.firstMediaId.op=='in'">
+                    ${condition.groupOp}   firstMediaId  ${condition.firstMediaId.op}
+                    <foreach collection="condition.firstMediaId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
         </trim>
         </select>
 
@@ -1753,6 +1856,9 @@ ${nativeSql}        </if>
             </if>
             <if test="condition.message!=null">
                 AND message = #{condition.message}
+            </if>
+            <if test="condition.firstMediaId!=null">
+                AND firstMediaId = #{condition.firstMediaId}
             </if>
         </trim>
         </delete>
