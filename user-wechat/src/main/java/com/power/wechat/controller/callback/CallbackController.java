@@ -10,8 +10,13 @@ import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.WxMpMassOpenIdsMessage;
 import me.chanjar.weixin.mp.bean.WxMpMassTagMessage;
+import me.chanjar.weixin.mp.bean.material.WxMpMaterialFileBatchGetResult;
+import me.chanjar.weixin.mp.bean.material.WxMpMaterialNews;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
+import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
+import me.chanjar.weixin.mp.bean.message.WxMpXmlOutNewsMessage;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
+import me.chanjar.weixin.mp.builder.outxml.NewsBuilder;
 import me.chanjar.weixin.mp.util.xml.XStreamTransformer;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
@@ -76,39 +81,28 @@ public class CallbackController {
 //            Long createTime= 1l;
 //            String msgType= WxConsts.XML_MSG_EVENT;
             //////////////////////////////////////////
-            String rtnMsg = "";
+            WxMpXmlOutMessage rtnMsg = null;
         switch (msgType){
             case WxConsts.XML_MSG_EVENT:
                 String enevt= wxMpXmlMessage.getEvent();
 //                String enevt= WxConsts.EVT_SUBSCRIBE;
                 rtnMsg = event(adminUser,openId,createTime,msgType,enevt,uniqueKey);
-                if (enevt.equals(WxConsts.EVT_SUBSCRIBE)){
-                    wxMpXmlMessage= new WxMpXmlMessage();
-                    wxMpXmlMessage.setToUser(openId);
-                    wxMpXmlMessage.setFromUser(adminUser);
-                    wxMpXmlMessage.setCreateTime(System.currentTimeMillis()/1000);
-                    wxMpXmlMessage.setSendLocationInfo(null);
-                    wxMpXmlMessage.setScanCodeInfo(null);
-                    wxMpXmlMessage.setSendPicsInfo(null);
-                    wxMpXmlMessage.setHardWare(null);
-                    wxMpXmlMessage.setContent(rtnMsg);
-                    wxMpXmlMessage.setMsgType(WxConsts.XML_MSG_TEXT);
-                }
                 break;
             default:
                 break;
 
         }
-            String rtnXml = XStreamTransformer.toXml(WxMpXmlMessage.class,wxMpXmlMessage);
-        logger.debug(rtnXml);
-            out.print(rtnXml);
+        logger.debug(rtnMsg.toXml());
+            out.print(rtnMsg.toXml());
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (WxErrorException e) {
+            e.printStackTrace();
         }
-        return null;
+        return "";
     }
 
-    private String event(String adminUser,String openId, Long createTime,String msgType,String enevt, @PathVariable String uniqueKey){
+    private WxMpXmlOutMessage event(String adminUser,String openId, Long createTime,String msgType,String enevt, @PathVariable String uniqueKey) throws WxErrorException {
         WxMpService wxMpService = WxMpServiceUtil.getWxMpService(uniqueKey);
         logger.debug("===============openId:{}=================",openId);
         WxMpUser wxMpUser = null;
@@ -154,7 +148,34 @@ public class CallbackController {
                 logger.info("用户关注："+wxMpUser.getOpenId());
                 //关注
                 String rtnMsg =  platformInfoFacade.wxSubscribe(wechat,uniqueKey);
-                return rtnMsg;
+                WxMpMaterialFileBatchGetResult wxMpMaterialFileBatchGetResult = null;
+                    wxMpMaterialFileBatchGetResult = wxMpService.getMaterialService().materialFileBatchGet(WxConsts.MATERIAL_NEWS,0,1);
+
+                    if (wxMpMaterialFileBatchGetResult.getTotalCount() > 0) {
+                        WxMpMaterialFileBatchGetResult.WxMaterialFileBatchGetNewsItem batchGetNewsItem = wxMpMaterialFileBatchGetResult.getItems().get(0);
+                        String mediaId = batchGetNewsItem.getMediaId();
+                        WxMpMaterialNews wxMpMaterialNews = null;
+                        wxMpMaterialNews = wxMpService.getMaterialService().materialNewsInfo(mediaId);
+                        if (!wxMpMaterialNews.isEmpty()) {
+                            NewsBuilder builder = WxMpXmlOutMessage.NEWS().fromUser(adminUser)
+                                    .toUser(openId);
+                            for (WxMpMaterialNews.WxMpMaterialNewsArticle newsArticle : wxMpMaterialNews.getArticles()) {
+                                WxMpXmlOutNewsMessage.Item item = new WxMpXmlOutNewsMessage.Item();
+                                item.setDescription(newsArticle.getContent());
+                                item.setPicUrl(newsArticle.getThumbUrl());
+                                item.setTitle(newsArticle.getTitle());
+                                item.setUrl(newsArticle.getUrl());
+                                builder.addArticle(item);
+                            }
+                            logger.info("推送图文消息给用户:{}",openId);
+                            return builder.build();
+                        }
+                    }
+                    return WxMpXmlOutMessage.TEXT()
+                            .content(rtnMsg)
+                            .fromUser(adminUser)
+                            .toUser(openId)
+                            .build();
             case WxConsts.EVT_UNSUBSCRIBE:
                 logger.info("用户取消关注："+wxMpUser.getOpenId());
                 //取消关注
@@ -163,7 +184,11 @@ public class CallbackController {
             default:
                 break;
         }
-        return "";
+        return WxMpXmlOutMessage.TEXT()
+                .content("")
+                .fromUser(adminUser)
+                .toUser(openId)
+                .build();
     }
 
 
