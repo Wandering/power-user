@@ -164,7 +164,7 @@ public class CallbackController {
                                     .toUser(openId);
                             for (WxMpMaterialNews.WxMpMaterialNewsArticle newsArticle : wxMpMaterialNews.getArticles()) {
                                 WxMpXmlOutNewsMessage.Item item = new WxMpXmlOutNewsMessage.Item();
-                                item.setDescription(newsArticle.getContent());
+                                item.setDescription(newsArticle.getDigest());
                                 item.setPicUrl(newsArticle.getThumbUrl());
                                 item.setTitle(newsArticle.getTitle());
                                 item.setUrl(newsArticle.getUrl());
