@@ -65,16 +65,16 @@ public class CallbackController {
         try {
             PrintWriter out = response.getWriter();
 
-        WxMpXmlMessage wxMpXmlMessage = null;
-        try {
-            wxMpXmlMessage = WxMpXmlMessage.fromXml(request.getInputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-            String adminUser= wxMpXmlMessage.getToUser();
-            String openId= wxMpXmlMessage.getFromUser();
-            Long createTime= wxMpXmlMessage.getCreateTime();
-            String msgType= wxMpXmlMessage.getMsgType();
+            WxMpXmlMessage wxMpXmlMessage = null;
+            try {
+                wxMpXmlMessage = WxMpXmlMessage.fromXml(request.getInputStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            String adminUser = wxMpXmlMessage.getToUser();
+            String openId = wxMpXmlMessage.getFromUser();
+            Long createTime = wxMpXmlMessage.getCreateTime();
+            String msgType = wxMpXmlMessage.getMsgType();
             /////////////////////////////////////////////////
 //            String adminUser= "";
 //            String openId= "";
@@ -82,17 +82,17 @@ public class CallbackController {
 //            String msgType= WxConsts.XML_MSG_EVENT;
             //////////////////////////////////////////
             WxMpXmlOutMessage rtnMsg = null;
-        switch (msgType){
-            case WxConsts.XML_MSG_EVENT:
-                String enevt= wxMpXmlMessage.getEvent();
+            switch (msgType) {
+                case WxConsts.XML_MSG_EVENT:
+                    String enevt = wxMpXmlMessage.getEvent();
 //                String enevt= WxConsts.EVT_SUBSCRIBE;
-                rtnMsg = event(adminUser,openId,createTime,msgType,enevt,uniqueKey);
-                break;
-            default:
-                break;
+                    rtnMsg = event(adminUser, openId, createTime, msgType, enevt, uniqueKey);
+                    break;
+                default:
+                    break;
 
-        }
-        logger.debug(rtnMsg.toXml());
+            }
+            logger.debug(rtnMsg.toXml());
             out.print(rtnMsg.toXml());
         } catch (IOException e) {
             e.printStackTrace();
@@ -148,6 +148,7 @@ public class CallbackController {
                 logger.info("用户关注："+wxMpUser.getOpenId());
                 //关注
                 String rtnMsg =  platformInfoFacade.wxSubscribe(wechat,uniqueKey);
+                //消息推送
                 WxMpMaterialFileBatchGetResult wxMpMaterialFileBatchGetResult = null;
                     wxMpMaterialFileBatchGetResult = wxMpService.getMaterialService().materialFileBatchGet(WxConsts.MATERIAL_NEWS,0,1);
 

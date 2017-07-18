@@ -14,8 +14,11 @@ import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.util.crypto.SHA1;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
+import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import me.chanjar.weixin.mp.util.xml.XStreamTransformer;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -35,6 +38,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Created by Administrator on 2017/7/11.
  */
 public class TestWechat extends BaseTest{
+
+    private final static Logger logger = LoggerFactory.getLogger(TestWechat.class);
 
     String uniqueKey = "powertest";
     String openId = "oqoGE0VhoE0ouB1ArW4LNl_iDl-s";
@@ -70,7 +75,7 @@ public class TestWechat extends BaseTest{
         String timestamp = String.valueOf(System.currentTimeMillis()/1000);
         String nonce = "123";
 
-        String rtnString = this.mvc.perform(post("/wechat/callback/{uniqueKey}/callback",uniqueKey)
+        String rtnString = this.mvc.perform(post("http://localhost:8081/wechat/callback/{uniqueKey}/callback",uniqueKey)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .param("signature",SHA1.gen(wxMpService.getWxMpConfigStorage().getToken(),timestamp,nonce))
                 .param("timestamp",timestamp)
@@ -79,10 +84,12 @@ public class TestWechat extends BaseTest{
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         Assert.isTrue(!StringUtils.isEmpty(rtnString),"关注消息推送为空");
+
+        logger.info(rtnString);
+
         Map<String,Object> params = Maps.newHashMap();
         PlatformInfo platformInfo = platformInfoFacade.getPlatformInfoByUniqueKey(uniqueKey);
         Assert.notNull(platformInfo,"公众号为空");
-
         params.put("openId",openId);
         params.put("platformId",platformInfo.getId());
 
@@ -106,7 +113,7 @@ public class TestWechat extends BaseTest{
         String timestamp = String.valueOf(System.currentTimeMillis()/1000);
         String nonce = "123";
 
-        String rtnString = this.mvc.perform(post("/wechat/callback/{uniqueKey}/callback",uniqueKey)
+        String rtnString = this.mvc.perform(post("http://localhost:8081/wechat/callback/{uniqueKey}/callback",uniqueKey)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .param("signature",SHA1.gen(wxMpService.getWxMpConfigStorage().getToken(),timestamp,nonce))
                 .param("timestamp",timestamp)
@@ -115,6 +122,7 @@ public class TestWechat extends BaseTest{
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         Assert.isTrue(!StringUtils.isEmpty(rtnString),"关注消息推送为空");
+
         Map<String,Object> params = Maps.newHashMap();
         PlatformInfo platformInfo = platformInfoFacade.getPlatformInfoByUniqueKey(uniqueKey);
         Assert.notNull(platformInfo,"公众号为空");
