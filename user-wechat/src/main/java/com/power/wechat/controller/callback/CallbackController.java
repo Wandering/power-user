@@ -50,20 +50,23 @@ public class CallbackController {
 //     */
     @RequestMapping(value = "/{uniqueKey}/callback",method = RequestMethod.POST)
     @ResponseBody
-    public String callback(@RequestParam String signature,
+    public void callback(@RequestParam String signature,
                          @RequestParam String timestamp,
                          @RequestParam String nonce,
                          @PathVariable String uniqueKey ,
                          HttpServletRequest request, HttpServletResponse response){
-        WxMpService wxMpService = WxMpServiceUtil.getWxMpService(uniqueKey);
-        if (!wxMpService.checkSignature(timestamp, nonce, signature)) {
-            logger.info("非法请求， signature："+signature);
-//            @RequestParam("ToUserName") String adminUser, @RequestParam("FromUserName") String openId, @RequestParam("CreateTime")String createTime, @RequestParam("MsgType")String msgType,@RequestParam("Enevt")String enevt
 
-            return "非法请求";
-        }
         try {
             PrintWriter out = response.getWriter();
+
+            WxMpService wxMpService = WxMpServiceUtil.getWxMpService(uniqueKey);
+            if (!wxMpService.checkSignature(timestamp, nonce, signature)) {
+                logger.info("非法请求， signature："+signature);
+//            @RequestParam("ToUserName") String adminUser, @RequestParam("FromUserName") String openId, @RequestParam("CreateTime")String createTime, @RequestParam("MsgType")String msgType,@RequestParam("Enevt")String enevt
+
+                out.print("非法请求");
+            }
+
 
             WxMpXmlMessage wxMpXmlMessage = null;
             try {
@@ -99,7 +102,6 @@ public class CallbackController {
         } catch (WxErrorException e) {
             e.printStackTrace();
         }
-        return "";
     }
 
     private WxMpXmlOutMessage event(String adminUser,String openId, Long createTime,String msgType,String enevt, @PathVariable String uniqueKey) throws WxErrorException {
