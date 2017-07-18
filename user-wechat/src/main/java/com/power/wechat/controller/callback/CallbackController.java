@@ -152,9 +152,6 @@ public class CallbackController {
                 logger.info("用户关注："+wxMpUser.getOpenId());
                 //关注
                 String rtnMsg =  platformInfoFacade.wxSubscribe(wechat,uniqueKey);
-                //消息推送
-                WxMpMaterialFileBatchGetResult wxMpMaterialFileBatchGetResult = null;
-                    wxMpMaterialFileBatchGetResult = wxMpService.getMaterialService().materialFileBatchGet(WxConsts.MATERIAL_NEWS,0,1);
                     if (platformInfo.getFirstMediaId() !=null) {
                         WxMpMaterialNews wxMpMaterialNews = null;
                         wxMpMaterialNews = wxMpService.getMaterialService().materialNewsInfo(platformInfo.getFirstMediaId());

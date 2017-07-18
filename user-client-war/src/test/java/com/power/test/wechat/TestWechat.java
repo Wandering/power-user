@@ -40,9 +40,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class TestWechat extends BaseTest{
 
     private final static Logger logger = LoggerFactory.getLogger(TestWechat.class);
+    ///////////////////////////开发/////////////////////////////
+//    String uniqueKey = "powertest";
+//    String openId = "oqoGE0VhoE0ouB1ArW4LNl_iDl-s";
+    ///////////////////////////开发/////////////////////////////
 
-    String uniqueKey = "powertest";
-    String openId = "oqoGE0VhoE0ouB1ArW4LNl_iDl-s";
+    ///////////////////////////正式/////////////////////////////
+    String uniqueKey = "ppower";
+    String openId = "o9P_pv2gzYtOm6V_sDNhZ7HLWHyY";
+    ///////////////////////////正式/////////////////////////////
     @Autowired
     private MockMvc mvc;
 
