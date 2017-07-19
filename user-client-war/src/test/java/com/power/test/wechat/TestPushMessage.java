@@ -91,7 +91,7 @@ public class TestPushMessage extends BaseTest {
         }
 
 
-        WxMpMaterialNews wxMpMaterialNews = wxMpService.getMaterialService().materialNewsInfo("AnI8tW5kzOyGI60w62RyXDDdCDoe4SrlFzUbcrY11M4");
+        WxMpMaterialNews wxMpMaterialNews = wxMpService.getMaterialService().materialNewsInfo("mp100000003");
         logger.info(JSON.toJSONString(wxMpMaterialNews));
 //        Assert.isTrue(wxJsapiSignature.getSignature().equals(SHA1.genWithAmple("jsapi_ticket=" + wxMpService.getJsapiTicket(false),
 //                "noncestr=" + wxJsapiSignature.getNonceStr(), "timestamp=" + wxJsapiSignature.getTimestamp(), "url=" + url)),"微信jsAPI校验错误");
