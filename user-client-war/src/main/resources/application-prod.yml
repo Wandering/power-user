@@ -35,10 +35,10 @@ mybatis:
   mapperLocations: classpath*:/mybatis/**/**/*.xml
   typeAliasesPackage: com.power.domain,com.power.dto
 server:
-  undertow:
-    buffer-size: 86400
-    io-threads: 10000
-    max-http-post-size: 10000
-    worker-threads: 5000
-    direct-buffers: true
+  tomcat:
+    max-http-post-size: 5000
+    max-connections: 5000
+    uri-encoding: UTF-8
+    background-processor-delay: 30
+    min-spare-threads: 100
   port: 8081
