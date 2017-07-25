@@ -42,13 +42,16 @@ public class CallbackController {
 
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-//    /**
-//     * @param adminUser 开发者微信号
-//     * @param openId 发送方帐号（一个OpenID）
-//     * @param openId 消息创建时间 （整型）
-//     * @param msgType 消息类型，event
-//     * @param enevt 事件类型，subscribe(订阅)、unsubscribe(取消订阅)
-//     */
+
+    /**
+     *
+     * @param signature 签名
+     * @param timestamp 时间戳
+     * @param nonce 随机字符
+     * @param uniqueKey 公众号唯一标识
+     * @param request
+     * @param response
+     */
     @RequestMapping(value = "/{uniqueKey}/callback",method = RequestMethod.POST)
     @ResponseBody
     public void callback(@RequestParam String signature,
@@ -93,6 +96,7 @@ public class CallbackController {
                     rtnMsg = event(adminUser, openId, createTime, msgType, enevt, uniqueKey);
                     break;
                 default:
+                    rtnMsg = WxMpXmlOutMessage.TEXT().content("您好,我还不认识您的消息哦~").build();
                     break;
 
             }
@@ -104,7 +108,13 @@ public class CallbackController {
             e.printStackTrace();
         }
     }
-
+    /**
+     * @param adminUser 开发者微信号
+     * @param openId 发送方帐号（一个OpenID）
+     * @param openId 消息创建时间 （整型）
+     * @param msgType 消息类型，event
+     * @param enevt 事件类型，subscribe(订阅)、unsubscribe(取消订阅)
+     */
     private WxMpXmlOutMessage event(String adminUser,String openId, Long createTime,String msgType,String enevt, @PathVariable String uniqueKey) throws WxErrorException {
         WxMpService wxMpService = WxMpServiceUtil.getWxMpService(uniqueKey);
         logger.debug("===============openId:{}=================",openId);
