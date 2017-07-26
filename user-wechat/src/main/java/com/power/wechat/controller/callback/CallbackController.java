@@ -96,11 +96,6 @@ public class CallbackController {
                     rtnMsg = event(adminUser, openId, createTime, msgType, enevt, uniqueKey);
                     break;
                 default:
-                    rtnMsg = WxMpXmlOutMessage.TEXT()
-                            .content("您好,我还不认识您的消息哦~")
-                            .fromUser(adminUser)
-                            .toUser(openId)
-                            .build();
                     break;
 
             }
