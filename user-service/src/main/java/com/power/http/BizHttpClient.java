@@ -32,7 +32,7 @@ public class BizHttpClient {
     private ConfigurableApplicationContext context;
 
     private  static  final Logger logger = LoggerFactory.getLogger(BizHttpClient.class);
-    private  static  final  String PRO_BASE_URL = "http://www.popularpowers.com";
+    private  static  final  String PRO_BASE_URL = "http://service.popularpowers.com";
     private  static  final  String DEV_BASE_URL = "http://localhost:9000";
 
     private  static  final  String REG_USER_URI = "/biz/user/register/notify";

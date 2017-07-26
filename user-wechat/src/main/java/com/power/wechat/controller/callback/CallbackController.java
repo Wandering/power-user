@@ -105,7 +105,7 @@ public class CallbackController {
 
             }
             logger.debug(rtnMsg.toXml());
-            out.print(rtnMsg.toXml());
+            out.print(rtnMsg==null?"":rtnMsg.toXml());
         } catch (IOException e) {
             e.printStackTrace();
         } catch (WxErrorException e) {
