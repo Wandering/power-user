@@ -105,7 +105,7 @@ public class CallbackController {
 
             }
             logger.debug(rtnMsg.toXml());
-            out.print(WxMpXmlOutMessage.TRANSFER_CUSTOMER_SERVICE().toUser(openId).fromUser(adminUser).kfAccount("").build());
+            out.print(StringUtils.isNotEmpty(rtnMsg.toXml())?rtnMsg.toXml():"");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (WxErrorException e) {
