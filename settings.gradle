@@ -4,8 +4,8 @@ include 'user-service'
 include 'user-client-war'
 include 'base-common'
 include 'user-wechat'
-include 'sms-api'
-include 'sms-domain'
-include 'sms-service'
+//include 'sms-api'
+//include 'sms-domain'
+//include 'sms-service'
 
 

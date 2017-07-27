@@ -6,12 +6,14 @@ import com.power.context.UserContext;
 import com.power.core.cache.RedisRepository;
 import com.power.core.exception.BizException;
 import com.power.domain.ERRORCODE;
+import com.power.domain.PlatformInfo;
 import com.power.domain.User;
 import com.power.domain.UserAccount;
 import com.power.dto.UserInfoDTO;
+import com.power.facade.IPlatformInfoFacade;
 import com.power.facade.IUserFacade;
-import com.power.sms.api.SMSService;
-import com.power.sms.domain.SMSCheckCode;
+import com.power.yuneng.sms.api.ISMSService;
+import com.power.yuneng.sms.domain.SMSCheckCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,7 @@ import java.util.regex.Pattern;
 @RequestMapping("/user/wechat/auth")
 public class AuthController {
     @Autowired
-    private SMSService smsService;
+    private ISMSService smsService;
 
     @Autowired
     private RedisRepository<String,String> repository;
@@ -48,22 +50,27 @@ public class AuthController {
     @Autowired
     private IUserFacade userFacade;
 
+    @Autowired
+    private IPlatformInfoFacade platformInfoFacade;
+
     @RequestMapping(value = "/{uniqueKey}/captcha/sendSms")
     @ResponseBody
-    public boolean sendSms(@RequestParam("phone") String phone){
+    public boolean sendSms(@RequestParam("phone") String phone,@PathVariable String uniqueKey){
         if (!PHONE_CHECK.matcher(phone).matches()){
             throw new BizException(ERRORCODE.SMS_CHECK_PHONE.getCode(),ERRORCODE.SMS_CHECK_PHONE.getMessage());
         }
+        PlatformInfo platformInfo = platformInfoFacade.getPlatformInfoByUniqueKey(uniqueKey);
         String redisKey = USER_SMS+phone;
         String redisLockKey = USER_SMS_IN_USE_TAG+phone;
         //redis存储验证码
         if (!repository.exists(redisLockKey)) {
 
             SMSCheckCode smsCheckCode = new SMSCheckCode();
+            smsCheckCode.setBizTarget(platformInfo.getName());
             smsCheckCode.setPhone(phone);
-            String code = String.valueOf((int)((Math.random() * 9 + 1) * 100000));
+            String code = String.valueOf((int)((Math.random() * 9 + 1) * 1000));
             smsCheckCode.setCheckCode(code);
-            boolean flag = smsService.sendSMS(smsCheckCode, false);
+            boolean flag = smsService.sendSMS(smsCheckCode);
             if (flag) {
                 //存储值
                 repository.set(redisKey, code);
@@ -114,4 +121,7 @@ public class AuthController {
     }
 
 
+//    public static void main(String[] args) {
+//        System.out.println(String.valueOf((int)((Math.random() * 9 + 1) * 1000)));
+//    }
 }

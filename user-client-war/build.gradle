@@ -16,6 +16,9 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-freemarker:$springbootVersion"
     compile "org.springframework.boot:spring-boot-starter-parent:$springbootVersion"
     compile("org.springframework.boot:spring-boot-devtools")
+    compile "com.alibaba:dubbo:$dubboVersion"
+
+
     compile project(":user-service")
     compile project(":user-wechat")
 }

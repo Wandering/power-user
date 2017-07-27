@@ -96,11 +96,16 @@ public class CallbackController {
                     rtnMsg = event(adminUser, openId, createTime, msgType, enevt, uniqueKey);
                     break;
                 default:
+//                    rtnMsg = WxMpXmlOutMessage.TEXT()
+//                            .content("您好,我还不认识您的消息哦~")
+//                            .fromUser(adminUser)
+//                            .toUser(openId)
+//                            .build();
                     break;
 
             }
             logger.debug(rtnMsg.toXml());
-            out.print(rtnMsg==null?"":rtnMsg.toXml());
+            out.print(WxMpXmlOutMessage.TRANSFER_CUSTOMER_SERVICE().toUser(openId).fromUser(adminUser).kfAccount("").build());
         } catch (IOException e) {
             e.printStackTrace();
         } catch (WxErrorException e) {

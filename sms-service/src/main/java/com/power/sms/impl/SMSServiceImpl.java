@@ -37,7 +37,9 @@ public class SMSServiceImpl implements SMSService, InitializingBean, DisposableB
     private List<SMSSend> sendNewList = new ArrayList<>();
 
     private boolean threadFlag = true;
-
+    private static final String url = "http://sms.253.com/msg/";// 应用地址
+    private static final String un = "N6882898";// 账号
+    private static final String pw = "M4LuOmDTnW042b";// 密码
     /**
      * true sendList m
      * false sendNewList
@@ -51,10 +53,7 @@ public class SMSServiceImpl implements SMSService, InitializingBean, DisposableB
 //        sms.password=M4LuOmDTnW042b
 //        sms.validate.msg=【宇能共享】您好，你的验证码是:%s, 请不要告诉他人。
 //        sms.rd=1
-        // TODO send it by short message
-        String url = "http://sms.253.com/msg/";// 应用地址
-        String un = "N6882898";// 账号
-        String pw = "M4LuOmDTnW042b";// 密码
+
         String msg = StringFormatter.format("【宇能共享】您好，你的验证码是:%s, 请不要告诉他人", smsCheckCode.getCheckCode()).get();// 短信内容
         String rd = "1";// 是否需要状态报告，需要1，不需要0
         String ex = null;// 扩展码
@@ -74,6 +73,18 @@ public class SMSServiceImpl implements SMSService, InitializingBean, DisposableB
                 int len = 0;
                 while ((len = in.read(buffer)) != -1) {
                     baos.write(buffer, 0, len);
+                }
+                String rtn = URLDecoder.decode(baos.toString(), "UTF-8");
+                if (rtn!=null){
+                    String[] rtns = rtn.split("\n");
+                    String rtnCode =  rtns[0].split(",")[1];
+                    if ("0".equals(rtnCode)){
+                        return true;
+                    }else {
+                        logger.info("短信发送失败：{}"，);
+                    }
+                }else {
+                    throw new Exception("HTTP ERROR Status: " + method.getStatusCode() + ":" + method.getStatusText());
                 }
                 return URLDecoder.decode(baos.toString(), "UTF-8")!=null;
             } else {

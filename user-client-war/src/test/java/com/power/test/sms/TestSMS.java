@@ -1,8 +1,8 @@
 package com.power.test.sms;
 
-import com.power.sms.api.SMSService;
-import com.power.sms.domain.SMSCheckCode;
 import com.power.test.BaseTest;
+import com.power.yuneng.sms.api.ISMSService;
+import com.power.yuneng.sms.domain.SMSCheckCode;
 import junit.framework.TestCase;
 import org.apache.log4j.Logger;
 import org.junit.Test;
@@ -19,14 +19,15 @@ import org.springframework.util.Assert;
  */
 public class TestSMS extends BaseTest {
     @Autowired
-    SMSService smsService;
+    ISMSService smsService;
     Logger logger = Logger.getLogger(TestSMS.class);
     @Test
     public void testSMS(){
-//        SMSCheckCode smsCheckCode = new SMSCheckCode();
-//        smsCheckCode.setPhone("17602903609");
-//        smsCheckCode.setCheckCode("123456");
-//        boolean flag = smsService.sendSMS(smsCheckCode,false);
-//        Assert.isTrue(flag,"短信发送成功");
+        SMSCheckCode smsCheckCode = new SMSCheckCode();
+        smsCheckCode.setPhone("17602903609");
+        smsCheckCode.setCheckCode("123456");
+        smsCheckCode.setBizTarget("123456");
+        boolean flag = smsService.sendSMS(smsCheckCode);
+        Assert.isTrue(flag,"短信发送成功");
     }
 }
