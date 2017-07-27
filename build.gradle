@@ -69,6 +69,8 @@ allprojects {
 
     repositories {
         mavenLocal()
+        maven { url "http://192.168.10.49:8081/repository/maven-public/" }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         maven { url 'http://repository.jboss.com/maven2/' }
         mavenCentral()
