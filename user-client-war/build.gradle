@@ -13,7 +13,6 @@ dependencies {
     testCompile "org.springframework.boot:spring-boot-starter-data-redis:$springbootVersion"
 //    testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
     testCompile group: 'org.springframework.restdocs', name: 'spring-restdocs-mockmvc', version: '1.2.1.RELEASE'
-    compile "org.springframework.boot:spring-boot-starter-freemarker:$springbootVersion"
     compile "org.springframework.boot:spring-boot-starter-parent:$springbootVersion"
     compile("org.springframework.boot:spring-boot-devtools")
     compile "com.alibaba:dubbo:$dubboVersion"
