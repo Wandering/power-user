@@ -5,4 +5,5 @@ dependencies {
     compile "com.power.yuneng.sms:sms-api:$powerCloudVersion"
     compile "com.github.binarywang:weixin-java-mp:2.6.0"
     compile "com.101tec:zkclient:0.10"
+    compile 'com.power.yuneng.activity:activity-api:0.0.2-SNAPSHOT'
 }

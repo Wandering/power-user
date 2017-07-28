@@ -12,8 +12,11 @@ import com.power.domain.UserAccount;
 import com.power.dto.UserInfoDTO;
 import com.power.facade.IPlatformInfoFacade;
 import com.power.facade.IUserFacade;
+import com.power.yuneng.activity.api.IActivityNotify;
+import com.power.yuneng.activity.entity.dto.UserActivityDTO;
 import com.power.yuneng.sms.api.ISMSService;
 import com.power.yuneng.sms.domain.SMSCheckCode;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +35,9 @@ import java.util.regex.Pattern;
 public class AuthController {
     @Autowired
     private ISMSService smsService;
+
+    @Autowired
+    private IActivityNotify activityNotify;
 
     @Autowired
     private RedisRepository<String,String> repository;
@@ -92,7 +98,8 @@ public class AuthController {
     public boolean checkSms(@PathVariable("uniqueKey")String uniqueKey,
                             @RequestParam String phone,
                             @RequestParam String checkCode,
-                            @RequestParam String token){
+                            @RequestParam String token,
+                            @RequestParam(name = "ex",required = false) String ex){
         if (!PHONE_CHECK.matcher(phone).matches()){
             throw new BizException(ERRORCODE.SMS_CHECK_PHONE.getCode(),ERRORCODE.SMS_CHECK_PHONE.getMessage());
         }
@@ -113,6 +120,11 @@ public class AuthController {
                 logger.debug(JSON.toJSONString(repository.get(token)));
                 userFacade.getMainService().edit(user);
                 repository.del(redisKey);
+                try {
+                    smsNotify(ex);
+                }catch (Exception e){
+                    logger.info(e.getMessage());
+                }
                 return true;
             }
             throw new BizException(ERRORCODE.SMS_CHECK_ERROR.getCode(),ERRORCODE.SMS_CHECK_ERROR.getMessage());
@@ -120,6 +132,12 @@ public class AuthController {
         throw new BizException(ERRORCODE.SMS_CHECK_ERROR.getCode(),ERRORCODE.SMS_CHECK_ERROR.getMessage());
     }
 
+    //完成事件通知
+    private void smsNotify(String ex){
+        if (StringUtils.isNotEmpty(ex)) {
+            activityNotify.giveBonuses(JSON.parseObject(ex, UserActivityDTO.class));
+        }
+    }
 
 //    public static void main(String[] args) {
 //        System.out.println(String.valueOf((int)((Math.random() * 9 + 1) * 1000)));

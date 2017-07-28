@@ -22,6 +22,7 @@ buildscript {
         classpath "io.spring.gradle:dependency-management-plugin:0.5.6.RELEASE"
         //jhipster-needle-gradle-buildscript-dependency - JHipster will add additional gradle build script plugins here
         classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.4'
+        classpath 'org.hibernate.build.gradle:gradle-maven-publish-auth:2.0.1+'
     }
 }
 
@@ -62,7 +63,8 @@ allprojects {
     apply plugin: 'maven'
     apply plugin: 'propdeps'
     apply plugin: 'io.spring.dependency-management'
-
+    apply plugin: 'maven-publish'
+    apply plugin: 'maven-publish-auth'
 
     apply plugin: 'idea'
     apply plugin: 'eclipse'
@@ -84,6 +86,28 @@ allprojects {
         maven { url 'http://repo.maven.apache.org/maven2' }
     }
 
+    publishing {
+        task sourceJar(type: Jar) {
+            classifier = 'sources'
+            from sourceSets.main.allSource
+        }
+
+        publications {
+            mavenJava(MavenPublication) { from components.java }
+            mavenJava(MavenPublication) {
+                artifact(sourceJar) {
+                    classifier = "sources"
+                }
+            }
+        }
+
+        repositories {
+            maven {
+                name = 'power'
+                url "http://192.168.10.49:8081/repository/maven-${project.version.endsWith('-SNAPSHOT') ? 'snapshots' : 'releases'}"
+            }
+        }
+    }
 
 
     tasks.withType(JavaCompile) {
