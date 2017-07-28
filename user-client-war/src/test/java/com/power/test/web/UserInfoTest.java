@@ -72,10 +72,7 @@ public class UserInfoTest extends BaseTest{
 //        WxMpOAuth2AccessToken wxMpOAuth2AccessToken = new WxMpOAuth2AccessToken();
 //        wxMpOAuth2AccessToken.setOpenId("o9P_pv2gzYtOm6V_sDNhZ7HLWHyY");
 //        given(wxMpService.oauth2getAccessToken("123")).willReturn(wxMpOAuth2AccessToken);
-        UserAnswerDTO userAnswerDTO = new UserAnswerDTO();
-        userAnswerDTO.setUserId(2L);
-        userAnswerDTO.setQuestionnaireId(1);
-        userAnswerDTO.setActivityId(1);
+
         String token = login(openId,agencyId,accountId);
         this.mvc.perform(get("/user/wechat/auth/{uniqueKey}/captcha/sendSms",uniqueKey).accept(MediaType.APPLICATION_JSON_UTF8)
                 .param("phone",phone)
@@ -100,7 +97,6 @@ public class UserInfoTest extends BaseTest{
         this.mvc.perform(get("/user/wechat/auth/{uniqueKey}/captcha/checkSms",uniqueKey).accept(MediaType.APPLICATION_JSON_UTF8)
                 .param("phone",phone)
                 .param("checkCode",checkCode)
-                .param("ex",JSON.toJSONString(userAnswerDTO))
                 .param("token",token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.rtnCode").value(ok_rtn))
