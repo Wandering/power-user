@@ -15,6 +15,7 @@
     <!-- 配置服务 -->
     <dubbo:reference id="smsService" interface="com.power.yuneng.sms.api.ISMSService" check="false"
                      timeout="60000"/>
-
+    <dubbo:reference id="activityNotify" interface="com.power.yuneng.activity.api.IActivityNotify" check="false"
+                     timeout="60000"/>
 </beans>
        
