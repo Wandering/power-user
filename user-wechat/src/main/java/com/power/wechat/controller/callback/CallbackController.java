@@ -104,8 +104,8 @@ public class CallbackController {
                     break;
 
             }
-            logger.debug(rtnMsg.toXml());
-            out.print(StringUtils.isNotEmpty(rtnMsg.toXml())?rtnMsg.toXml():"");
+//            logger.debug(rtnMsg.toXml());
+            out.print(StringUtils.isNotEmpty(rtnMsg==null?null:rtnMsg.toXml())?rtnMsg.toXml():"");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (WxErrorException e) {
@@ -197,11 +197,7 @@ public class CallbackController {
             default:
                 break;
         }
-        return WxMpXmlOutMessage.TEXT()
-                .content("")
-                .fromUser(adminUser)
-                .toUser(openId)
-                .build();
+        return null;
     }
 
 

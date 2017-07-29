@@ -112,6 +112,12 @@ public class UserInfoTest extends BaseTest{
         Assert.isTrue(userInfoDTO.getOpenId().equals(openId),"openId错误");
 
     }
+
+    @Test
+    public void getSmsCheckCode(){
+        String checkCode = redis.get(checkKey);
+        logger.info("checkCode===================={}",checkCode);
+    }
     @Test
     public void testQueryWxPlatform() throws Exception {
 
