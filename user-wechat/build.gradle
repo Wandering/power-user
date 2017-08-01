@@ -6,5 +6,6 @@ dependencies {
     compile "com.101tec:zkclient:0.10"
     compile ("com.power.yuneng.activity:activity-api:0.0.3-SNAPSHOT"){
         exclude module: "base-common"
+        exclude module: "power-activity"
     }
 }
