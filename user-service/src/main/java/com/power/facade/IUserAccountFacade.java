@@ -16,5 +16,6 @@ import java.util.Map;
 
 public interface IUserAccountFacade extends IPersistenceProvider {
     Agencies queryUserAgencyInfo(Long userId);
+    UserAccount queryUserAccount(Long userId,Long agencyId);
     Map<String,Object> login(String openId,String uniqueKey);
 }
