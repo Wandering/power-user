@@ -8,5 +8,6 @@ include 'user-api'
 //include 'sms-api'
 //include 'sms-domain'
 //include 'sms-service'
-
+include 'test'
+include 'test'
 

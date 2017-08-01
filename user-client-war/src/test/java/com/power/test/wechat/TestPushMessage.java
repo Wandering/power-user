@@ -119,8 +119,10 @@ public class TestPushMessage extends BaseTest {
      */
     @Test
     public void testSendMessage() throws Exception {
-        String openId = "o9P_pv2gzYtOm6V_sDNhZ7HLWHyY";
-        String uniqueKey = "ppower";
+        String openId = "oqoGE0UJGJSuFrSbJX-SwcpVhLYY";
+        String uniqueKey = "powertest";
+//        String openId = "o9P_pv2gzYtOm6V_sDNhZ7HLWHyY";
+//        String uniqueKey = "ppower";
         WxMpService wxMpService = WxMpServiceUtil.getWxMpService(uniqueKey);
         String mediaId = wxMpService.getMaterialService().materialNewsBatchGet(0,1).getItems().get(0).getMediaId();
         articleService.sendArticle(uniqueKey,openId,mediaId);
