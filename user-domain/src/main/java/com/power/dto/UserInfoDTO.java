@@ -34,6 +34,11 @@ public class UserInfoDTO {
 
     private String openId;
 
+    /**
+     * 公众号唯一标识
+     */
+    private String uniqueKey;
+
     public Long getUserId() {
         return userId;
     }
@@ -122,5 +127,13 @@ public class UserInfoDTO {
 
     public void setOpenId(String openId) {
         this.openId = openId;
+    }
+
+    public String getUniqueKey() {
+        return uniqueKey;
+    }
+
+    public void setUniqueKey(String uniqueKey) {
+        this.uniqueKey = uniqueKey;
     }
 }

@@ -7,12 +7,15 @@ import com.power.domain.ERRORCODE;
 import com.power.domain.PlatformInfo;
 import com.power.domain.UserAccount;
 import com.power.domain.UserPlatform;
+import com.power.dto.WxEvent;
+import com.power.enums.PowerEvent;
 import com.power.facade.IPlatformInfoFacade;
 import com.power.facade.IUserAccountFacade;
 import com.power.facade.IUserFacade;
 import com.power.facade.IUserPlatformFacade;
 import com.power.http.BizHttpClient;
 import com.power.service.IUserExpandService;
+import com.power.wechat.listener.IEventListener;
 import com.power.wechat.util.WxMpServiceUtil;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.exception.WxErrorException;
@@ -79,4 +82,20 @@ public class PlatformController {
         }
         return openId;
     }
+    @Autowired
+    IEventListener eventListener;
+    /**
+     * @param uniqueKey
+     * @param openId
+     * @return
+     */
+    @PostMapping("/{uniqueKey}/event")
+    public void returnStart(@PathVariable String uniqueKey,@RequestParam String openId,@RequestParam String event){
+        WxEvent wxEvent = new WxEvent();
+        wxEvent.setOpenId(openId);
+        wxEvent.setUniqueKey(uniqueKey);
+        wxEvent.setEvent(PowerEvent.valueOf(event));
+        eventListener.eventDispatched(wxEvent);
+    }
+
 }

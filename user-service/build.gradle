@@ -9,5 +9,5 @@ dependencies {
     compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:$MybatisSpringBoot"
     compile("org.mybatis:mybatis-spring:1.3.0")
 
-    compile project(":user-domain")
+    compile project(":user-api")
 }

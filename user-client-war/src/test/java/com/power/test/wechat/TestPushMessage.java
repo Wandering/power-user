@@ -1,8 +1,11 @@
 package com.power.test.wechat;
 
 import com.alibaba.fastjson.JSON;
+import com.power.enums.PowerEvent;
 import com.power.test.BaseTest;
+import com.power.wechat.listener.EventObservableFactory;
 import com.power.wechat.util.WxMpServiceUtil;
+import com.power.yuneng.user.IArticleService;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialFileBatchGetResult;
@@ -13,6 +16,14 @@ import me.chanjar.weixin.mp.builder.outxml.NewsBuilder;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 /**
@@ -95,5 +106,41 @@ public class TestPushMessage extends BaseTest {
 //        logger.info(JSON.toJSONString(wxMpMaterialNews));
 //        Assert.isTrue(wxJsapiSignature.getSignature().equals(SHA1.genWithAmple("jsapi_ticket=" + wxMpService.getJsapiTicket(false),
 //                "noncestr=" + wxJsapiSignature.getNonceStr(), "timestamp=" + wxJsapiSignature.getTimestamp(), "url=" + url)),"微信jsAPI校验错误");
+    }
+
+    @Autowired
+    private MockMvc mvc;
+    @Autowired
+    IArticleService articleService;
+    /**
+     * 测试微信推送消息
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testSendMessage() throws Exception {
+        String openId = "o9P_pv2gzYtOm6V_sDNhZ7HLWHyY";
+        String uniqueKey = "ppower";
+        WxMpService wxMpService = WxMpServiceUtil.getWxMpService(uniqueKey);
+        String mediaId = wxMpService.getMaterialService().materialNewsBatchGet(0,1).getItems().get(0).getMediaId();
+        articleService.sendArticle(uniqueKey,openId,mediaId);
+    }
+
+
+    /**
+     * 测试事件监听
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testEvent() throws Exception {
+        String openId = "o9P_pv2gzYtOm6V_sDNhZ7HLWHyY";
+        String uniqueKey = "ppower";
+        this.mvc.perform(post("/platform/wechat/{uniqueKey}/event",uniqueKey).accept(MediaType.APPLICATION_JSON_UTF8)
+                .param("openId",openId)
+                .param("event","RETURN_END"))
+                .andExpect(status().isOk()
+                )
+        ;
     }
 }

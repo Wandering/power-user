@@ -14,6 +14,7 @@ import com.power.facade.IPlatformInfoFacade;
 import com.power.facade.IUserFacade;
 import com.power.yuneng.activity.api.IActivityNotify;
 import com.power.yuneng.activity.entity.dto.UserActivityDTO;
+import com.power.yuneng.activity.entity.dto.UserActivityExDTO;
 import com.power.yuneng.sms.api.ISMSService;
 import com.power.yuneng.sms.domain.SMSCheckCode;
 import org.apache.commons.lang3.StringUtils;
@@ -121,7 +122,7 @@ public class AuthController {
                 userFacade.getMainService().edit(user);
                 repository.del(redisKey);
                 try {
-                    smsNotify(ex);
+                    smsNotify(ex,uniqueKey);
                 }catch (Exception e){
                     logger.info(e.getMessage());
                 }
@@ -133,9 +134,12 @@ public class AuthController {
     }
 
     //完成事件通知
-    private void smsNotify(String ex){
+    private void smsNotify(String ex,String uniqueKey){
         if (StringUtils.isNotEmpty(ex)) {
-            activityNotify.giveBonuses(JSON.parseObject(ex, UserActivityDTO.class));
+            UserActivityExDTO userActivityExDTO = JSON.parseObject(ex, UserActivityExDTO.class);
+            userActivityExDTO.setOpenId(UserContext.getCurrentUser().getOpenId());
+            userActivityExDTO.setUniqueKey(uniqueKey);
+            activityNotify.giveBonuses(userActivityExDTO);
         }
     }
 
