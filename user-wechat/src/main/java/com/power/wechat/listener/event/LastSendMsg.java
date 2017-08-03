@@ -60,7 +60,7 @@ public class LastSendMsg implements Observer{
         logger.info("推送还电结束之后问卷消息");
         if (activityNotify.hasGiveBonuses(userActivity)) {
             logger.info("推送成功");
-            articleService.sendArticle(wxEvent.getUniqueKey(), wxEvent.getOpenId(), activity.getName(), activity.getDesc(), activity.getImageUrl(), activity.getUrl());
+            articleService.sendArticle(wxEvent.getUniqueKey(), wxEvent.getOpenId(), activity.getName(), activity.getActivityDesc(), activity.getImageUrl(), activity.getUrl());
         }
     }
 }
