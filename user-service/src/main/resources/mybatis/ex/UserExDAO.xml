@@ -26,7 +26,7 @@ D
 
     <select id="getUserInfoByAccount" resultType="UserInfoDTO">
 
-      SELECT puser.phone as phone,expand.*,userplatform.openId,account.id as accountId from power_user_account account
+      SELECT puser.phone as phone,expand.*,userplatform.openId,account.id as accountId,platform.uniqueKey as uniqueKey from power_user_account account
             INNER JOIN power_user puser on puser.id = account.userId
             INNER JOIN power_user_expand expand ON expand.agencyId = account.agencyId and puser.id = expand.userId
             INNER JOIN power_platform_info platform ON platform.agencyId = account.agencyId

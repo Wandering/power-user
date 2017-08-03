@@ -11,6 +11,7 @@ import com.power.facade.IUserAccountFacade;
 import com.power.facade.IUserPlatformFacade;
 import com.power.wechat.listener.EventObservableFactory;
 import com.power.yuneng.activity.api.IActivityNotify;
+import com.power.yuneng.activity.entity.Activity;
 import com.power.yuneng.activity.entity.dto.UserActivityExDTO;
 import com.power.yuneng.user.IArticleService;
 import org.slf4j.Logger;
@@ -46,6 +47,7 @@ public class LastSendMsg implements Observer{
     @Override
     public void update(Observable o, Object arg) {
         WxEvent wxEvent = (WxEvent) arg;
+        Activity activity = activityNotify.getActivityById(1,wxEvent.getUniqueKey());
         UserActivityExDTO userActivity = new UserActivityExDTO();
         userActivity.setOpenId(wxEvent.getOpenId());
         userActivity.setUniqueKey(wxEvent.getUniqueKey());
@@ -58,7 +60,7 @@ public class LastSendMsg implements Observer{
         logger.info("推送还电结束之后问卷消息");
         if (activityNotify.hasGiveBonuses(userActivity)) {
             logger.info("推送成功");
-            articleService.sendArticle(wxEvent.getUniqueKey(), wxEvent.getOpenId(), "我只是个测试", "我只是个测试", "https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=2546541266,732148371&fm=173&s=C7E602E6126A875546C1BAB703002005&w=639&h=399&img.JPEG", "https://www.baidu.com/home/news/data/newspage?nid=3118762423702707450&n_type=0&p_from=1&dtype=-1");
+            articleService.sendArticle(wxEvent.getUniqueKey(), wxEvent.getOpenId(), activity.getName(), activity.getDesc(), activity.getImageUrl(), activity.getUrl());
         }
     }
 }
