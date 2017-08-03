@@ -91,6 +91,7 @@ public class PlatformController {
      */
     @PostMapping("/{uniqueKey}/event")
     public void returnStart(@PathVariable String uniqueKey,@RequestParam String openId,@RequestParam String event){
+        logger.debug("接收到事件{}",JSON.toJSONString(event));
         WxEvent wxEvent = new WxEvent();
         wxEvent.setOpenId(openId);
         wxEvent.setUniqueKey(uniqueKey);

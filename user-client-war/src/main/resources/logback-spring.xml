@@ -59,7 +59,7 @@
             </encoder>
         </appender>
 
-        <root level="DEBUG">
+        <root level="INFO">
             <appender-ref ref="FILE" />
         </root>
     </springProfile>
@@ -80,11 +80,11 @@
             </encoder>
         </appender>
 
-        <root level="debug">
+        <root level="INFO">
             <appender-ref ref="FILE" />
         </root>
     </springProfile>
-    <logger name="com.power" level="#logback.loglevel#"/>
+    <logger name="com.power" level="DEBUG"/>
 
     <logger name="io.github.jhipster.sample" level="#logback.loglevel#"/>
 

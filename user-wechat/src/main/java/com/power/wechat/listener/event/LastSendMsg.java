@@ -13,6 +13,8 @@ import com.power.wechat.listener.EventObservableFactory;
 import com.power.yuneng.activity.api.IActivityNotify;
 import com.power.yuneng.activity.entity.dto.UserActivityExDTO;
 import com.power.yuneng.user.IArticleService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -29,6 +31,7 @@ import java.util.Observer;
  */
 @Component
 public class LastSendMsg implements Observer{
+    private static final Logger logger = LoggerFactory.getLogger(LastSendMsg.class);
     @Autowired
     private IArticleService articleService;
     @Autowired
@@ -43,7 +46,6 @@ public class LastSendMsg implements Observer{
     @Override
     public void update(Observable o, Object arg) {
         WxEvent wxEvent = (WxEvent) arg;
-//        String title,String desc, String picurl, String url
         UserActivityExDTO userActivity = new UserActivityExDTO();
         userActivity.setOpenId(wxEvent.getOpenId());
         userActivity.setUniqueKey(wxEvent.getUniqueKey());
@@ -53,7 +55,9 @@ public class LastSendMsg implements Observer{
         UserPlatform userPlatform = userPlatformFacade.getWxPlatformByOpIdAndPid(wxEvent.getOpenId(),platformInfo.getAgencyId());
         UserAccount userAccount = userAccountFacade.queryUserAccount(userPlatform.getUserId(),platformInfo.getAgencyId());
         userActivity.setUserId(userAccount.getId());
+        logger.info("推送还电结束之后问卷消息");
         if (activityNotify.hasGiveBonuses(userActivity)) {
+            logger.info("推送成功");
             articleService.sendArticle(wxEvent.getUniqueKey(), wxEvent.getOpenId(), "我只是个测试", "我只是个测试", "https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=2546541266,732148371&fm=173&s=C7E602E6126A875546C1BAB703002005&w=639&h=399&img.JPEG", "https://www.baidu.com/home/news/data/newspage?nid=3118762423702707450&n_type=0&p_from=1&dtype=-1");
         }
     }
