@@ -78,6 +78,7 @@ public class CallbackController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            logger.info(JSON.toJSONString(wxMpXmlMessage));
             String adminUser = wxMpXmlMessage.getToUser();
             String openId = wxMpXmlMessage.getFromUser();
             Long createTime = wxMpXmlMessage.getCreateTime();

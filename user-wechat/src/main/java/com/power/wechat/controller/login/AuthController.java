@@ -60,6 +60,12 @@ public class AuthController {
     @Autowired
     private IPlatformInfoFacade platformInfoFacade;
 
+    /**
+     * 发送手机短信
+     * @param phone 手机号码
+     * @param uniqueKey 公众号平台唯一key
+     * @return 成功/失败
+     */
     @RequestMapping(value = "/{uniqueKey}/captcha/sendSms")
     @ResponseBody
     public boolean sendSms(@RequestParam("phone") String phone,@PathVariable String uniqueKey){
@@ -94,6 +100,15 @@ public class AuthController {
         }
     }
 
+    /**
+     * 校验短信验证码
+     * @param uniqueKey 公众号唯一key
+     * @param phone 手机号码
+     * @param checkCode 校验码
+     * @param token 用户唯一token
+     * @param ex 拓展信息
+     * @return 成功/失败
+     */
     @RequestMapping(value = "/{uniqueKey}/captcha/checkSms")
     @ResponseBody
     public boolean checkSms(@PathVariable("uniqueKey")String uniqueKey,
@@ -133,7 +148,13 @@ public class AuthController {
         throw new BizException(ERRORCODE.SMS_CHECK_ERROR.getCode(),ERRORCODE.SMS_CHECK_ERROR.getMessage());
     }
 
-    //完成事件通知
+    /**
+     * 完成事件通知
+     *
+     * 根据拓展信息调用接口
+     * @param ex
+     * @param uniqueKey
+     */
     private void smsNotify(String ex,String uniqueKey){
         if (StringUtils.isNotEmpty(ex)) {
             UserActivityExDTO userActivityExDTO = JSON.parseObject(ex, UserActivityExDTO.class);

@@ -41,7 +41,7 @@ public class ArticleController {
     /**
      * <pre>
      *   mediaId = ""
-     *
+     * 发送公众号新闻
      * </pre>
      * @param uniqueKey
      * @param openId

@@ -145,4 +145,19 @@ public class TestPushMessage extends BaseTest {
                 )
         ;
     }
+
+    /**
+     * 测试事件监听
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testGenQrCode() throws Exception {
+        WxMpService wxMpService = WxMpServiceUtil.getWxMpService("ppowersdk");
+
+//        String ss = wxMpService.getQrcodeService().qrCodePicture(wxMpService.getQrcodeService().qrCodeCreateTmpTicket(1,2592000));
+//        wxMpService.shortUrl("http://weixin.qq.com/q/02WlOHZfQ_bF_1EztM1p1t");
+        logger.info(wxMpService.shortUrl(wxMpService.getQrcodeService().qrCodeCreateLastTicket("2233333").getUrl()));
+//        logger.info(wxMpService.shortUrl("http://weixin.qq.com/q/02WlOHZfQ_bF_1EztM1p1t"));
+    }
 }

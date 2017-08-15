@@ -29,6 +29,12 @@ public class LoginController {
     private PlatformCache platformCache;
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
+    /**
+     * 根据code登录公众号
+     * @param code 微信code
+     * @param uniqueKey 微信公众号对于宇能平台唯一key
+     * @return
+     */
     @RequestMapping("/{uniqueKey}/code")
     @ResponseBody
    public Map<String,Object> wxCodeLogin(@RequestParam("code")String code,@PathVariable("uniqueKey")String uniqueKey){
@@ -49,6 +55,12 @@ public class LoginController {
         return rtnMap;
    }
 
+    /**
+     * 根据openId来登录公众号
+     * @param openId 微信对于公众号唯一用户标识openId
+     * @param uniqueKey 微信公众号对于宇能平台唯一key
+     * @return
+     */
     @RequestMapping("/{uniqueKey}/open")
     @ResponseBody
     public Map<String,Object> wxOpenLogin(@RequestParam("openId")String openId,@PathVariable("uniqueKey")String uniqueKey){

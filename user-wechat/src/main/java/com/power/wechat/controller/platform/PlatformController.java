@@ -85,8 +85,9 @@ public class PlatformController {
     @Autowired
     IEventListener eventListener;
     /**
-     * @param uniqueKey
-     * @param openId
+     * 获取事件通知
+     * @param uniqueKey 微信公众号对于宇能平台唯一key
+     * @param openId 微信公众号唯一key
      * @return
      */
     @PostMapping("/{uniqueKey}/event")

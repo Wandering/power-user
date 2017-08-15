@@ -26,10 +26,10 @@ public class VoucherController {
      * <pre>
      *     tempData = L
      * </pre>
-     * @param uniqueKey
-     * @param templateId
-     * @param openId
-     * @param tempData
+     * @param uniqueKey 微信公众号对于宇能平台唯一key
+     * @param templateId 模板消息ID
+     * @param openId 微信公众号openId
+     * @param tempData 模板数据
      * @return
      */
     @PostMapping("/{uniqueKey}/sendTemplateMsg")
