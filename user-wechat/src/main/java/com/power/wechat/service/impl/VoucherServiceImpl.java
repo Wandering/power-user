@@ -1,5 +1,6 @@
 package com.power.wechat.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.power.yuneng.user.IVoucherService;
 import com.power.wechat.util.WxMpServiceUtil;
 import me.chanjar.weixin.common.exception.WxErrorException;
@@ -26,9 +27,11 @@ public class VoucherServiceImpl implements IVoucherService {
         WxMpTemplateMsgService wxMpTemplateMsgService = wxMpService.getTemplateMsgService();
         WxMpTemplateMessage wxMpTemplateMessage = WxMpTemplateMessage.builder().templateId(templateId).data(wxMpTemplateDatas).toUser(openId).build();
         try {
+
             wxMpTemplateMsgService.sendTemplateMsg(wxMpTemplateMessage);
+            logger.info("通知发送成功：{}", JSON.toJSONString(wxMpTemplateMessage));
         } catch (WxErrorException e) {
-            logger.info("信息发送失败：{}", e.getMessage());
+            logger.info("通知发送成功：{}", e.getMessage());
             e.printStackTrace();
         }
         return true;
