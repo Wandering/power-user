@@ -107,57 +107,57 @@ public class TestPushMessage extends BaseTest {
 //        Assert.isTrue(wxJsapiSignature.getSignature().equals(SHA1.genWithAmple("jsapi_ticket=" + wxMpService.getJsapiTicket(false),
 //                "noncestr=" + wxJsapiSignature.getNonceStr(), "timestamp=" + wxJsapiSignature.getTimestamp(), "url=" + url)),"微信jsAPI校验错误");
     }
+//
+//    @Autowired
+//    private MockMvc mvc;
+//    @Autowired
+//    IArticleService articleService;
+//    /**
+//     * 测试微信推送消息
+//     *
+//     * @throws Exception
+//     */
+//    @Test
+//    public void testSendMessage() throws Exception {
+//        String openId = "oqoGE0UJGJSuFrSbJX-SwcpVhLYY";
+//        String uniqueKey = "powertest";
+////        String openId = "o9P_pv2gzYtOm6V_sDNhZ7HLWHyY";
+////        String uniqueKey = "ppower";
+//        WxMpService wxMpService = WxMpServiceUtil.getWxMpService(uniqueKey);
+//        String mediaId = wxMpService.getMaterialService().materialNewsBatchGet(0,1).getItems().get(0).getMediaId();
+//        articleService.sendArticle(uniqueKey,openId,mediaId);
+//    }
 
-    @Autowired
-    private MockMvc mvc;
-    @Autowired
-    IArticleService articleService;
-    /**
-     * 测试微信推送消息
-     *
-     * @throws Exception
-     */
-    @Test
-    public void testSendMessage() throws Exception {
-        String openId = "oqoGE0UJGJSuFrSbJX-SwcpVhLYY";
-        String uniqueKey = "powertest";
+
+//    /**
+//     * 测试事件监听
+//     *
+//     * @throws Exception
+//     */
+//    @Test
+//    public void testEvent() throws Exception {
 //        String openId = "o9P_pv2gzYtOm6V_sDNhZ7HLWHyY";
 //        String uniqueKey = "ppower";
-        WxMpService wxMpService = WxMpServiceUtil.getWxMpService(uniqueKey);
-        String mediaId = wxMpService.getMaterialService().materialNewsBatchGet(0,1).getItems().get(0).getMediaId();
-        articleService.sendArticle(uniqueKey,openId,mediaId);
-    }
-
-
-    /**
-     * 测试事件监听
-     *
-     * @throws Exception
-     */
-    @Test
-    public void testEvent() throws Exception {
-        String openId = "o9P_pv2gzYtOm6V_sDNhZ7HLWHyY";
-        String uniqueKey = "ppower";
-        this.mvc.perform(post("/platform/wechat/{uniqueKey}/event",uniqueKey).accept(MediaType.APPLICATION_JSON_UTF8)
-                .param("openId",openId)
-                .param("event","RETURN_END"))
-                .andExpect(status().isOk()
-                )
-        ;
-    }
-
-    /**
-     * 测试事件监听
-     *
-     * @throws Exception
-     */
-    @Test
-    public void testGenQrCode() throws Exception {
-        WxMpService wxMpService = WxMpServiceUtil.getWxMpService("ppowersdk");
-
-//        String ss = wxMpService.getQrcodeService().qrCodePicture(wxMpService.getQrcodeService().qrCodeCreateTmpTicket(1,2592000));
-//        wxMpService.shortUrl("http://weixin.qq.com/q/02WlOHZfQ_bF_1EztM1p1t");
-        logger.info(wxMpService.shortUrl(wxMpService.getQrcodeService().qrCodeCreateLastTicket("2233333").getUrl()));
-//        logger.info(wxMpService.shortUrl("http://weixin.qq.com/q/02WlOHZfQ_bF_1EztM1p1t"));
-    }
+//        this.mvc.perform(post("/platform/wechat/{uniqueKey}/event",uniqueKey).accept(MediaType.APPLICATION_JSON_UTF8)
+//                .param("openId",openId)
+//                .param("event","RETURN_END"))
+//                .andExpect(status().isOk()
+//                )
+//        ;
+//    }
+//
+//    /**
+//     * 测试事件监听
+//     *
+//     * @throws Exception
+//     */
+//    @Test
+//    public void testGenQrCode() throws Exception {
+//        WxMpService wxMpService = WxMpServiceUtil.getWxMpService("ppowersdk");
+//
+////        String ss = wxMpService.getQrcodeService().qrCodePicture(wxMpService.getQrcodeService().qrCodeCreateTmpTicket(1,2592000));
+////        wxMpService.shortUrl("http://weixin.qq.com/q/02WlOHZfQ_bF_1EztM1p1t");
+//        logger.info(wxMpService.shortUrl(wxMpService.getQrcodeService().qrCodeCreateLastTicket("2233333").getUrl()));
+////        logger.info(wxMpService.shortUrl("http://weixin.qq.com/q/02WlOHZfQ_bF_1EztM1p1t"));
+//    }
 }
