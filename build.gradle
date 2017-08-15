@@ -103,7 +103,7 @@ allprojects {
         repositories {
             maven {
                 name = 'power'
-                url "http://192.168.10.49:8081/repository/maven-${project.version.endsWith('-SNAPSHOT') ? 'snapshots' : 'releases'}"
+                url "http://192.168.1.47:8081/repository/maven-${project.version.endsWith('-SNAPSHOT') ? 'snapshots' : 'releases'}"
             }
         }
     }
