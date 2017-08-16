@@ -102,7 +102,7 @@ public class CallbackController {
 
             }
 //            logger.debug(rtnMsg.toXml());
-            out.print(StringUtils.isNotEmpty(rtnMsg==null?null:rtnMsg.toXml())?rtnMsg.toXml():"");
+            out.print(rtnMsg != null ?rtnMsg.toXml():"");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (WxErrorException e) {
