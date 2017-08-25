@@ -46,21 +46,21 @@ public class LastSendMsg implements Observer{
     public LastSendMsg(){}
     @Override
     public void update(Observable o, Object arg) {
-        WxEvent wxEvent = (WxEvent) arg;
-        Activity activity = activityNotify.getActivityById(1,wxEvent.getUniqueKey());
-        UserActivityExDTO userActivity = new UserActivityExDTO();
-        userActivity.setOpenId(wxEvent.getOpenId());
-        userActivity.setUniqueKey(wxEvent.getUniqueKey());
-        userActivity.setActivityId(1);
-        userActivity.setQuestionnaireId(1);
-        PlatformInfo platformInfo = platformInfoFacade.getPlatformInfoByUniqueKey(wxEvent.getUniqueKey());
-        UserPlatform userPlatform = userPlatformFacade.getWxPlatformByOpIdAndPid(wxEvent.getOpenId(),platformInfo.getAgencyId());
-        UserAccount userAccount = userAccountFacade.queryUserAccount(userPlatform.getUserId(),platformInfo.getAgencyId());
-        userActivity.setUserId(userAccount.getId());
-        logger.info("推送还电结束之后问卷消息");
-        if (activityNotify.hasGiveBonuses(userActivity)) {
-            logger.info("推送成功");
-            articleService.sendArticle(wxEvent.getUniqueKey(), wxEvent.getOpenId(), activity.getName(), activity.getActivityDesc(), activity.getImageUrl(), activity.getUrl());
-        }
+//        WxEvent wxEvent = (WxEvent) arg;
+//        Activity activity = activityNotify.getActivityById(1,wxEvent.getUniqueKey());
+//        UserActivityExDTO userActivity = new UserActivityExDTO();
+//        userActivity.setOpenId(wxEvent.getOpenId());
+//        userActivity.setUniqueKey(wxEvent.getUniqueKey());
+//        userActivity.setActivityId(1);
+//        userActivity.setQuestionnaireId(1);
+//        PlatformInfo platformInfo = platformInfoFacade.getPlatformInfoByUniqueKey(wxEvent.getUniqueKey());
+//        UserPlatform userPlatform = userPlatformFacade.getWxPlatformByOpIdAndPid(wxEvent.getOpenId(),platformInfo.getAgencyId());
+//        UserAccount userAccount = userAccountFacade.queryUserAccount(userPlatform.getUserId(),platformInfo.getAgencyId());
+//        userActivity.setUserId(userAccount.getId());
+//        logger.info("推送还电结束之后问卷消息");
+//        if (activityNotify.hasGiveBonuses(userActivity)) {
+//            logger.info("推送成功");
+//            articleService.sendArticle(wxEvent.getUniqueKey(), wxEvent.getOpenId(), activity.getName(), activity.getActivityDesc(), activity.getImageUrl(), activity.getUrl());
+//        }
     }
 }
