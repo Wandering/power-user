@@ -6,6 +6,7 @@ package com.power.dto;
 public class WxEvent extends Event{
     private String openId;
     private String uniqueKey;
+    private UserInfoDTO userInfoDTO;
 
     public String getUniqueKey() {
         return uniqueKey;
@@ -21,5 +22,13 @@ public class WxEvent extends Event{
 
     public void setOpenId(String openId) {
         this.openId = openId;
+    }
+
+    public UserInfoDTO getUserInfoDTO() {
+        return userInfoDTO;
+    }
+
+    public void setUserInfoDTO(UserInfoDTO userInfoDTO) {
+        this.userInfoDTO = userInfoDTO;
     }
 }

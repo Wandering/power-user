@@ -1,29 +1,17 @@
 package com.power.wechat.listener.event;
 
-import com.power.domain.PlatformInfo;
-import com.power.domain.UserAccount;
-import com.power.domain.UserPlatform;
-import com.power.dto.UserPlatformDTO;
 import com.power.dto.WxEvent;
-import com.power.enums.PowerEvent;
 import com.power.facade.IPlatformInfoFacade;
 import com.power.facade.IUserAccountFacade;
 import com.power.facade.IUserPlatformFacade;
-import com.power.wechat.listener.EventObservableFactory;
 import com.power.yuneng.activity.api.IActivityNotify;
-import com.power.yuneng.activity.entity.Activity;
 import com.power.yuneng.activity.entity.dto.UserActivityExDTO;
 import com.power.yuneng.user.IArticleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -31,8 +19,8 @@ import java.util.Observer;
  * Created by Administrator on 2017/7/31.
  */
 @Component
-public class LastSendMsg implements Observer{
-    private static final Logger logger = LoggerFactory.getLogger(LastSendMsg.class);
+public class LastSendEvent implements Observer{
+    private static final Logger logger = LoggerFactory.getLogger(LastSendEvent.class);
     @Autowired
     private IArticleService articleService;
     @Autowired
@@ -43,7 +31,7 @@ public class LastSendMsg implements Observer{
     private IUserPlatformFacade userPlatformFacade;
     @Autowired
     private IUserAccountFacade userAccountFacade;
-    public LastSendMsg(){}
+    public LastSendEvent(){}
     @Override
     public void update(Observable o, Object arg) {
 //        WxEvent wxEvent = (WxEvent) arg;

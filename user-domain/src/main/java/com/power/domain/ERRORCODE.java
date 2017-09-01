@@ -35,9 +35,22 @@ public enum  ERRORCODE {
 
 
     PLATFORM_IS_NULL("5000001","服务号不存在" ),
-    USER_IS_NULL("5000002","非法用户" )
-    ;
+    USER_IS_NULL("5000002","非法用户" ),
     /////////////////////////////业务系统相关业务异常/////////////////////////
+
+
+    /////////////////////////////订单系统相关业务异常/////////////////////////
+
+
+    UNIFIED_ORDER_FAIL("6000001","下单失败" ),
+    UNIFIED_BALANCE_ZORE("6000002","用户余额为零" ),
+    UNIFIED_BALANCE_ORDER_ZORE("6000003","用户无可退订单" ),
+    UNIFIED_PENDING_ORDER_NOT_ZORE("6000004","用户有正在借用的充电宝" ),
+    UNIFIED_EXIST("6000005","用户有正在进行的退款" ),
+    /////////////////////////////订单系统相关业务异常/////////////////////////
+
+    ;
+
     private final String code;
     private final String message;
 

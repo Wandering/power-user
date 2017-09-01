@@ -8,14 +8,20 @@ import javax.annotation.PostConstruct;
 
 /**
  * Created by Administrator on 2017/7/31.
+ * 本地事件监听服务注册
  */
 @Component
 public class RegeditObserver {
     @Autowired
-    private LastSendMsg lastSendMsg;
-
+    private RefundEvent refundEvent;
+    @Autowired
+    private RefundAcceptMsgEvent refundAcceptMsgEvent;
+    @Autowired
+    private LastSendEvent lastSendEvent;
     @PostConstruct
     private void init(){
-        EventObservableFactory.getObservable(PowerEvent.RETURN_END).addObserver(lastSendMsg);
+        EventObservableFactory.getObservable(PowerEvent.RETURN_END).addObserver(lastSendEvent);
+        EventObservableFactory.getObservable(PowerEvent.ORDER_REFUND).addObserver(refundAcceptMsgEvent);
+        EventObservableFactory.getObservable(PowerEvent.ORDER_REFUND).addObserver(refundEvent);
     }
 }

@@ -8,4 +8,6 @@ dependencies {
         exclude module: "base-common"
         exclude module: "power-activity"
     }
+
+    compile "com.github.binarywang:weixin-java-pay:2.6.0"
 }

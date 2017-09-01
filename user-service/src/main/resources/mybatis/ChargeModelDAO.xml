@@ -1,0 +1,2094 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.power.dao.IChargeModelDAO">
+
+
+
+<!--
+C
+insert
+insertMap
+R
+findOne
+findAll
+exists
+queryOne
+queryOneByWhereSql
+queryList
+queryListByWhereSql
+queryBySql
+queryBySqlCount
+U
+D
+-->
+
+
+    <sql id="Base_Column_List">
+        id as id ,
+        name as name ,
+        charge_day as chargeDay ,
+        first_deposit as firstDeposit ,
+        min_deposit as minDeposit ,
+        year_fee as yearFee ,
+        free_time as freeTime ,
+        overdue_fee as overdueFee ,
+        max_overdue_fee as maxOverdueFee ,
+        buffer_time as bufferTime ,
+        create_dt as createDt ,
+        update_dt as updateDt ,
+        create_by as createBy ,
+        update_by as updateBy ,
+        borrow_scale as borrowScale ,
+        order_free_time as orderFreeTime ,
+        end_time as endTime 
+    </sql>
+
+    <!-- 插入 start-->
+
+    <insert id="insert" parameterType="ChargeModel" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO charge_model (
+        name,
+        charge_day,
+        first_deposit,
+        min_deposit,
+        year_fee,
+        free_time,
+        overdue_fee,
+        max_overdue_fee,
+        buffer_time,
+        create_dt,
+        update_dt,
+        create_by,
+        update_by,
+        borrow_scale,
+        order_free_time,
+        end_time
+        ) VALUES (
+        #{name},
+        #{chargeDay},
+        #{firstDeposit},
+        #{minDeposit},
+        #{yearFee},
+        #{freeTime},
+        #{overdueFee},
+        #{maxOverdueFee},
+        #{bufferTime},
+        #{createDt},
+        #{updateDt},
+        #{createBy},
+        #{updateBy},
+        #{borrowScale},
+        #{orderFreeTime},
+        #{endTime}
+        )
+    </insert>
+
+
+    <insert id="insertMap" >
+        INSERT INTO charge_model (
+        name,
+        charge_day,
+        first_deposit,
+        min_deposit,
+        year_fee,
+        free_time,
+        overdue_fee,
+        max_overdue_fee,
+        buffer_time,
+        create_dt,
+        update_dt,
+        create_by,
+        update_by,
+        borrow_scale,
+        order_free_time,
+        end_time
+                ) VALUES (
+        #{map.name},
+        #{map.chargeDay},
+        #{map.firstDeposit},
+        #{map.minDeposit},
+        #{map.yearFee},
+        #{map.freeTime},
+        #{map.overdueFee},
+        #{map.maxOverdueFee},
+        #{map.bufferTime},
+        #{map.createDt},
+        #{map.updateDt},
+        #{map.createBy},
+        #{map.updateBy},
+        #{map.borrowScale},
+        #{map.orderFreeTime},
+        #{map.endTime}
+                )
+    </insert>
+
+
+    <!-- 插入 end-->
+
+    <!-- 修改 start-->
+        <!-- 更新 -->
+        <update id="update" parameterType="ChargeModel">
+        UPDATE charge_model
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name!=null">
+                name = #{name},
+            </if>
+            <if test="chargeDay!=null">
+                charge_day = #{chargeDay},
+            </if>
+            <if test="firstDeposit!=null">
+                first_deposit = #{firstDeposit},
+            </if>
+            <if test="minDeposit!=null">
+                min_deposit = #{minDeposit},
+            </if>
+            <if test="yearFee!=null">
+                year_fee = #{yearFee},
+            </if>
+            <if test="freeTime!=null">
+                free_time = #{freeTime},
+            </if>
+            <if test="overdueFee!=null">
+                overdue_fee = #{overdueFee},
+            </if>
+            <if test="maxOverdueFee!=null">
+                max_overdue_fee = #{maxOverdueFee},
+            </if>
+            <if test="bufferTime!=null">
+                buffer_time = #{bufferTime},
+            </if>
+            <if test="createDt!=null">
+                create_dt = #{createDt},
+            </if>
+            <if test="updateDt!=null">
+                update_dt = #{updateDt},
+            </if>
+            <if test="createBy!=null">
+                create_by = #{createBy},
+            </if>
+            <if test="updateBy!=null">
+                update_by = #{updateBy},
+            </if>
+            <if test="borrowScale!=null">
+                borrow_scale = #{borrowScale},
+            </if>
+            <if test="orderFreeTime!=null">
+                order_free_time = #{orderFreeTime},
+            </if>
+            <if test="endTime!=null">
+                end_time = #{endTime},
+            </if>
+        </trim>
+                WHERE
+        id = #{id}
+        </update>
+
+        <update id="updateMap">
+        UPDATE charge_model
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="map.name!=null">
+                name = #{map.name},
+            </if>
+            <if test="map.chargeDay!=null">
+                charge_day = #{map.chargeDay},
+            </if>
+            <if test="map.firstDeposit!=null">
+                first_deposit = #{map.firstDeposit},
+            </if>
+            <if test="map.minDeposit!=null">
+                min_deposit = #{map.minDeposit},
+            </if>
+            <if test="map.yearFee!=null">
+                year_fee = #{map.yearFee},
+            </if>
+            <if test="map.freeTime!=null">
+                free_time = #{map.freeTime},
+            </if>
+            <if test="map.overdueFee!=null">
+                overdue_fee = #{map.overdueFee},
+            </if>
+            <if test="map.maxOverdueFee!=null">
+                max_overdue_fee = #{map.maxOverdueFee},
+            </if>
+            <if test="map.bufferTime!=null">
+                buffer_time = #{map.bufferTime},
+            </if>
+            <if test="map.createDt!=null">
+                create_dt = #{map.createDt},
+            </if>
+            <if test="map.updateDt!=null">
+                update_dt = #{map.updateDt},
+            </if>
+            <if test="map.createBy!=null">
+                create_by = #{map.createBy},
+            </if>
+            <if test="map.updateBy!=null">
+                update_by = #{map.updateBy},
+            </if>
+            <if test="map.borrowScale!=null">
+                borrow_scale = #{map.borrowScale},
+            </if>
+            <if test="map.orderFreeTime!=null">
+                order_free_time = #{map.orderFreeTime},
+            </if>
+            <if test="map.endTime!=null">
+                end_time = #{map.endTime},
+            </if>
+        </trim>
+        WHERE
+        id = #{map.id}
+        </update>
+
+        <update id="updateByCondition">
+        UPDATE charge_model
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="update.name!=null">
+                name = #{update.name},
+            </if>
+            <if test="update.chargeDay!=null">
+                charge_day = #{update.chargeDay},
+            </if>
+            <if test="update.firstDeposit!=null">
+                first_deposit = #{update.firstDeposit},
+            </if>
+            <if test="update.minDeposit!=null">
+                min_deposit = #{update.minDeposit},
+            </if>
+            <if test="update.yearFee!=null">
+                year_fee = #{update.yearFee},
+            </if>
+            <if test="update.freeTime!=null">
+                free_time = #{update.freeTime},
+            </if>
+            <if test="update.overdueFee!=null">
+                overdue_fee = #{update.overdueFee},
+            </if>
+            <if test="update.maxOverdueFee!=null">
+                max_overdue_fee = #{update.maxOverdueFee},
+            </if>
+            <if test="update.bufferTime!=null">
+                buffer_time = #{update.bufferTime},
+            </if>
+            <if test="update.createDt!=null">
+                create_dt = #{update.createDt},
+            </if>
+            <if test="update.updateDt!=null">
+                update_dt = #{update.updateDt},
+            </if>
+            <if test="update.createBy!=null">
+                create_by = #{update.createBy},
+            </if>
+            <if test="update.updateBy!=null">
+                update_by = #{update.updateBy},
+            </if>
+            <if test="update.borrowScale!=null">
+                borrow_scale = #{update.borrowScale},
+            </if>
+            <if test="update.orderFreeTime!=null">
+                order_free_time = #{update.orderFreeTime},
+            </if>
+            <if test="update.endTime!=null">
+                end_time = #{update.endTime},
+            </if>
+        </trim>
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+        <if test="condition.id!=null">
+            AND id = #{condition.id}
+        </if>
+        <if test="condition.name!=null">
+            AND name = #{condition.name}
+        </if>
+        <if test="condition.chargeDay!=null">
+            AND charge_day = #{condition.chargeDay}
+        </if>
+        <if test="condition.firstDeposit!=null">
+            AND first_deposit = #{condition.firstDeposit}
+        </if>
+        <if test="condition.minDeposit!=null">
+            AND min_deposit = #{condition.minDeposit}
+        </if>
+        <if test="condition.yearFee!=null">
+            AND year_fee = #{condition.yearFee}
+        </if>
+        <if test="condition.freeTime!=null">
+            AND free_time = #{condition.freeTime}
+        </if>
+        <if test="condition.overdueFee!=null">
+            AND overdue_fee = #{condition.overdueFee}
+        </if>
+        <if test="condition.maxOverdueFee!=null">
+            AND max_overdue_fee = #{condition.maxOverdueFee}
+        </if>
+        <if test="condition.bufferTime!=null">
+            AND buffer_time = #{condition.bufferTime}
+        </if>
+        <if test="condition.createDt!=null">
+            AND create_dt = #{condition.createDt}
+        </if>
+        <if test="condition.updateDt!=null">
+            AND update_dt = #{condition.updateDt}
+        </if>
+        <if test="condition.createBy!=null">
+            AND create_by = #{condition.createBy}
+        </if>
+        <if test="condition.updateBy!=null">
+            AND update_by = #{condition.updateBy}
+        </if>
+        <if test="condition.borrowScale!=null">
+            AND borrow_scale = #{condition.borrowScale}
+        </if>
+        <if test="condition.orderFreeTime!=null">
+            AND order_free_time = #{condition.orderFreeTime}
+        </if>
+        <if test="condition.endTime!=null">
+            AND end_time = #{condition.endTime}
+        </if>
+        </trim>
+        </update>
+
+        <update id="updateByWhereSql">
+        UPDATE charge_model
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="update.name!=null">
+                name = #{update.name},
+            </if>
+            <if test="update.chargeDay!=null">
+                charge_day = #{update.chargeDay},
+            </if>
+            <if test="update.firstDeposit!=null">
+                first_deposit = #{update.firstDeposit},
+            </if>
+            <if test="update.minDeposit!=null">
+                min_deposit = #{update.minDeposit},
+            </if>
+            <if test="update.yearFee!=null">
+                year_fee = #{update.yearFee},
+            </if>
+            <if test="update.freeTime!=null">
+                free_time = #{update.freeTime},
+            </if>
+            <if test="update.overdueFee!=null">
+                overdue_fee = #{update.overdueFee},
+            </if>
+            <if test="update.maxOverdueFee!=null">
+                max_overdue_fee = #{update.maxOverdueFee},
+            </if>
+            <if test="update.bufferTime!=null">
+                buffer_time = #{update.bufferTime},
+            </if>
+            <if test="update.createDt!=null">
+                create_dt = #{update.createDt},
+            </if>
+            <if test="update.updateDt!=null">
+                update_dt = #{update.updateDt},
+            </if>
+            <if test="update.createBy!=null">
+                create_by = #{update.createBy},
+            </if>
+            <if test="update.updateBy!=null">
+                update_by = #{update.updateBy},
+            </if>
+            <if test="update.borrowScale!=null">
+                borrow_scale = #{update.borrowScale},
+            </if>
+            <if test="update.orderFreeTime!=null">
+                order_free_time = #{update.orderFreeTime},
+            </if>
+            <if test="update.endTime!=null">
+                end_time = #{update.endTime},
+            </if>
+        </trim>
+
+
+        <if test="nativeSql!=null">
+${nativeSql}        </if>
+        </update>
+
+
+
+        <update id="updateNull" parameterType="ChargeModel">
+        UPDATE charge_model
+        <trim prefix="SET" suffixOverrides=",">
+            name = #{name},
+            charge_day = #{chargeDay},
+            first_deposit = #{firstDeposit},
+            min_deposit = #{minDeposit},
+            year_fee = #{yearFee},
+            free_time = #{freeTime},
+            overdue_fee = #{overdueFee},
+            max_overdue_fee = #{maxOverdueFee},
+            buffer_time = #{bufferTime},
+            create_dt = #{createDt},
+            update_dt = #{updateDt},
+            create_by = #{createBy},
+            update_by = #{updateBy},
+            borrow_scale = #{borrowScale},
+            order_free_time = #{orderFreeTime},
+            end_time = #{endTime},
+        </trim>
+                WHERE
+        id = #{id} 
+        </update>
+    <!-- 修改 end-->
+
+    <!-- 读取数据 start-->
+        <select id="findOne" parameterType="java.lang.Long" resultType="ChargeModel">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM charge_model
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+        </select>
+
+        <select id="findAll" resultType="ChargeModel">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM charge_model
+        </select>
+
+        <!-- 查询 -->
+        <select id="queryOne" resultType="ChargeModel">
+        SELECT
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                <if test="selector.id!=null">
+                    , id
+                </if>
+                <if test="selector.name!=null">
+                    , name
+                </if>
+                <if test="selector.chargeDay!=null">
+                    , charge_day
+                </if>
+                <if test="selector.firstDeposit!=null">
+                    , first_deposit
+                </if>
+                <if test="selector.minDeposit!=null">
+                    , min_deposit
+                </if>
+                <if test="selector.yearFee!=null">
+                    , year_fee
+                </if>
+                <if test="selector.freeTime!=null">
+                    , free_time
+                </if>
+                <if test="selector.overdueFee!=null">
+                    , overdue_fee
+                </if>
+                <if test="selector.maxOverdueFee!=null">
+                    , max_overdue_fee
+                </if>
+                <if test="selector.bufferTime!=null">
+                    , buffer_time
+                </if>
+                <if test="selector.createDt!=null">
+                    , create_dt
+                </if>
+                <if test="selector.updateDt!=null">
+                    , update_dt
+                </if>
+                <if test="selector.createBy!=null">
+                    , create_by
+                </if>
+                <if test="selector.updateBy!=null">
+                    , update_by
+                </if>
+                <if test="selector.borrowScale!=null">
+                    , borrow_scale
+                </if>
+                <if test="selector.orderFreeTime!=null">
+                    , order_free_time
+                </if>
+                <if test="selector.endTime!=null">
+                    , end_time
+                </if>
+        </trim>
+        </if>
+        <if test="selector==null">
+        <include refid="Base_Column_List" />
+        </if>
+
+                FROM charge_model
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+        <if test="condition.id!=null">
+
+            <if test="condition.id.op!='in' and condition.id.op!='like' and condition.id.op!='leftlike'">
+                AND   id  ${condition.id.op} #{condition.id.data}
+            </if>
+            <if test="condition.id.op=='like'">
+                AND id like CONCAT('%', #{condition.id.data} , '%')
+            </if>
+            <if test="condition.id.op=='leftlike'">
+                AND id like CONCAT(#{condition.id.data} , '%')
+            </if>
+            <if test="condition.id.op=='in'">
+                ${condition.groupOp}   id  ${condition.id.op}
+                <foreach collection="condition.id.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.name!=null">
+
+            <if test="condition.name.op!='in' and condition.name.op!='like' and condition.name.op!='leftlike'">
+                AND   name  ${condition.name.op} #{condition.name.data}
+            </if>
+            <if test="condition.name.op=='like'">
+                AND name like CONCAT('%', #{condition.name.data} , '%')
+            </if>
+            <if test="condition.name.op=='leftlike'">
+                AND name like CONCAT(#{condition.name.data} , '%')
+            </if>
+            <if test="condition.name.op=='in'">
+                ${condition.groupOp}   name  ${condition.name.op}
+                <foreach collection="condition.name.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.chargeDay!=null">
+
+            <if test="condition.chargeDay.op!='in' and condition.chargeDay.op!='like' and condition.chargeDay.op!='leftlike'">
+                AND   charge_day  ${condition.chargeDay.op} #{condition.chargeDay.data}
+            </if>
+            <if test="condition.chargeDay.op=='like'">
+                AND charge_day like CONCAT('%', #{condition.chargeDay.data} , '%')
+            </if>
+            <if test="condition.chargeDay.op=='leftlike'">
+                AND charge_day like CONCAT(#{condition.chargeDay.data} , '%')
+            </if>
+            <if test="condition.chargeDay.op=='in'">
+                ${condition.groupOp}   charge_day  ${condition.chargeDay.op}
+                <foreach collection="condition.chargeDay.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.firstDeposit!=null">
+
+            <if test="condition.firstDeposit.op!='in' and condition.firstDeposit.op!='like' and condition.firstDeposit.op!='leftlike'">
+                AND   first_deposit  ${condition.firstDeposit.op} #{condition.firstDeposit.data}
+            </if>
+            <if test="condition.firstDeposit.op=='like'">
+                AND first_deposit like CONCAT('%', #{condition.firstDeposit.data} , '%')
+            </if>
+            <if test="condition.firstDeposit.op=='leftlike'">
+                AND first_deposit like CONCAT(#{condition.firstDeposit.data} , '%')
+            </if>
+            <if test="condition.firstDeposit.op=='in'">
+                ${condition.groupOp}   first_deposit  ${condition.firstDeposit.op}
+                <foreach collection="condition.firstDeposit.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.minDeposit!=null">
+
+            <if test="condition.minDeposit.op!='in' and condition.minDeposit.op!='like' and condition.minDeposit.op!='leftlike'">
+                AND   min_deposit  ${condition.minDeposit.op} #{condition.minDeposit.data}
+            </if>
+            <if test="condition.minDeposit.op=='like'">
+                AND min_deposit like CONCAT('%', #{condition.minDeposit.data} , '%')
+            </if>
+            <if test="condition.minDeposit.op=='leftlike'">
+                AND min_deposit like CONCAT(#{condition.minDeposit.data} , '%')
+            </if>
+            <if test="condition.minDeposit.op=='in'">
+                ${condition.groupOp}   min_deposit  ${condition.minDeposit.op}
+                <foreach collection="condition.minDeposit.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.yearFee!=null">
+
+            <if test="condition.yearFee.op!='in' and condition.yearFee.op!='like' and condition.yearFee.op!='leftlike'">
+                AND   year_fee  ${condition.yearFee.op} #{condition.yearFee.data}
+            </if>
+            <if test="condition.yearFee.op=='like'">
+                AND year_fee like CONCAT('%', #{condition.yearFee.data} , '%')
+            </if>
+            <if test="condition.yearFee.op=='leftlike'">
+                AND year_fee like CONCAT(#{condition.yearFee.data} , '%')
+            </if>
+            <if test="condition.yearFee.op=='in'">
+                ${condition.groupOp}   year_fee  ${condition.yearFee.op}
+                <foreach collection="condition.yearFee.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.freeTime!=null">
+
+            <if test="condition.freeTime.op!='in' and condition.freeTime.op!='like' and condition.freeTime.op!='leftlike'">
+                AND   free_time  ${condition.freeTime.op} #{condition.freeTime.data}
+            </if>
+            <if test="condition.freeTime.op=='like'">
+                AND free_time like CONCAT('%', #{condition.freeTime.data} , '%')
+            </if>
+            <if test="condition.freeTime.op=='leftlike'">
+                AND free_time like CONCAT(#{condition.freeTime.data} , '%')
+            </if>
+            <if test="condition.freeTime.op=='in'">
+                ${condition.groupOp}   free_time  ${condition.freeTime.op}
+                <foreach collection="condition.freeTime.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.overdueFee!=null">
+
+            <if test="condition.overdueFee.op!='in' and condition.overdueFee.op!='like' and condition.overdueFee.op!='leftlike'">
+                AND   overdue_fee  ${condition.overdueFee.op} #{condition.overdueFee.data}
+            </if>
+            <if test="condition.overdueFee.op=='like'">
+                AND overdue_fee like CONCAT('%', #{condition.overdueFee.data} , '%')
+            </if>
+            <if test="condition.overdueFee.op=='leftlike'">
+                AND overdue_fee like CONCAT(#{condition.overdueFee.data} , '%')
+            </if>
+            <if test="condition.overdueFee.op=='in'">
+                ${condition.groupOp}   overdue_fee  ${condition.overdueFee.op}
+                <foreach collection="condition.overdueFee.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.maxOverdueFee!=null">
+
+            <if test="condition.maxOverdueFee.op!='in' and condition.maxOverdueFee.op!='like' and condition.maxOverdueFee.op!='leftlike'">
+                AND   max_overdue_fee  ${condition.maxOverdueFee.op} #{condition.maxOverdueFee.data}
+            </if>
+            <if test="condition.maxOverdueFee.op=='like'">
+                AND max_overdue_fee like CONCAT('%', #{condition.maxOverdueFee.data} , '%')
+            </if>
+            <if test="condition.maxOverdueFee.op=='leftlike'">
+                AND max_overdue_fee like CONCAT(#{condition.maxOverdueFee.data} , '%')
+            </if>
+            <if test="condition.maxOverdueFee.op=='in'">
+                ${condition.groupOp}   max_overdue_fee  ${condition.maxOverdueFee.op}
+                <foreach collection="condition.maxOverdueFee.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.bufferTime!=null">
+
+            <if test="condition.bufferTime.op!='in' and condition.bufferTime.op!='like' and condition.bufferTime.op!='leftlike'">
+                AND   buffer_time  ${condition.bufferTime.op} #{condition.bufferTime.data}
+            </if>
+            <if test="condition.bufferTime.op=='like'">
+                AND buffer_time like CONCAT('%', #{condition.bufferTime.data} , '%')
+            </if>
+            <if test="condition.bufferTime.op=='leftlike'">
+                AND buffer_time like CONCAT(#{condition.bufferTime.data} , '%')
+            </if>
+            <if test="condition.bufferTime.op=='in'">
+                ${condition.groupOp}   buffer_time  ${condition.bufferTime.op}
+                <foreach collection="condition.bufferTime.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.createDt!=null">
+
+            <if test="condition.createDt.op!='in' and condition.createDt.op!='like' and condition.createDt.op!='leftlike'">
+                AND   create_dt  ${condition.createDt.op} #{condition.createDt.data}
+            </if>
+            <if test="condition.createDt.op=='like'">
+                AND create_dt like CONCAT('%', #{condition.createDt.data} , '%')
+            </if>
+            <if test="condition.createDt.op=='leftlike'">
+                AND create_dt like CONCAT(#{condition.createDt.data} , '%')
+            </if>
+            <if test="condition.createDt.op=='in'">
+                ${condition.groupOp}   create_dt  ${condition.createDt.op}
+                <foreach collection="condition.createDt.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.updateDt!=null">
+
+            <if test="condition.updateDt.op!='in' and condition.updateDt.op!='like' and condition.updateDt.op!='leftlike'">
+                AND   update_dt  ${condition.updateDt.op} #{condition.updateDt.data}
+            </if>
+            <if test="condition.updateDt.op=='like'">
+                AND update_dt like CONCAT('%', #{condition.updateDt.data} , '%')
+            </if>
+            <if test="condition.updateDt.op=='leftlike'">
+                AND update_dt like CONCAT(#{condition.updateDt.data} , '%')
+            </if>
+            <if test="condition.updateDt.op=='in'">
+                ${condition.groupOp}   update_dt  ${condition.updateDt.op}
+                <foreach collection="condition.updateDt.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.createBy!=null">
+
+            <if test="condition.createBy.op!='in' and condition.createBy.op!='like' and condition.createBy.op!='leftlike'">
+                AND   create_by  ${condition.createBy.op} #{condition.createBy.data}
+            </if>
+            <if test="condition.createBy.op=='like'">
+                AND create_by like CONCAT('%', #{condition.createBy.data} , '%')
+            </if>
+            <if test="condition.createBy.op=='leftlike'">
+                AND create_by like CONCAT(#{condition.createBy.data} , '%')
+            </if>
+            <if test="condition.createBy.op=='in'">
+                ${condition.groupOp}   create_by  ${condition.createBy.op}
+                <foreach collection="condition.createBy.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.updateBy!=null">
+
+            <if test="condition.updateBy.op!='in' and condition.updateBy.op!='like' and condition.updateBy.op!='leftlike'">
+                AND   update_by  ${condition.updateBy.op} #{condition.updateBy.data}
+            </if>
+            <if test="condition.updateBy.op=='like'">
+                AND update_by like CONCAT('%', #{condition.updateBy.data} , '%')
+            </if>
+            <if test="condition.updateBy.op=='leftlike'">
+                AND update_by like CONCAT(#{condition.updateBy.data} , '%')
+            </if>
+            <if test="condition.updateBy.op=='in'">
+                ${condition.groupOp}   update_by  ${condition.updateBy.op}
+                <foreach collection="condition.updateBy.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.borrowScale!=null">
+
+            <if test="condition.borrowScale.op!='in' and condition.borrowScale.op!='like' and condition.borrowScale.op!='leftlike'">
+                AND   borrow_scale  ${condition.borrowScale.op} #{condition.borrowScale.data}
+            </if>
+            <if test="condition.borrowScale.op=='like'">
+                AND borrow_scale like CONCAT('%', #{condition.borrowScale.data} , '%')
+            </if>
+            <if test="condition.borrowScale.op=='leftlike'">
+                AND borrow_scale like CONCAT(#{condition.borrowScale.data} , '%')
+            </if>
+            <if test="condition.borrowScale.op=='in'">
+                ${condition.groupOp}   borrow_scale  ${condition.borrowScale.op}
+                <foreach collection="condition.borrowScale.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.orderFreeTime!=null">
+
+            <if test="condition.orderFreeTime.op!='in' and condition.orderFreeTime.op!='like' and condition.orderFreeTime.op!='leftlike'">
+                AND   order_free_time  ${condition.orderFreeTime.op} #{condition.orderFreeTime.data}
+            </if>
+            <if test="condition.orderFreeTime.op=='like'">
+                AND order_free_time like CONCAT('%', #{condition.orderFreeTime.data} , '%')
+            </if>
+            <if test="condition.orderFreeTime.op=='leftlike'">
+                AND order_free_time like CONCAT(#{condition.orderFreeTime.data} , '%')
+            </if>
+            <if test="condition.orderFreeTime.op=='in'">
+                ${condition.groupOp}   order_free_time  ${condition.orderFreeTime.op}
+                <foreach collection="condition.orderFreeTime.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.endTime!=null">
+
+            <if test="condition.endTime.op!='in' and condition.endTime.op!='like' and condition.endTime.op!='leftlike'">
+                AND   end_time  ${condition.endTime.op} #{condition.endTime.data}
+            </if>
+            <if test="condition.endTime.op=='like'">
+                AND end_time like CONCAT('%', #{condition.endTime.data} , '%')
+            </if>
+            <if test="condition.endTime.op=='leftlike'">
+                AND end_time like CONCAT(#{condition.endTime.data} , '%')
+            </if>
+            <if test="condition.endTime.op=='in'">
+                ${condition.groupOp}   end_time  ${condition.endTime.op}
+                <foreach collection="condition.endTime.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+                </trim>
+
+        <if test="sorter!=null" >
+        ORDER BY
+        <foreach collection="sorter" item="sort" separator="," >
+            ${sort.field} ${sort.order}</foreach>
+        </if>
+        LIMIT 0,1
+        </select>
+
+        <!-- 查询 -->
+        <select id="queryOneByWhereSql" resultType="ChargeModel">
+        SELECT
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                <if test="selector.id!=null">
+                    , id
+                </if>
+                <if test="selector.name!=null">
+                    , name
+                </if>
+                <if test="selector.chargeDay!=null">
+                    , charge_day
+                </if>
+                <if test="selector.firstDeposit!=null">
+                    , first_deposit
+                </if>
+                <if test="selector.minDeposit!=null">
+                    , min_deposit
+                </if>
+                <if test="selector.yearFee!=null">
+                    , year_fee
+                </if>
+                <if test="selector.freeTime!=null">
+                    , free_time
+                </if>
+                <if test="selector.overdueFee!=null">
+                    , overdue_fee
+                </if>
+                <if test="selector.maxOverdueFee!=null">
+                    , max_overdue_fee
+                </if>
+                <if test="selector.bufferTime!=null">
+                    , buffer_time
+                </if>
+                <if test="selector.createDt!=null">
+                    , create_dt
+                </if>
+                <if test="selector.updateDt!=null">
+                    , update_dt
+                </if>
+                <if test="selector.createBy!=null">
+                    , create_by
+                </if>
+                <if test="selector.updateBy!=null">
+                    , update_by
+                </if>
+                <if test="selector.borrowScale!=null">
+                    , borrow_scale
+                </if>
+                <if test="selector.orderFreeTime!=null">
+                    , order_free_time
+                </if>
+                <if test="selector.endTime!=null">
+                    , end_time
+                </if>
+        </trim>
+        </if>
+        <if test="selector==null">
+        <include refid="Base_Column_List" />
+        </if>
+
+        FROM charge_model
+
+        <if test="nativeSql!=null">
+${nativeSql}        </if>
+
+        <if test="sorter!=null" >
+        ORDER BY
+        <foreach collection="sorter" item="sort" separator="," >
+            ${sort.field} ${sort.order}</foreach>
+        </if>
+        LIMIT 0,1
+        </select>
+
+        <!-- 查询 -->
+        <select id="queryList" resultType="ChargeModel">
+        SELECT
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                <if test="selector.id!=null">
+                    , id
+                </if>
+                <if test="selector.name!=null">
+                    , name
+                </if>
+                <if test="selector.chargeDay!=null">
+                    , charge_day
+                </if>
+                <if test="selector.firstDeposit!=null">
+                    , first_deposit
+                </if>
+                <if test="selector.minDeposit!=null">
+                    , min_deposit
+                </if>
+                <if test="selector.yearFee!=null">
+                    , year_fee
+                </if>
+                <if test="selector.freeTime!=null">
+                    , free_time
+                </if>
+                <if test="selector.overdueFee!=null">
+                    , overdue_fee
+                </if>
+                <if test="selector.maxOverdueFee!=null">
+                    , max_overdue_fee
+                </if>
+                <if test="selector.bufferTime!=null">
+                    , buffer_time
+                </if>
+                <if test="selector.createDt!=null">
+                    , create_dt
+                </if>
+                <if test="selector.updateDt!=null">
+                    , update_dt
+                </if>
+                <if test="selector.createBy!=null">
+                    , create_by
+                </if>
+                <if test="selector.updateBy!=null">
+                    , update_by
+                </if>
+                <if test="selector.borrowScale!=null">
+                    , borrow_scale
+                </if>
+                <if test="selector.orderFreeTime!=null">
+                    , order_free_time
+                </if>
+                <if test="selector.endTime!=null">
+                    , end_time
+                </if>
+        </trim>
+        </if>
+        <if test="selector==null">
+        <include refid="Base_Column_List" />
+        </if>
+
+        FROM charge_model
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+        <if test="condition.id!=null">
+
+            <if test="condition.id.op!='in' and condition.id.op!='like' and condition.id.op!='leftlike'">
+                ${condition.groupOp}   id  ${condition.id.op} #{condition.id.data}
+            </if>
+            <if test="condition.id.op=='like'">
+                AND id like CONCAT('%', #{condition.id.data} , '%')
+            </if>
+            <if test="condition.id.op=='leftlike'">
+                AND id like CONCAT(#{condition.id.data} , '%')
+            </if>
+            <if test="condition.id.op=='in'">
+                ${condition.groupOp}   id  ${condition.id.op}
+                <foreach collection="condition.id.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.name!=null">
+
+            <if test="condition.name.op!='in' and condition.name.op!='like' and condition.name.op!='leftlike'">
+                ${condition.groupOp}   name  ${condition.name.op} #{condition.name.data}
+            </if>
+            <if test="condition.name.op=='like'">
+                AND name like CONCAT('%', #{condition.name.data} , '%')
+            </if>
+            <if test="condition.name.op=='leftlike'">
+                AND name like CONCAT(#{condition.name.data} , '%')
+            </if>
+            <if test="condition.name.op=='in'">
+                ${condition.groupOp}   name  ${condition.name.op}
+                <foreach collection="condition.name.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.chargeDay!=null">
+
+            <if test="condition.chargeDay.op!='in' and condition.chargeDay.op!='like' and condition.chargeDay.op!='leftlike'">
+                ${condition.groupOp}   charge_day  ${condition.chargeDay.op} #{condition.chargeDay.data}
+            </if>
+            <if test="condition.chargeDay.op=='like'">
+                AND charge_day like CONCAT('%', #{condition.chargeDay.data} , '%')
+            </if>
+            <if test="condition.chargeDay.op=='leftlike'">
+                AND charge_day like CONCAT(#{condition.chargeDay.data} , '%')
+            </if>
+            <if test="condition.chargeDay.op=='in'">
+                ${condition.groupOp}   charge_day  ${condition.chargeDay.op}
+                <foreach collection="condition.chargeDay.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.firstDeposit!=null">
+
+            <if test="condition.firstDeposit.op!='in' and condition.firstDeposit.op!='like' and condition.firstDeposit.op!='leftlike'">
+                ${condition.groupOp}   first_deposit  ${condition.firstDeposit.op} #{condition.firstDeposit.data}
+            </if>
+            <if test="condition.firstDeposit.op=='like'">
+                AND first_deposit like CONCAT('%', #{condition.firstDeposit.data} , '%')
+            </if>
+            <if test="condition.firstDeposit.op=='leftlike'">
+                AND first_deposit like CONCAT(#{condition.firstDeposit.data} , '%')
+            </if>
+            <if test="condition.firstDeposit.op=='in'">
+                ${condition.groupOp}   first_deposit  ${condition.firstDeposit.op}
+                <foreach collection="condition.firstDeposit.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.minDeposit!=null">
+
+            <if test="condition.minDeposit.op!='in' and condition.minDeposit.op!='like' and condition.minDeposit.op!='leftlike'">
+                ${condition.groupOp}   min_deposit  ${condition.minDeposit.op} #{condition.minDeposit.data}
+            </if>
+            <if test="condition.minDeposit.op=='like'">
+                AND min_deposit like CONCAT('%', #{condition.minDeposit.data} , '%')
+            </if>
+            <if test="condition.minDeposit.op=='leftlike'">
+                AND min_deposit like CONCAT(#{condition.minDeposit.data} , '%')
+            </if>
+            <if test="condition.minDeposit.op=='in'">
+                ${condition.groupOp}   min_deposit  ${condition.minDeposit.op}
+                <foreach collection="condition.minDeposit.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.yearFee!=null">
+
+            <if test="condition.yearFee.op!='in' and condition.yearFee.op!='like' and condition.yearFee.op!='leftlike'">
+                ${condition.groupOp}   year_fee  ${condition.yearFee.op} #{condition.yearFee.data}
+            </if>
+            <if test="condition.yearFee.op=='like'">
+                AND year_fee like CONCAT('%', #{condition.yearFee.data} , '%')
+            </if>
+            <if test="condition.yearFee.op=='leftlike'">
+                AND year_fee like CONCAT(#{condition.yearFee.data} , '%')
+            </if>
+            <if test="condition.yearFee.op=='in'">
+                ${condition.groupOp}   year_fee  ${condition.yearFee.op}
+                <foreach collection="condition.yearFee.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.freeTime!=null">
+
+            <if test="condition.freeTime.op!='in' and condition.freeTime.op!='like' and condition.freeTime.op!='leftlike'">
+                ${condition.groupOp}   free_time  ${condition.freeTime.op} #{condition.freeTime.data}
+            </if>
+            <if test="condition.freeTime.op=='like'">
+                AND free_time like CONCAT('%', #{condition.freeTime.data} , '%')
+            </if>
+            <if test="condition.freeTime.op=='leftlike'">
+                AND free_time like CONCAT(#{condition.freeTime.data} , '%')
+            </if>
+            <if test="condition.freeTime.op=='in'">
+                ${condition.groupOp}   free_time  ${condition.freeTime.op}
+                <foreach collection="condition.freeTime.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.overdueFee!=null">
+
+            <if test="condition.overdueFee.op!='in' and condition.overdueFee.op!='like' and condition.overdueFee.op!='leftlike'">
+                ${condition.groupOp}   overdue_fee  ${condition.overdueFee.op} #{condition.overdueFee.data}
+            </if>
+            <if test="condition.overdueFee.op=='like'">
+                AND overdue_fee like CONCAT('%', #{condition.overdueFee.data} , '%')
+            </if>
+            <if test="condition.overdueFee.op=='leftlike'">
+                AND overdue_fee like CONCAT(#{condition.overdueFee.data} , '%')
+            </if>
+            <if test="condition.overdueFee.op=='in'">
+                ${condition.groupOp}   overdue_fee  ${condition.overdueFee.op}
+                <foreach collection="condition.overdueFee.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.maxOverdueFee!=null">
+
+            <if test="condition.maxOverdueFee.op!='in' and condition.maxOverdueFee.op!='like' and condition.maxOverdueFee.op!='leftlike'">
+                ${condition.groupOp}   max_overdue_fee  ${condition.maxOverdueFee.op} #{condition.maxOverdueFee.data}
+            </if>
+            <if test="condition.maxOverdueFee.op=='like'">
+                AND max_overdue_fee like CONCAT('%', #{condition.maxOverdueFee.data} , '%')
+            </if>
+            <if test="condition.maxOverdueFee.op=='leftlike'">
+                AND max_overdue_fee like CONCAT(#{condition.maxOverdueFee.data} , '%')
+            </if>
+            <if test="condition.maxOverdueFee.op=='in'">
+                ${condition.groupOp}   max_overdue_fee  ${condition.maxOverdueFee.op}
+                <foreach collection="condition.maxOverdueFee.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.bufferTime!=null">
+
+            <if test="condition.bufferTime.op!='in' and condition.bufferTime.op!='like' and condition.bufferTime.op!='leftlike'">
+                ${condition.groupOp}   buffer_time  ${condition.bufferTime.op} #{condition.bufferTime.data}
+            </if>
+            <if test="condition.bufferTime.op=='like'">
+                AND buffer_time like CONCAT('%', #{condition.bufferTime.data} , '%')
+            </if>
+            <if test="condition.bufferTime.op=='leftlike'">
+                AND buffer_time like CONCAT(#{condition.bufferTime.data} , '%')
+            </if>
+            <if test="condition.bufferTime.op=='in'">
+                ${condition.groupOp}   buffer_time  ${condition.bufferTime.op}
+                <foreach collection="condition.bufferTime.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.createDt!=null">
+
+            <if test="condition.createDt.op!='in' and condition.createDt.op!='like' and condition.createDt.op!='leftlike'">
+                ${condition.groupOp}   create_dt  ${condition.createDt.op} #{condition.createDt.data}
+            </if>
+            <if test="condition.createDt.op=='like'">
+                AND create_dt like CONCAT('%', #{condition.createDt.data} , '%')
+            </if>
+            <if test="condition.createDt.op=='leftlike'">
+                AND create_dt like CONCAT(#{condition.createDt.data} , '%')
+            </if>
+            <if test="condition.createDt.op=='in'">
+                ${condition.groupOp}   create_dt  ${condition.createDt.op}
+                <foreach collection="condition.createDt.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.updateDt!=null">
+
+            <if test="condition.updateDt.op!='in' and condition.updateDt.op!='like' and condition.updateDt.op!='leftlike'">
+                ${condition.groupOp}   update_dt  ${condition.updateDt.op} #{condition.updateDt.data}
+            </if>
+            <if test="condition.updateDt.op=='like'">
+                AND update_dt like CONCAT('%', #{condition.updateDt.data} , '%')
+            </if>
+            <if test="condition.updateDt.op=='leftlike'">
+                AND update_dt like CONCAT(#{condition.updateDt.data} , '%')
+            </if>
+            <if test="condition.updateDt.op=='in'">
+                ${condition.groupOp}   update_dt  ${condition.updateDt.op}
+                <foreach collection="condition.updateDt.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.createBy!=null">
+
+            <if test="condition.createBy.op!='in' and condition.createBy.op!='like' and condition.createBy.op!='leftlike'">
+                ${condition.groupOp}   create_by  ${condition.createBy.op} #{condition.createBy.data}
+            </if>
+            <if test="condition.createBy.op=='like'">
+                AND create_by like CONCAT('%', #{condition.createBy.data} , '%')
+            </if>
+            <if test="condition.createBy.op=='leftlike'">
+                AND create_by like CONCAT(#{condition.createBy.data} , '%')
+            </if>
+            <if test="condition.createBy.op=='in'">
+                ${condition.groupOp}   create_by  ${condition.createBy.op}
+                <foreach collection="condition.createBy.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.updateBy!=null">
+
+            <if test="condition.updateBy.op!='in' and condition.updateBy.op!='like' and condition.updateBy.op!='leftlike'">
+                ${condition.groupOp}   update_by  ${condition.updateBy.op} #{condition.updateBy.data}
+            </if>
+            <if test="condition.updateBy.op=='like'">
+                AND update_by like CONCAT('%', #{condition.updateBy.data} , '%')
+            </if>
+            <if test="condition.updateBy.op=='leftlike'">
+                AND update_by like CONCAT(#{condition.updateBy.data} , '%')
+            </if>
+            <if test="condition.updateBy.op=='in'">
+                ${condition.groupOp}   update_by  ${condition.updateBy.op}
+                <foreach collection="condition.updateBy.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.borrowScale!=null">
+
+            <if test="condition.borrowScale.op!='in' and condition.borrowScale.op!='like' and condition.borrowScale.op!='leftlike'">
+                ${condition.groupOp}   borrow_scale  ${condition.borrowScale.op} #{condition.borrowScale.data}
+            </if>
+            <if test="condition.borrowScale.op=='like'">
+                AND borrow_scale like CONCAT('%', #{condition.borrowScale.data} , '%')
+            </if>
+            <if test="condition.borrowScale.op=='leftlike'">
+                AND borrow_scale like CONCAT(#{condition.borrowScale.data} , '%')
+            </if>
+            <if test="condition.borrowScale.op=='in'">
+                ${condition.groupOp}   borrow_scale  ${condition.borrowScale.op}
+                <foreach collection="condition.borrowScale.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.orderFreeTime!=null">
+
+            <if test="condition.orderFreeTime.op!='in' and condition.orderFreeTime.op!='like' and condition.orderFreeTime.op!='leftlike'">
+                ${condition.groupOp}   order_free_time  ${condition.orderFreeTime.op} #{condition.orderFreeTime.data}
+            </if>
+            <if test="condition.orderFreeTime.op=='like'">
+                AND order_free_time like CONCAT('%', #{condition.orderFreeTime.data} , '%')
+            </if>
+            <if test="condition.orderFreeTime.op=='leftlike'">
+                AND order_free_time like CONCAT(#{condition.orderFreeTime.data} , '%')
+            </if>
+            <if test="condition.orderFreeTime.op=='in'">
+                ${condition.groupOp}   order_free_time  ${condition.orderFreeTime.op}
+                <foreach collection="condition.orderFreeTime.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.endTime!=null">
+
+            <if test="condition.endTime.op!='in' and condition.endTime.op!='like' and condition.endTime.op!='leftlike'">
+                ${condition.groupOp}   end_time  ${condition.endTime.op} #{condition.endTime.data}
+            </if>
+            <if test="condition.endTime.op=='like'">
+                AND end_time like CONCAT('%', #{condition.endTime.data} , '%')
+            </if>
+            <if test="condition.endTime.op=='leftlike'">
+                AND end_time like CONCAT(#{condition.endTime.data} , '%')
+            </if>
+            <if test="condition.endTime.op=='in'">
+                ${condition.groupOp}   end_time  ${condition.endTime.op}
+                <foreach collection="condition.endTime.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        </trim>
+
+        <if test="sorter!=null" >
+        ORDER BY
+        <foreach collection="sorter" item="sort" separator="," >
+            ${sort.field} ${sort.order}</foreach>
+        </if>
+        </select>
+
+        <!-- 查询 -->
+        <select id="queryListByWhereSql" resultType="ChargeModel">
+            SELECT
+            <if test="selector!=null">
+                <trim prefixOverrides=",">
+                    <if test="selector.id!=null">
+                        , id
+                    </if>
+                    <if test="selector.name!=null">
+                        , name
+                    </if>
+                    <if test="selector.chargeDay!=null">
+                        , charge_day
+                    </if>
+                    <if test="selector.firstDeposit!=null">
+                        , first_deposit
+                    </if>
+                    <if test="selector.minDeposit!=null">
+                        , min_deposit
+                    </if>
+                    <if test="selector.yearFee!=null">
+                        , year_fee
+                    </if>
+                    <if test="selector.freeTime!=null">
+                        , free_time
+                    </if>
+                    <if test="selector.overdueFee!=null">
+                        , overdue_fee
+                    </if>
+                    <if test="selector.maxOverdueFee!=null">
+                        , max_overdue_fee
+                    </if>
+                    <if test="selector.bufferTime!=null">
+                        , buffer_time
+                    </if>
+                    <if test="selector.createDt!=null">
+                        , create_dt
+                    </if>
+                    <if test="selector.updateDt!=null">
+                        , update_dt
+                    </if>
+                    <if test="selector.createBy!=null">
+                        , create_by
+                    </if>
+                    <if test="selector.updateBy!=null">
+                        , update_by
+                    </if>
+                    <if test="selector.borrowScale!=null">
+                        , borrow_scale
+                    </if>
+                    <if test="selector.orderFreeTime!=null">
+                        , order_free_time
+                    </if>
+                    <if test="selector.endTime!=null">
+                        , end_time
+                    </if>
+            </trim>
+        </if>
+        <if test="selector==null">
+            <include refid="Base_Column_List" />
+        </if>
+
+        FROM charge_model
+
+        <if test="nativeSql!=null">
+${nativeSql}        </if>
+
+        <if test="sorter!=null" >
+            ORDER BY
+            <foreach collection="sorter" item="sort" separator="," >
+                ${sort.field} ${sort.order}</foreach>
+        </if>
+        </select>
+
+        <select id="queryBySql" resultType="Map">
+${executeSql}        </select>
+
+        <select id="queryBySqlCount" resultType="java.lang.Long">
+${executeSqlCount}        </select>
+
+    <!-- 读取数据 end-->
+
+    <!-- 分页数据 start-->
+
+        <select id="queryPage" resultType="ChargeModel">
+        SELECT
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                <if test="selector.id!=null">
+                    , id
+                </if>
+                <if test="selector.name!=null">
+                    , name
+                </if>
+                <if test="selector.chargeDay!=null">
+                    , charge_day
+                </if>
+                <if test="selector.firstDeposit!=null">
+                    , first_deposit
+                </if>
+                <if test="selector.minDeposit!=null">
+                    , min_deposit
+                </if>
+                <if test="selector.yearFee!=null">
+                    , year_fee
+                </if>
+                <if test="selector.freeTime!=null">
+                    , free_time
+                </if>
+                <if test="selector.overdueFee!=null">
+                    , overdue_fee
+                </if>
+                <if test="selector.maxOverdueFee!=null">
+                    , max_overdue_fee
+                </if>
+                <if test="selector.bufferTime!=null">
+                    , buffer_time
+                </if>
+                <if test="selector.createDt!=null">
+                    , create_dt
+                </if>
+                <if test="selector.updateDt!=null">
+                    , update_dt
+                </if>
+                <if test="selector.createBy!=null">
+                    , create_by
+                </if>
+                <if test="selector.updateBy!=null">
+                    , update_by
+                </if>
+                <if test="selector.borrowScale!=null">
+                    , borrow_scale
+                </if>
+                <if test="selector.orderFreeTime!=null">
+                    , order_free_time
+                </if>
+                <if test="selector.endTime!=null">
+                    , end_time
+                </if>
+        </trim>
+        </if>
+        <if test="selector==null">
+        <include refid="Base_Column_List" />
+        </if>
+                FROM charge_model
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+        <if test="condition.id!=null">
+
+            <if test="condition.id.op!='in' and condition.id.op!='like' and condition.id.op!='leftlike'">
+                ${condition.groupOp}   id  ${condition.id.op} #{condition.id.data}
+            </if>
+            <if test="condition.id.op=='like'">
+                AND id like CONCAT('%', #{condition.id.data} , '%')
+            </if>
+            <if test="condition.id.op=='leftlike'">
+                AND id like CONCAT(#{condition.id.data} , '%')
+            </if>
+            <if test="condition.id.op=='in'">
+                ${condition.groupOp}   id  ${condition.id.op}
+                <foreach collection="condition.id.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.name!=null">
+
+            <if test="condition.name.op!='in' and condition.name.op!='like' and condition.name.op!='leftlike'">
+                ${condition.groupOp}   name  ${condition.name.op} #{condition.name.data}
+            </if>
+            <if test="condition.name.op=='like'">
+                AND name like CONCAT('%', #{condition.name.data} , '%')
+            </if>
+            <if test="condition.name.op=='leftlike'">
+                AND name like CONCAT(#{condition.name.data} , '%')
+            </if>
+            <if test="condition.name.op=='in'">
+                ${condition.groupOp}   name  ${condition.name.op}
+                <foreach collection="condition.name.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.chargeDay!=null">
+
+            <if test="condition.chargeDay.op!='in' and condition.chargeDay.op!='like' and condition.chargeDay.op!='leftlike'">
+                ${condition.groupOp}   charge_day  ${condition.chargeDay.op} #{condition.chargeDay.data}
+            </if>
+            <if test="condition.chargeDay.op=='like'">
+                AND charge_day like CONCAT('%', #{condition.chargeDay.data} , '%')
+            </if>
+            <if test="condition.chargeDay.op=='leftlike'">
+                AND charge_day like CONCAT(#{condition.chargeDay.data} , '%')
+            </if>
+            <if test="condition.chargeDay.op=='in'">
+                ${condition.groupOp}   charge_day  ${condition.chargeDay.op}
+                <foreach collection="condition.chargeDay.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.firstDeposit!=null">
+
+            <if test="condition.firstDeposit.op!='in' and condition.firstDeposit.op!='like' and condition.firstDeposit.op!='leftlike'">
+                ${condition.groupOp}   first_deposit  ${condition.firstDeposit.op} #{condition.firstDeposit.data}
+            </if>
+            <if test="condition.firstDeposit.op=='like'">
+                AND first_deposit like CONCAT('%', #{condition.firstDeposit.data} , '%')
+            </if>
+            <if test="condition.firstDeposit.op=='leftlike'">
+                AND first_deposit like CONCAT(#{condition.firstDeposit.data} , '%')
+            </if>
+            <if test="condition.firstDeposit.op=='in'">
+                ${condition.groupOp}   first_deposit  ${condition.firstDeposit.op}
+                <foreach collection="condition.firstDeposit.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.minDeposit!=null">
+
+            <if test="condition.minDeposit.op!='in' and condition.minDeposit.op!='like' and condition.minDeposit.op!='leftlike'">
+                ${condition.groupOp}   min_deposit  ${condition.minDeposit.op} #{condition.minDeposit.data}
+            </if>
+            <if test="condition.minDeposit.op=='like'">
+                AND min_deposit like CONCAT('%', #{condition.minDeposit.data} , '%')
+            </if>
+            <if test="condition.minDeposit.op=='leftlike'">
+                AND min_deposit like CONCAT(#{condition.minDeposit.data} , '%')
+            </if>
+            <if test="condition.minDeposit.op=='in'">
+                ${condition.groupOp}   min_deposit  ${condition.minDeposit.op}
+                <foreach collection="condition.minDeposit.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.yearFee!=null">
+
+            <if test="condition.yearFee.op!='in' and condition.yearFee.op!='like' and condition.yearFee.op!='leftlike'">
+                ${condition.groupOp}   year_fee  ${condition.yearFee.op} #{condition.yearFee.data}
+            </if>
+            <if test="condition.yearFee.op=='like'">
+                AND year_fee like CONCAT('%', #{condition.yearFee.data} , '%')
+            </if>
+            <if test="condition.yearFee.op=='leftlike'">
+                AND year_fee like CONCAT(#{condition.yearFee.data} , '%')
+            </if>
+            <if test="condition.yearFee.op=='in'">
+                ${condition.groupOp}   year_fee  ${condition.yearFee.op}
+                <foreach collection="condition.yearFee.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.freeTime!=null">
+
+            <if test="condition.freeTime.op!='in' and condition.freeTime.op!='like' and condition.freeTime.op!='leftlike'">
+                ${condition.groupOp}   free_time  ${condition.freeTime.op} #{condition.freeTime.data}
+            </if>
+            <if test="condition.freeTime.op=='like'">
+                AND free_time like CONCAT('%', #{condition.freeTime.data} , '%')
+            </if>
+            <if test="condition.freeTime.op=='leftlike'">
+                AND free_time like CONCAT(#{condition.freeTime.data} , '%')
+            </if>
+            <if test="condition.freeTime.op=='in'">
+                ${condition.groupOp}   free_time  ${condition.freeTime.op}
+                <foreach collection="condition.freeTime.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.overdueFee!=null">
+
+            <if test="condition.overdueFee.op!='in' and condition.overdueFee.op!='like' and condition.overdueFee.op!='leftlike'">
+                ${condition.groupOp}   overdue_fee  ${condition.overdueFee.op} #{condition.overdueFee.data}
+            </if>
+            <if test="condition.overdueFee.op=='like'">
+                AND overdue_fee like CONCAT('%', #{condition.overdueFee.data} , '%')
+            </if>
+            <if test="condition.overdueFee.op=='leftlike'">
+                AND overdue_fee like CONCAT(#{condition.overdueFee.data} , '%')
+            </if>
+            <if test="condition.overdueFee.op=='in'">
+                ${condition.groupOp}   overdue_fee  ${condition.overdueFee.op}
+                <foreach collection="condition.overdueFee.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.maxOverdueFee!=null">
+
+            <if test="condition.maxOverdueFee.op!='in' and condition.maxOverdueFee.op!='like' and condition.maxOverdueFee.op!='leftlike'">
+                ${condition.groupOp}   max_overdue_fee  ${condition.maxOverdueFee.op} #{condition.maxOverdueFee.data}
+            </if>
+            <if test="condition.maxOverdueFee.op=='like'">
+                AND max_overdue_fee like CONCAT('%', #{condition.maxOverdueFee.data} , '%')
+            </if>
+            <if test="condition.maxOverdueFee.op=='leftlike'">
+                AND max_overdue_fee like CONCAT(#{condition.maxOverdueFee.data} , '%')
+            </if>
+            <if test="condition.maxOverdueFee.op=='in'">
+                ${condition.groupOp}   max_overdue_fee  ${condition.maxOverdueFee.op}
+                <foreach collection="condition.maxOverdueFee.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.bufferTime!=null">
+
+            <if test="condition.bufferTime.op!='in' and condition.bufferTime.op!='like' and condition.bufferTime.op!='leftlike'">
+                ${condition.groupOp}   buffer_time  ${condition.bufferTime.op} #{condition.bufferTime.data}
+            </if>
+            <if test="condition.bufferTime.op=='like'">
+                AND buffer_time like CONCAT('%', #{condition.bufferTime.data} , '%')
+            </if>
+            <if test="condition.bufferTime.op=='leftlike'">
+                AND buffer_time like CONCAT(#{condition.bufferTime.data} , '%')
+            </if>
+            <if test="condition.bufferTime.op=='in'">
+                ${condition.groupOp}   buffer_time  ${condition.bufferTime.op}
+                <foreach collection="condition.bufferTime.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.createDt!=null">
+
+            <if test="condition.createDt.op!='in' and condition.createDt.op!='like' and condition.createDt.op!='leftlike'">
+                ${condition.groupOp}   create_dt  ${condition.createDt.op} #{condition.createDt.data}
+            </if>
+            <if test="condition.createDt.op=='like'">
+                AND create_dt like CONCAT('%', #{condition.createDt.data} , '%')
+            </if>
+            <if test="condition.createDt.op=='leftlike'">
+                AND create_dt like CONCAT(#{condition.createDt.data} , '%')
+            </if>
+            <if test="condition.createDt.op=='in'">
+                ${condition.groupOp}   create_dt  ${condition.createDt.op}
+                <foreach collection="condition.createDt.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.updateDt!=null">
+
+            <if test="condition.updateDt.op!='in' and condition.updateDt.op!='like' and condition.updateDt.op!='leftlike'">
+                ${condition.groupOp}   update_dt  ${condition.updateDt.op} #{condition.updateDt.data}
+            </if>
+            <if test="condition.updateDt.op=='like'">
+                AND update_dt like CONCAT('%', #{condition.updateDt.data} , '%')
+            </if>
+            <if test="condition.updateDt.op=='leftlike'">
+                AND update_dt like CONCAT(#{condition.updateDt.data} , '%')
+            </if>
+            <if test="condition.updateDt.op=='in'">
+                ${condition.groupOp}   update_dt  ${condition.updateDt.op}
+                <foreach collection="condition.updateDt.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.createBy!=null">
+
+            <if test="condition.createBy.op!='in' and condition.createBy.op!='like' and condition.createBy.op!='leftlike'">
+                ${condition.groupOp}   create_by  ${condition.createBy.op} #{condition.createBy.data}
+            </if>
+            <if test="condition.createBy.op=='like'">
+                AND create_by like CONCAT('%', #{condition.createBy.data} , '%')
+            </if>
+            <if test="condition.createBy.op=='leftlike'">
+                AND create_by like CONCAT(#{condition.createBy.data} , '%')
+            </if>
+            <if test="condition.createBy.op=='in'">
+                ${condition.groupOp}   create_by  ${condition.createBy.op}
+                <foreach collection="condition.createBy.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.updateBy!=null">
+
+            <if test="condition.updateBy.op!='in' and condition.updateBy.op!='like' and condition.updateBy.op!='leftlike'">
+                ${condition.groupOp}   update_by  ${condition.updateBy.op} #{condition.updateBy.data}
+            </if>
+            <if test="condition.updateBy.op=='like'">
+                AND update_by like CONCAT('%', #{condition.updateBy.data} , '%')
+            </if>
+            <if test="condition.updateBy.op=='leftlike'">
+                AND update_by like CONCAT(#{condition.updateBy.data} , '%')
+            </if>
+            <if test="condition.updateBy.op=='in'">
+                ${condition.groupOp}   update_by  ${condition.updateBy.op}
+                <foreach collection="condition.updateBy.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.borrowScale!=null">
+
+            <if test="condition.borrowScale.op!='in' and condition.borrowScale.op!='like' and condition.borrowScale.op!='leftlike'">
+                ${condition.groupOp}   borrow_scale  ${condition.borrowScale.op} #{condition.borrowScale.data}
+            </if>
+            <if test="condition.borrowScale.op=='like'">
+                AND borrow_scale like CONCAT('%', #{condition.borrowScale.data} , '%')
+            </if>
+            <if test="condition.borrowScale.op=='leftlike'">
+                AND borrow_scale like CONCAT(#{condition.borrowScale.data} , '%')
+            </if>
+            <if test="condition.borrowScale.op=='in'">
+                ${condition.groupOp}   borrow_scale  ${condition.borrowScale.op}
+                <foreach collection="condition.borrowScale.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.orderFreeTime!=null">
+
+            <if test="condition.orderFreeTime.op!='in' and condition.orderFreeTime.op!='like' and condition.orderFreeTime.op!='leftlike'">
+                ${condition.groupOp}   order_free_time  ${condition.orderFreeTime.op} #{condition.orderFreeTime.data}
+            </if>
+            <if test="condition.orderFreeTime.op=='like'">
+                AND order_free_time like CONCAT('%', #{condition.orderFreeTime.data} , '%')
+            </if>
+            <if test="condition.orderFreeTime.op=='leftlike'">
+                AND order_free_time like CONCAT(#{condition.orderFreeTime.data} , '%')
+            </if>
+            <if test="condition.orderFreeTime.op=='in'">
+                ${condition.groupOp}   order_free_time  ${condition.orderFreeTime.op}
+                <foreach collection="condition.orderFreeTime.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.endTime!=null">
+
+            <if test="condition.endTime.op!='in' and condition.endTime.op!='like' and condition.endTime.op!='leftlike'">
+                ${condition.groupOp}   end_time  ${condition.endTime.op} #{condition.endTime.data}
+            </if>
+            <if test="condition.endTime.op=='like'">
+                AND end_time like CONCAT('%', #{condition.endTime.data} , '%')
+            </if>
+            <if test="condition.endTime.op=='leftlike'">
+                AND end_time like CONCAT(#{condition.endTime.data} , '%')
+            </if>
+            <if test="condition.endTime.op=='in'">
+                ${condition.groupOp}   end_time  ${condition.endTime.op}
+                <foreach collection="condition.endTime.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        </trim>
+
+        <if test="sorter!=null" >
+        ORDER BY
+        <foreach collection="sorter" item="sort" separator="," >
+            ${sort.field} ${sort.order}</foreach>
+        </if>
+
+        <if test="offset != null">
+        limit ${offset}, ${rows}
+        </if>
+        </select>
+
+        <select id="queryPageByWhereSql" resultType="ChargeModel">
+        SELECT
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                <if test="selector.id!=null">
+                    , id
+                </if>
+                <if test="selector.name!=null">
+                    , name
+                </if>
+                <if test="selector.chargeDay!=null">
+                    , charge_day
+                </if>
+                <if test="selector.firstDeposit!=null">
+                    , first_deposit
+                </if>
+                <if test="selector.minDeposit!=null">
+                    , min_deposit
+                </if>
+                <if test="selector.yearFee!=null">
+                    , year_fee
+                </if>
+                <if test="selector.freeTime!=null">
+                    , free_time
+                </if>
+                <if test="selector.overdueFee!=null">
+                    , overdue_fee
+                </if>
+                <if test="selector.maxOverdueFee!=null">
+                    , max_overdue_fee
+                </if>
+                <if test="selector.bufferTime!=null">
+                    , buffer_time
+                </if>
+                <if test="selector.createDt!=null">
+                    , create_dt
+                </if>
+                <if test="selector.updateDt!=null">
+                    , update_dt
+                </if>
+                <if test="selector.createBy!=null">
+                    , create_by
+                </if>
+                <if test="selector.updateBy!=null">
+                    , update_by
+                </if>
+                <if test="selector.borrowScale!=null">
+                    , borrow_scale
+                </if>
+                <if test="selector.orderFreeTime!=null">
+                    , order_free_time
+                </if>
+                <if test="selector.endTime!=null">
+                    , end_time
+                </if>
+        </trim>
+        </if>
+        <if test="selector==null">
+        <include refid="Base_Column_List" />
+        </if>
+                FROM charge_model
+
+        <if test="nativeSql!=null">
+${nativeSql}        </if>
+
+        <if test="sorter!=null" >
+        ORDER BY
+        <foreach collection="sorter" item="sort" separator="," >
+            ${sort.field} ${sort.order}</foreach>
+        </if>
+
+        <if test="offset != null">
+        limit ${offset}, ${rows}
+        </if>
+        </select>
+
+        <select id="count" resultType="java.lang.Integer">
+        SELECT count(id) FROM charge_model
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+
+                <if test="condition.id.op!='in' and condition.id.op!='like' and condition.id.op!='leftlike'">
+                    ${condition.groupOp}   id  ${condition.id.op} #{condition.id.data}
+                </if>
+                <if test="condition.id.op=='like'">
+                    AND id like CONCAT('%', #{condition.id.data} , '%')
+                </if>
+                <if test="condition.id.op=='leftlike'">
+                    AND id like CONCAT(#{condition.id.data} , '%')
+                </if>
+                <if test="condition.id.op=='in'">
+                    ${condition.groupOp}   id  ${condition.id.op}
+                    <foreach collection="condition.id.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.name!=null">
+
+                <if test="condition.name.op!='in' and condition.name.op!='like' and condition.name.op!='leftlike'">
+                    ${condition.groupOp}   name  ${condition.name.op} #{condition.name.data}
+                </if>
+                <if test="condition.name.op=='like'">
+                    AND name like CONCAT('%', #{condition.name.data} , '%')
+                </if>
+                <if test="condition.name.op=='leftlike'">
+                    AND name like CONCAT(#{condition.name.data} , '%')
+                </if>
+                <if test="condition.name.op=='in'">
+                    ${condition.groupOp}   name  ${condition.name.op}
+                    <foreach collection="condition.name.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.chargeDay!=null">
+
+                <if test="condition.chargeDay.op!='in' and condition.chargeDay.op!='like' and condition.chargeDay.op!='leftlike'">
+                    ${condition.groupOp}   charge_day  ${condition.chargeDay.op} #{condition.chargeDay.data}
+                </if>
+                <if test="condition.chargeDay.op=='like'">
+                    AND charge_day like CONCAT('%', #{condition.chargeDay.data} , '%')
+                </if>
+                <if test="condition.chargeDay.op=='leftlike'">
+                    AND charge_day like CONCAT(#{condition.chargeDay.data} , '%')
+                </if>
+                <if test="condition.chargeDay.op=='in'">
+                    ${condition.groupOp}   charge_day  ${condition.chargeDay.op}
+                    <foreach collection="condition.chargeDay.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.firstDeposit!=null">
+
+                <if test="condition.firstDeposit.op!='in' and condition.firstDeposit.op!='like' and condition.firstDeposit.op!='leftlike'">
+                    ${condition.groupOp}   first_deposit  ${condition.firstDeposit.op} #{condition.firstDeposit.data}
+                </if>
+                <if test="condition.firstDeposit.op=='like'">
+                    AND first_deposit like CONCAT('%', #{condition.firstDeposit.data} , '%')
+                </if>
+                <if test="condition.firstDeposit.op=='leftlike'">
+                    AND first_deposit like CONCAT(#{condition.firstDeposit.data} , '%')
+                </if>
+                <if test="condition.firstDeposit.op=='in'">
+                    ${condition.groupOp}   first_deposit  ${condition.firstDeposit.op}
+                    <foreach collection="condition.firstDeposit.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.minDeposit!=null">
+
+                <if test="condition.minDeposit.op!='in' and condition.minDeposit.op!='like' and condition.minDeposit.op!='leftlike'">
+                    ${condition.groupOp}   min_deposit  ${condition.minDeposit.op} #{condition.minDeposit.data}
+                </if>
+                <if test="condition.minDeposit.op=='like'">
+                    AND min_deposit like CONCAT('%', #{condition.minDeposit.data} , '%')
+                </if>
+                <if test="condition.minDeposit.op=='leftlike'">
+                    AND min_deposit like CONCAT(#{condition.minDeposit.data} , '%')
+                </if>
+                <if test="condition.minDeposit.op=='in'">
+                    ${condition.groupOp}   min_deposit  ${condition.minDeposit.op}
+                    <foreach collection="condition.minDeposit.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.yearFee!=null">
+
+                <if test="condition.yearFee.op!='in' and condition.yearFee.op!='like' and condition.yearFee.op!='leftlike'">
+                    ${condition.groupOp}   year_fee  ${condition.yearFee.op} #{condition.yearFee.data}
+                </if>
+                <if test="condition.yearFee.op=='like'">
+                    AND year_fee like CONCAT('%', #{condition.yearFee.data} , '%')
+                </if>
+                <if test="condition.yearFee.op=='leftlike'">
+                    AND year_fee like CONCAT(#{condition.yearFee.data} , '%')
+                </if>
+                <if test="condition.yearFee.op=='in'">
+                    ${condition.groupOp}   year_fee  ${condition.yearFee.op}
+                    <foreach collection="condition.yearFee.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.freeTime!=null">
+
+                <if test="condition.freeTime.op!='in' and condition.freeTime.op!='like' and condition.freeTime.op!='leftlike'">
+                    ${condition.groupOp}   free_time  ${condition.freeTime.op} #{condition.freeTime.data}
+                </if>
+                <if test="condition.freeTime.op=='like'">
+                    AND free_time like CONCAT('%', #{condition.freeTime.data} , '%')
+                </if>
+                <if test="condition.freeTime.op=='leftlike'">
+                    AND free_time like CONCAT(#{condition.freeTime.data} , '%')
+                </if>
+                <if test="condition.freeTime.op=='in'">
+                    ${condition.groupOp}   free_time  ${condition.freeTime.op}
+                    <foreach collection="condition.freeTime.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.overdueFee!=null">
+
+                <if test="condition.overdueFee.op!='in' and condition.overdueFee.op!='like' and condition.overdueFee.op!='leftlike'">
+                    ${condition.groupOp}   overdue_fee  ${condition.overdueFee.op} #{condition.overdueFee.data}
+                </if>
+                <if test="condition.overdueFee.op=='like'">
+                    AND overdue_fee like CONCAT('%', #{condition.overdueFee.data} , '%')
+                </if>
+                <if test="condition.overdueFee.op=='leftlike'">
+                    AND overdue_fee like CONCAT(#{condition.overdueFee.data} , '%')
+                </if>
+                <if test="condition.overdueFee.op=='in'">
+                    ${condition.groupOp}   overdue_fee  ${condition.overdueFee.op}
+                    <foreach collection="condition.overdueFee.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.maxOverdueFee!=null">
+
+                <if test="condition.maxOverdueFee.op!='in' and condition.maxOverdueFee.op!='like' and condition.maxOverdueFee.op!='leftlike'">
+                    ${condition.groupOp}   max_overdue_fee  ${condition.maxOverdueFee.op} #{condition.maxOverdueFee.data}
+                </if>
+                <if test="condition.maxOverdueFee.op=='like'">
+                    AND max_overdue_fee like CONCAT('%', #{condition.maxOverdueFee.data} , '%')
+                </if>
+                <if test="condition.maxOverdueFee.op=='leftlike'">
+                    AND max_overdue_fee like CONCAT(#{condition.maxOverdueFee.data} , '%')
+                </if>
+                <if test="condition.maxOverdueFee.op=='in'">
+                    ${condition.groupOp}   max_overdue_fee  ${condition.maxOverdueFee.op}
+                    <foreach collection="condition.maxOverdueFee.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.bufferTime!=null">
+
+                <if test="condition.bufferTime.op!='in' and condition.bufferTime.op!='like' and condition.bufferTime.op!='leftlike'">
+                    ${condition.groupOp}   buffer_time  ${condition.bufferTime.op} #{condition.bufferTime.data}
+                </if>
+                <if test="condition.bufferTime.op=='like'">
+                    AND buffer_time like CONCAT('%', #{condition.bufferTime.data} , '%')
+                </if>
+                <if test="condition.bufferTime.op=='leftlike'">
+                    AND buffer_time like CONCAT(#{condition.bufferTime.data} , '%')
+                </if>
+                <if test="condition.bufferTime.op=='in'">
+                    ${condition.groupOp}   buffer_time  ${condition.bufferTime.op}
+                    <foreach collection="condition.bufferTime.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.createDt!=null">
+
+                <if test="condition.createDt.op!='in' and condition.createDt.op!='like' and condition.createDt.op!='leftlike'">
+                    ${condition.groupOp}   create_dt  ${condition.createDt.op} #{condition.createDt.data}
+                </if>
+                <if test="condition.createDt.op=='like'">
+                    AND create_dt like CONCAT('%', #{condition.createDt.data} , '%')
+                </if>
+                <if test="condition.createDt.op=='leftlike'">
+                    AND create_dt like CONCAT(#{condition.createDt.data} , '%')
+                </if>
+                <if test="condition.createDt.op=='in'">
+                    ${condition.groupOp}   create_dt  ${condition.createDt.op}
+                    <foreach collection="condition.createDt.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.updateDt!=null">
+
+                <if test="condition.updateDt.op!='in' and condition.updateDt.op!='like' and condition.updateDt.op!='leftlike'">
+                    ${condition.groupOp}   update_dt  ${condition.updateDt.op} #{condition.updateDt.data}
+                </if>
+                <if test="condition.updateDt.op=='like'">
+                    AND update_dt like CONCAT('%', #{condition.updateDt.data} , '%')
+                </if>
+                <if test="condition.updateDt.op=='leftlike'">
+                    AND update_dt like CONCAT(#{condition.updateDt.data} , '%')
+                </if>
+                <if test="condition.updateDt.op=='in'">
+                    ${condition.groupOp}   update_dt  ${condition.updateDt.op}
+                    <foreach collection="condition.updateDt.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.createBy!=null">
+
+                <if test="condition.createBy.op!='in' and condition.createBy.op!='like' and condition.createBy.op!='leftlike'">
+                    ${condition.groupOp}   create_by  ${condition.createBy.op} #{condition.createBy.data}
+                </if>
+                <if test="condition.createBy.op=='like'">
+                    AND create_by like CONCAT('%', #{condition.createBy.data} , '%')
+                </if>
+                <if test="condition.createBy.op=='leftlike'">
+                    AND create_by like CONCAT(#{condition.createBy.data} , '%')
+                </if>
+                <if test="condition.createBy.op=='in'">
+                    ${condition.groupOp}   create_by  ${condition.createBy.op}
+                    <foreach collection="condition.createBy.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.updateBy!=null">
+
+                <if test="condition.updateBy.op!='in' and condition.updateBy.op!='like' and condition.updateBy.op!='leftlike'">
+                    ${condition.groupOp}   update_by  ${condition.updateBy.op} #{condition.updateBy.data}
+                </if>
+                <if test="condition.updateBy.op=='like'">
+                    AND update_by like CONCAT('%', #{condition.updateBy.data} , '%')
+                </if>
+                <if test="condition.updateBy.op=='leftlike'">
+                    AND update_by like CONCAT(#{condition.updateBy.data} , '%')
+                </if>
+                <if test="condition.updateBy.op=='in'">
+                    ${condition.groupOp}   update_by  ${condition.updateBy.op}
+                    <foreach collection="condition.updateBy.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.borrowScale!=null">
+
+                <if test="condition.borrowScale.op!='in' and condition.borrowScale.op!='like' and condition.borrowScale.op!='leftlike'">
+                    ${condition.groupOp}   borrow_scale  ${condition.borrowScale.op} #{condition.borrowScale.data}
+                </if>
+                <if test="condition.borrowScale.op=='like'">
+                    AND borrow_scale like CONCAT('%', #{condition.borrowScale.data} , '%')
+                </if>
+                <if test="condition.borrowScale.op=='leftlike'">
+                    AND borrow_scale like CONCAT(#{condition.borrowScale.data} , '%')
+                </if>
+                <if test="condition.borrowScale.op=='in'">
+                    ${condition.groupOp}   borrow_scale  ${condition.borrowScale.op}
+                    <foreach collection="condition.borrowScale.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.orderFreeTime!=null">
+
+                <if test="condition.orderFreeTime.op!='in' and condition.orderFreeTime.op!='like' and condition.orderFreeTime.op!='leftlike'">
+                    ${condition.groupOp}   order_free_time  ${condition.orderFreeTime.op} #{condition.orderFreeTime.data}
+                </if>
+                <if test="condition.orderFreeTime.op=='like'">
+                    AND order_free_time like CONCAT('%', #{condition.orderFreeTime.data} , '%')
+                </if>
+                <if test="condition.orderFreeTime.op=='leftlike'">
+                    AND order_free_time like CONCAT(#{condition.orderFreeTime.data} , '%')
+                </if>
+                <if test="condition.orderFreeTime.op=='in'">
+                    ${condition.groupOp}   order_free_time  ${condition.orderFreeTime.op}
+                    <foreach collection="condition.orderFreeTime.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.endTime!=null">
+
+                <if test="condition.endTime.op!='in' and condition.endTime.op!='like' and condition.endTime.op!='leftlike'">
+                    ${condition.groupOp}   end_time  ${condition.endTime.op} #{condition.endTime.data}
+                </if>
+                <if test="condition.endTime.op=='like'">
+                    AND end_time like CONCAT('%', #{condition.endTime.data} , '%')
+                </if>
+                <if test="condition.endTime.op=='leftlike'">
+                    AND end_time like CONCAT(#{condition.endTime.data} , '%')
+                </if>
+                <if test="condition.endTime.op=='in'">
+                    ${condition.groupOp}   end_time  ${condition.endTime.op}
+                    <foreach collection="condition.endTime.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+        </trim>
+        </select>
+
+        <select id="countByWhereSql" resultType="java.lang.Integer">
+        SELECT count(id) FROM charge_model
+        <if test="nativeSql!=null">
+${nativeSql}        </if>
+        </select>
+
+    <!-- 分页数据 end-->
+
+    <!-- 删除 start-->
+    <!-- 按Id删除 -->
+        <delete id="delete" parameterType="java.lang.Long">
+        DELETE FROM charge_model
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+        </delete>
+
+
+        <delete id="deleteByCondition" parameterType="java.util.Map">
+        DELETE FROM charge_model
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.name!=null">
+                AND name = #{condition.name}
+            </if>
+            <if test="condition.chargeDay!=null">
+                AND charge_day = #{condition.chargeDay}
+            </if>
+            <if test="condition.firstDeposit!=null">
+                AND first_deposit = #{condition.firstDeposit}
+            </if>
+            <if test="condition.minDeposit!=null">
+                AND min_deposit = #{condition.minDeposit}
+            </if>
+            <if test="condition.yearFee!=null">
+                AND year_fee = #{condition.yearFee}
+            </if>
+            <if test="condition.freeTime!=null">
+                AND free_time = #{condition.freeTime}
+            </if>
+            <if test="condition.overdueFee!=null">
+                AND overdue_fee = #{condition.overdueFee}
+            </if>
+            <if test="condition.maxOverdueFee!=null">
+                AND max_overdue_fee = #{condition.maxOverdueFee}
+            </if>
+            <if test="condition.bufferTime!=null">
+                AND buffer_time = #{condition.bufferTime}
+            </if>
+            <if test="condition.createDt!=null">
+                AND create_dt = #{condition.createDt}
+            </if>
+            <if test="condition.updateDt!=null">
+                AND update_dt = #{condition.updateDt}
+            </if>
+            <if test="condition.createBy!=null">
+                AND create_by = #{condition.createBy}
+            </if>
+            <if test="condition.updateBy!=null">
+                AND update_by = #{condition.updateBy}
+            </if>
+            <if test="condition.borrowScale!=null">
+                AND borrow_scale = #{condition.borrowScale}
+            </if>
+            <if test="condition.orderFreeTime!=null">
+                AND order_free_time = #{condition.orderFreeTime}
+            </if>
+            <if test="condition.endTime!=null">
+                AND end_time = #{condition.endTime}
+            </if>
+        </trim>
+        </delete>
+
+        <delete id="deleteByWhereSql" parameterType="java.lang.String">
+        DELETE FROM charge_model
+        <if test="nativeSql!=null">
+${nativeSql}        </if>
+        <if test="nativeSql==null">
+            WHERE 1=2
+        </if>
+        </delete>
+
+        <delete id="deleteAll" >
+        DELETE FROM charge_model
+        </delete>
+
+
+    <!-- 删除 end-->
+</mapper>
+
