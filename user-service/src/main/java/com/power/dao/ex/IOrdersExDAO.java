@@ -12,6 +12,6 @@ public interface IOrdersExDAO {
      * @param accountId
      * @return
      */
-    Integer countOrderByTypeAndStatus(Long accountId,String type,String status);
+    Integer countOrderByTypeAndStatus(@Param("accountId")Long accountId,@Param("type")String type,@Param("status")String status);
 
 }
