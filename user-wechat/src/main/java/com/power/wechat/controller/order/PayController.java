@@ -18,6 +18,7 @@ import me.chanjar.weixin.common.exception.WxErrorException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -46,6 +47,16 @@ public class PayController {
 
     @Autowired
     private IEventListener listener;
+
+    private final static ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+    static {
+        executor.setCorePoolSize(4);
+        executor.setMaxPoolSize(100);
+        executor.setQueueCapacity(100);
+        executor.initialize();
+    }
+
+
     /**
      * <pre>
      *   用户充值
@@ -139,13 +150,15 @@ public class PayController {
         }
         //锁定到退款，清空原有的余额
         userAcountsFacade.lockBalance(userAcounts);
-
-        WxEvent wxEvent = new WxEvent();
-        wxEvent.setOpenId(openId);
-        wxEvent.setUniqueKey(uniqueKey);
-        wxEvent.setUserInfoDTO(UserContext.getCurrentUser());
-        wxEvent.setEvent(PowerEvent.ORDER_REFUND);
-        listener.eventDispatched(wxEvent);
+        UserInfoDTO userInfoDTO = UserContext.getCurrentUser();
+        executor.submit(()->{
+            WxEvent wxEvent = new WxEvent();
+            wxEvent.setOpenId(openId);
+            wxEvent.setUniqueKey(uniqueKey);
+            wxEvent.setUserInfoDTO(userInfoDTO);
+            wxEvent.setEvent(PowerEvent.ORDER_REFUND);
+            listener.eventDispatched(wxEvent);
+        });
         return true;
     }
 

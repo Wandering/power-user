@@ -33,6 +33,6 @@ public class RefundSuccessEvent implements Observer {
         WxRefundEvent wxRefundEvent = (WxRefundEvent) arg;
         //查询当前用户所有的未结算的金额
         logger.info("推送退款成功模板！");
-        voucherService.sendTemplateMsg(wxRefundEvent.getUniqueKey(),wxRefundEvent.getOpenId(),"FILL_BALANCE",new ArrayList<>());
+        voucherService.sendTemplateMsg(wxRefundEvent.getUniqueKey(),"FILL_BALANCE",wxRefundEvent.getOpenId(),new ArrayList<>());
     }
 }

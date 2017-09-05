@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -48,7 +49,6 @@ public class RefundEvent implements Observer {
     private IUserAcountsFacade userAcountsFacade;
     @Autowired
     private IUserOrderRefundFacade userOrderRefundFacade;
-
 
     public RefundEvent() {
     }
@@ -83,58 +83,51 @@ public class RefundEvent implements Observer {
         refundEvent.setUserInfoDTO(userInfoDTO);
         refundEvent.setUniqueKey(wxEvent.getUniqueKey());
         refundEvent.setOpenId(wxEvent.getOpenId());
-        try {
-            Integer totalFee = 0;
-            for (Orders orders : successList) {
+        Integer totalFee = 0;
+        for (Orders orders : successList) {
 
-                String refundOrderNo = UUID.randomUUID().toString();
-                boolean isRefund = wxRefund(orders,refundOrderNo);
-                totalFee += WxPayRefundRequest.yuanToFee(orders.getSurplusFee().toString());
-                Orders refundOrder = this.genRefundOrder(userInfoDTO.getAccountId(),refundOrderNo,orders);
-                if (isRefund) {
-                    //标准反馈成功+业务反馈成功
-                    refundOrderList.add(refundOrder);
-                    refundSuccessList.add(orders);
-                } else {
-                    refundFailList.add(refundOrder);
-                }
-            }
-
-            if (refundSuccessList.size() > 0) {
-                //有执行退款成功的订单给用户推送退款成功消息
-                logger.info("用户accountId:{},用户昵称:{},用户退款成功！", userInfoDTO.getAccountId(), userInfoDTO.getNickname());
-                logger.info("推送退款成功事件给用户！");
-                refundEvent.setFee(totalFee);
-                refundEvent.setEvent(PowerEvent.ORDER_REFUND_SUCCESS);
-                listener.eventDispatched(refundEvent);
-                //todo 用户退款表格维护
-                ordersFacade.refundSuccess(refundSuccessList);
+            String refundOrderNo = UUID.randomUUID().toString();
+            boolean isRefund = wxRefund(orders, refundOrderNo);
+            totalFee += WxPayRefundRequest.yuanToFee(orders.getSurplusFee().toString());
+            Orders refundOrder = this.genRefundOrder(userInfoDTO.getAccountId(), refundOrderNo, orders);
+            if (isRefund) {
+                //标准反馈成功+业务反馈成功
+                refundOrderList.add(refundOrder);
+                refundSuccessList.add(orders);
             } else {
-                logger.info("用户accountId:{},用户昵称:{},用户退款失败！当前：\n 不可退款订单：{}\n可退款但退款失败订单：{}", userInfoDTO.getAccountId(), userInfoDTO.getNickname(), JSON.toJSONString(failList), JSON.toJSONString(refundFailList));
-                refundEvent.setEvent(PowerEvent.ORDER_REFUND_FAIL);
-                listener.eventDispatched(refundEvent);
+                refundFailList.add(refundOrder);
             }
-            if (refundOrderList.size()>0){
-                //放置退款成功信息
-                ordersFacade.saveRefundSuccessOrder(refundOrderList);
-            }
-            if (failList.size() > 0) {
-                /**如果有数据和微信不统一，同步为微信订单,这里处理的是微信认为已经退款的订单 时间复杂度0(n)**/
-                ordersFacade.syncRefund(failList);
-            }
-            if (refundFailList.size() > 0) {
-                //如果有退款失败的订单 加入到定时任务 时间复杂度0(n平方)
-                refundFailList.stream().forEach((obj) -> {
-                    obj.setStatus(OrderStatus.REFUND_FAIL.toString());
-                });
-                ordersFacade.saveRefundFailOrder(refundFailList);
-                userOrderRefundFacade.createTimerTask(refundFailList);
-            }
-        } catch (WxErrorException e) {
+        }
+
+        if (refundSuccessList.size() > 0) {
+            //有执行退款成功的订单给用户推送退款成功消息
+            logger.info("用户accountId:{},用户昵称:{},用户退款成功！", userInfoDTO.getAccountId(), userInfoDTO.getNickname());
+            logger.info("推送退款成功事件给用户！");
+            refundEvent.setFee(totalFee);
+            refundEvent.setEvent(PowerEvent.ORDER_REFUND_SUCCESS);
+            listener.eventDispatched(refundEvent);
+            //todo 用户退款表格维护
+            ordersFacade.refundSuccess(refundSuccessList);
+        } else {
+            logger.info("用户accountId:{},用户昵称:{},用户退款失败！当前：\n 不可退款订单：{}\n可退款但退款失败订单：{}", userInfoDTO.getAccountId(), userInfoDTO.getNickname(), JSON.toJSONString(failList), JSON.toJSONString(refundFailList));
             refundEvent.setEvent(PowerEvent.ORDER_REFUND_FAIL);
             listener.eventDispatched(refundEvent);
-            logger.info(e.getMessage());
-            e.printStackTrace();
+        }
+        if (refundOrderList.size() > 0) {
+            //放置退款成功信息
+            ordersFacade.saveRefundSuccessOrder(refundOrderList);
+        }
+        if (failList.size() > 0) {
+            /**如果有数据和微信不统一，同步为微信订单,这里处理的是微信认为已经退款的订单 时间复杂度0(n)**/
+            ordersFacade.syncRefund(failList);
+        }
+        if (refundFailList.size() > 0) {
+            //如果有退款失败的订单 加入到定时任务 时间复杂度0(n平方)
+            refundFailList.stream().forEach((obj) -> {
+                obj.setStatus(OrderStatus.REFUND_FAIL.toString());
+            });
+            ordersFacade.saveRefundFailOrder(refundFailList);
+            userOrderRefundFacade.createTimerTask(refundFailList);
         }
         logger.info("*******************退款 E**********************");
     }
@@ -162,18 +155,15 @@ public class RefundEvent implements Observer {
             int success = 0;
             int fee = 0;
             for (UserOrderRefundDTO.UserOrder userOrder : userOrderRefundDTO.getUserOrders()) {
-                try {
-                    boolean isRefund = wxRefund(userOrder.getOriginalOrder(), userOrder.getRefundOrder().getOrderNo());
-                    if (isRefund) {
-                        //成功退款 添加到保存list统一处理 减少数据库io
-                        refundSuccessOrderList.add(userOrder.getRefundOrder());
-                        userOrderRefundSuccessDTOs.add(userOrderRefundDTO);
-                        fee += WxPayRefundRequest.yuanToFee(userOrder.getRefundOrder().getTotalFee().toString());
-                        success ++;
-                    }
-                } catch (WxErrorException e) {
-                    e.printStackTrace();
+                boolean isRefund = wxRefund(userOrder.getOriginalOrder(), userOrder.getRefundOrder().getOrderNo());
+                if (isRefund) {
+                    //成功退款 添加到保存list统一处理 减少数据库io
+                    refundSuccessOrderList.add(userOrder.getRefundOrder());
+                    userOrderRefundSuccessDTOs.add(userOrderRefundDTO);
+                    fee += WxPayRefundRequest.yuanToFee(userOrder.getRefundOrder().getTotalFee().toString());
+                    success++;
                 }
+
             }
 
             //当前用户的退款请求已经执行完毕 等待判定是否推送消息
@@ -190,7 +180,7 @@ public class RefundEvent implements Observer {
 
     }
 
-    private boolean wxRefund(Orders orders,String refundOrderNo) throws WxErrorException {
+    private boolean wxRefund(Orders orders,String refundOrderNo){
         Integer refundFee = WxPayRefundRequest.yuanToFee(orders.getSurplusFee().toString());
         WxPayRefundRequest wxPayRefundRequest =
                 WxPayRefundRequest
@@ -200,14 +190,22 @@ public class RefundEvent implements Observer {
                         .outRefundNo(refundOrderNo)
                         .outTradeNo(orders.getOrderNo())
                         .build();
-        WxPayRefundResult wxPayRefundResult = wxPayService.refund(wxPayRefundRequest);
-        if ("SUCCESS".equals(wxPayRefundResult.getReturnCode()) && "FAIL".equals(wxPayRefundResult.getResultCode()) && "NOTENOUGH".equals(wxPayRefundResult.getErrCode())) {
-            logger.info("\n当前退款失败：\n订单号：{}\n订单id:{}\n当前用户accountId:{}\n当前反馈状态:{}", orders.getOrderNo(), orders.getId(), orders.getOrderOwner(), wxPayRefundResult.getErrCodeDes());
-            logger.info("尝试使用可用余额退款！");
+
+        WxPayRefundResult wxPayRefundResult = null;
+        try {
+            wxPayRefundResult = wxPayService.refund(wxPayRefundRequest);
+
+            if ("SUCCESS".equals(wxPayRefundResult.getReturnCode()) && "FAIL".equals(wxPayRefundResult.getResultCode()) && "NOTENOUGH".equals(wxPayRefundResult.getErrCode())) {
+                logger.info("\n当前退款失败：\n订单号：{}\n订单id:{}\n当前用户accountId:{}\n当前反馈状态:{}", orders.getOrderNo(), orders.getId(), orders.getOrderOwner(), wxPayRefundResult.getErrCodeDes());
+                logger.info("尝试使用可用余额退款！");
 //                    REFUND_SOURCE_UNSETTLED_FUNDS---未结算资金退款（默认使用未结算资金退款）
 //                    REFUND_SOURCE_RECHARGE_FUNDS---可用余额退款
-            wxPayRefundRequest.setRefundAccount("REFUND_SOURCE_RECHARGE_FUNDS");
-            wxPayRefundResult = wxPayService.refund(wxPayRefundRequest);
+                wxPayRefundRequest.setRefundAccount("REFUND_SOURCE_RECHARGE_FUNDS");
+                wxPayRefundResult = wxPayService.refund(wxPayRefundRequest);
+            }
+        } catch (WxErrorException e) {
+            e.printStackTrace();
+            return false;
         }
 
         return "SUCCESS".equals(wxPayRefundResult.getReturnCode()) && "SUCCESS".equals(wxPayRefundResult.getResultCode());

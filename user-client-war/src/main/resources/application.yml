@@ -48,4 +48,11 @@ server:
     # 是否分配的直接内存
     direct-buffers: true
   port: 8081
+wechat:
+  pay:
+    appId: wx0a6f912b64eaf720
+    mchId: 1442541002
+    mchKey: popularPOWER2016POPULARpower2016
+    keyPath: E:\projects\server\power-user\user-wechat\src\main\resources\wx-pay-config\apiclient_cert.p12
+
 

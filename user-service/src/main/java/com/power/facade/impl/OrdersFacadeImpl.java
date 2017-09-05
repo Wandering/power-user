@@ -55,6 +55,8 @@ public class OrdersFacadeImpl extends AbstractPersistenceProvider implements IOr
     public List<Orders> findAllBalanceOrder(Long accountId) {
         //费用大于0的
         Map<String,Object> condition = new HashMap<>();
+        condition.put("groupOp","AND");
+
         SearchField searchField = new SearchField();
         searchField.setField("surplusFee");
         searchField.setOp(SearchEnum.gt.getValue());
@@ -62,26 +64,29 @@ public class OrdersFacadeImpl extends AbstractPersistenceProvider implements IOr
         condition.put("surplusFee",searchField);
 
 //        支付成功和正在扣费的
-        condition = new HashMap<>();
         searchField = new SearchField();
         searchField.setField("status");
-        searchField.setOp(SearchEnum.gt.getValue());
+        searchField.setOp(SearchEnum.in.getValue());
         searchField.setData(Arrays.asList("PAYED","IN_COUNT"));
         condition.put("status",searchField);
 //        渠道类型
-        condition = new HashMap<>();
         searchField = new SearchField();
         searchField.setField("tradeType");
-        searchField.setOp(SearchEnum.gt.getValue());
+        searchField.setOp(SearchEnum.eq.getValue());
         searchField.setData("JSAPI");
         condition.put("tradeType",searchField);
 //        类型
-        condition = new HashMap<>();
         searchField = new SearchField();
         searchField.setField("type");
-        searchField.setOp(SearchEnum.gt.getValue());
-        searchField.setData(OrderType.BALANCE);
+        searchField.setOp(SearchEnum.eq.getValue());
+        searchField.setData(OrderType.BALANCE.toString());
         condition.put("type",searchField);
+        //        类型
+        searchField = new SearchField();
+        searchField.setField("orderOwner");
+        searchField.setOp(SearchEnum.eq.getValue());
+        searchField.setData(accountId);
+        condition.put("orderOwner",searchField);
         return this.ordersService.viewList(null,condition,null);
     }
 

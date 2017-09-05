@@ -8,5 +8,5 @@ import java.util.List;
  * Created by Administrator on 2017/7/29.
  */
 public interface IVoucherService {
-    boolean sendTemplateMsg(String uniqueKey,  String openId, String templateId,List<WxMpTemplateData> wxMpTemplateDatas);
+    boolean sendTemplateMsg(String uniqueKey,String templateId,String openId,List<WxMpTemplateData> wxMpTemplateDatas);
 }
