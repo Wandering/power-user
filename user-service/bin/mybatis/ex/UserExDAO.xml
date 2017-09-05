@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.power.dao.ex.IUserExDAO">
+
+
+
+<!--
+C
+insert
+insertMap
+R
+findOne
+findAll
+exists
+queryOne
+queryOneByWhereSql
+queryList
+queryListByWhereSql
+queryBySql
+queryBySqlCount
+U
+D
+-->
+
+
+    <select id="getUserInfoByAccount" resultType="UserInfoDTO">
+
+      SELECT puser.phone as phone,expand.*,userplatform.openId,account.id as accountId,platform.uniqueKey as uniqueKey from power_user_account account
+            INNER JOIN power_user puser on puser.id = account.userId
+            INNER JOIN power_user_expand expand ON expand.agencyId = account.agencyId and puser.id = expand.userId
+            INNER JOIN power_platform_info platform ON platform.agencyId = account.agencyId
+            INNER JOIN power_user_platform userplatform ON platform.id = userplatform.platformId AND puser.id = userplatform.userId
+            WHERE account.id = #{accountId} AND platform.type = #{type}
+
+    </select>
+</mapper>
+

@@ -1,0 +1,1670 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+    <mapper namespace="com.power.dao.IUserAcountsDAO">
+
+
+
+<!--
+C
+insert
+insertMap
+R
+findOne
+findAll
+exists
+queryOne
+queryOneByWhereSql
+queryList
+queryListByWhereSql
+queryBySql
+queryBySqlCount
+U
+D
+-->
+
+
+    <sql id="Base_Column_List">
+        id as id ,
+        account_no as accountNo ,
+        user_id as userId ,
+        balance as balance ,
+        bouns as bouns ,
+        back_bouns as backBouns ,
+        roles as roles ,
+        credit as credit ,
+        create_dt as createDt ,
+        update_dt as updateDt ,
+        create_by as createBy ,
+        update_by as updateBy ,
+        deposit as deposit 
+    </sql>
+
+    <!-- 插入 start-->
+
+    <insert id="insert" parameterType="UserAcounts" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO power_user_acounts (
+        account_no,
+        user_id,
+        balance,
+        bouns,
+        back_bouns,
+        roles,
+        credit,
+        create_dt,
+        update_dt,
+        create_by,
+        update_by,
+        deposit
+        ) VALUES (
+        #{accountNo},
+        #{userId},
+        #{balance},
+        #{bouns},
+        #{backBouns},
+        #{roles},
+        #{credit},
+        #{createDt},
+        #{updateDt},
+        #{createBy},
+        #{updateBy},
+        #{deposit}
+        )
+    </insert>
+
+
+    <insert id="insertMap" >
+        INSERT INTO power_user_acounts (
+        account_no,
+        user_id,
+        balance,
+        bouns,
+        back_bouns,
+        roles,
+        credit,
+        create_dt,
+        update_dt,
+        create_by,
+        update_by,
+        deposit
+                ) VALUES (
+        #{map.accountNo},
+        #{map.userId},
+        #{map.balance},
+        #{map.bouns},
+        #{map.backBouns},
+        #{map.roles},
+        #{map.credit},
+        #{map.createDt},
+        #{map.updateDt},
+        #{map.createBy},
+        #{map.updateBy},
+        #{map.deposit}
+                )
+    </insert>
+
+
+    <!-- 插入 end-->
+
+    <!-- 修改 start-->
+        <!-- 更新 -->
+        <update id="update" parameterType="UserAcounts">
+        UPDATE power_user_acounts
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="accountNo!=null">
+                account_no = #{accountNo},
+            </if>
+            <if test="userId!=null">
+                user_id = #{userId},
+            </if>
+            <if test="balance!=null">
+                balance = #{balance},
+            </if>
+            <if test="bouns!=null">
+                bouns = #{bouns},
+            </if>
+            <if test="backBouns!=null">
+                back_bouns = #{backBouns},
+            </if>
+            <if test="roles!=null">
+                roles = #{roles},
+            </if>
+            <if test="credit!=null">
+                credit = #{credit},
+            </if>
+            <if test="createDt!=null">
+                create_dt = #{createDt},
+            </if>
+            <if test="updateDt!=null">
+                update_dt = #{updateDt},
+            </if>
+            <if test="createBy!=null">
+                create_by = #{createBy},
+            </if>
+            <if test="updateBy!=null">
+                update_by = #{updateBy},
+            </if>
+            <if test="deposit!=null">
+                deposit = #{deposit},
+            </if>
+        </trim>
+                WHERE
+        id = #{id}
+        </update>
+
+        <update id="updateMap">
+        UPDATE power_user_acounts
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="map.accountNo!=null">
+                account_no = #{map.accountNo},
+            </if>
+            <if test="map.userId!=null">
+                user_id = #{map.userId},
+            </if>
+            <if test="map.balance!=null">
+                balance = #{map.balance},
+            </if>
+            <if test="map.bouns!=null">
+                bouns = #{map.bouns},
+            </if>
+            <if test="map.backBouns!=null">
+                back_bouns = #{map.backBouns},
+            </if>
+            <if test="map.roles!=null">
+                roles = #{map.roles},
+            </if>
+            <if test="map.credit!=null">
+                credit = #{map.credit},
+            </if>
+            <if test="map.createDt!=null">
+                create_dt = #{map.createDt},
+            </if>
+            <if test="map.updateDt!=null">
+                update_dt = #{map.updateDt},
+            </if>
+            <if test="map.createBy!=null">
+                create_by = #{map.createBy},
+            </if>
+            <if test="map.updateBy!=null">
+                update_by = #{map.updateBy},
+            </if>
+            <if test="map.deposit!=null">
+                deposit = #{map.deposit},
+            </if>
+        </trim>
+        WHERE
+        id = #{map.id}
+        </update>
+
+        <update id="updateByCondition">
+        UPDATE power_user_acounts
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="update.accountNo!=null">
+                account_no = #{update.accountNo},
+            </if>
+            <if test="update.userId!=null">
+                user_id = #{update.userId},
+            </if>
+            <if test="update.balance!=null">
+                balance = #{update.balance},
+            </if>
+            <if test="update.bouns!=null">
+                bouns = #{update.bouns},
+            </if>
+            <if test="update.backBouns!=null">
+                back_bouns = #{update.backBouns},
+            </if>
+            <if test="update.roles!=null">
+                roles = #{update.roles},
+            </if>
+            <if test="update.credit!=null">
+                credit = #{update.credit},
+            </if>
+            <if test="update.createDt!=null">
+                create_dt = #{update.createDt},
+            </if>
+            <if test="update.updateDt!=null">
+                update_dt = #{update.updateDt},
+            </if>
+            <if test="update.createBy!=null">
+                create_by = #{update.createBy},
+            </if>
+            <if test="update.updateBy!=null">
+                update_by = #{update.updateBy},
+            </if>
+            <if test="update.deposit!=null">
+                deposit = #{update.deposit},
+            </if>
+        </trim>
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+        <if test="condition.id!=null">
+            AND id = #{condition.id}
+        </if>
+        <if test="condition.accountNo!=null">
+            AND account_no = #{condition.accountNo}
+        </if>
+        <if test="condition.userId!=null">
+            AND user_id = #{condition.userId}
+        </if>
+        <if test="condition.balance!=null">
+            AND balance = #{condition.balance}
+        </if>
+        <if test="condition.bouns!=null">
+            AND bouns = #{condition.bouns}
+        </if>
+        <if test="condition.backBouns!=null">
+            AND back_bouns = #{condition.backBouns}
+        </if>
+        <if test="condition.roles!=null">
+            AND roles = #{condition.roles}
+        </if>
+        <if test="condition.credit!=null">
+            AND credit = #{condition.credit}
+        </if>
+        <if test="condition.createDt!=null">
+            AND create_dt = #{condition.createDt}
+        </if>
+        <if test="condition.updateDt!=null">
+            AND update_dt = #{condition.updateDt}
+        </if>
+        <if test="condition.createBy!=null">
+            AND create_by = #{condition.createBy}
+        </if>
+        <if test="condition.updateBy!=null">
+            AND update_by = #{condition.updateBy}
+        </if>
+        <if test="condition.deposit!=null">
+            AND deposit = #{condition.deposit}
+        </if>
+        </trim>
+        </update>
+
+        <update id="updateByWhereSql">
+        UPDATE power_user_acounts
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="update.accountNo!=null">
+                account_no = #{update.accountNo},
+            </if>
+            <if test="update.userId!=null">
+                user_id = #{update.userId},
+            </if>
+            <if test="update.balance!=null">
+                balance = #{update.balance},
+            </if>
+            <if test="update.bouns!=null">
+                bouns = #{update.bouns},
+            </if>
+            <if test="update.backBouns!=null">
+                back_bouns = #{update.backBouns},
+            </if>
+            <if test="update.roles!=null">
+                roles = #{update.roles},
+            </if>
+            <if test="update.credit!=null">
+                credit = #{update.credit},
+            </if>
+            <if test="update.createDt!=null">
+                create_dt = #{update.createDt},
+            </if>
+            <if test="update.updateDt!=null">
+                update_dt = #{update.updateDt},
+            </if>
+            <if test="update.createBy!=null">
+                create_by = #{update.createBy},
+            </if>
+            <if test="update.updateBy!=null">
+                update_by = #{update.updateBy},
+            </if>
+            <if test="update.deposit!=null">
+                deposit = #{update.deposit},
+            </if>
+        </trim>
+
+
+        <if test="nativeSql!=null">
+${nativeSql}        </if>
+        </update>
+
+
+
+        <update id="updateNull" parameterType="UserAcounts">
+        UPDATE power_user_acounts
+        <trim prefix="SET" suffixOverrides=",">
+            account_no = #{accountNo},
+            user_id = #{userId},
+            balance = #{balance},
+            bouns = #{bouns},
+            back_bouns = #{backBouns},
+            roles = #{roles},
+            credit = #{credit},
+            create_dt = #{createDt},
+            update_dt = #{updateDt},
+            create_by = #{createBy},
+            update_by = #{updateBy},
+            deposit = #{deposit},
+        </trim>
+                WHERE
+        id = #{id} 
+        </update>
+    <!-- 修改 end-->
+
+    <!-- 读取数据 start-->
+        <select id="findOne" parameterType="java.lang.Long" resultType="UserAcounts">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM power_user_acounts
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+        </select>
+
+        <select id="findAll" resultType="UserAcounts">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM power_user_acounts
+        </select>
+
+        <!-- 查询 -->
+        <select id="queryOne" resultType="UserAcounts">
+        SELECT
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                <if test="selector.id!=null">
+                    , id
+                </if>
+                <if test="selector.accountNo!=null">
+                    , account_no
+                </if>
+                <if test="selector.userId!=null">
+                    , user_id
+                </if>
+                <if test="selector.balance!=null">
+                    , balance
+                </if>
+                <if test="selector.bouns!=null">
+                    , bouns
+                </if>
+                <if test="selector.backBouns!=null">
+                    , back_bouns
+                </if>
+                <if test="selector.roles!=null">
+                    , roles
+                </if>
+                <if test="selector.credit!=null">
+                    , credit
+                </if>
+                <if test="selector.createDt!=null">
+                    , create_dt
+                </if>
+                <if test="selector.updateDt!=null">
+                    , update_dt
+                </if>
+                <if test="selector.createBy!=null">
+                    , create_by
+                </if>
+                <if test="selector.updateBy!=null">
+                    , update_by
+                </if>
+                <if test="selector.deposit!=null">
+                    , deposit
+                </if>
+        </trim>
+        </if>
+        <if test="selector==null">
+        <include refid="Base_Column_List" />
+        </if>
+
+                FROM power_user_acounts
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+        <if test="condition.id!=null">
+
+            <if test="condition.id.op!='in' and condition.id.op!='like' and condition.id.op!='leftlike'">
+                AND   id  ${condition.id.op} #{condition.id.data}
+            </if>
+            <if test="condition.id.op=='like'">
+                AND id like CONCAT('%', #{condition.id.data} , '%')
+            </if>
+            <if test="condition.id.op=='leftlike'">
+                AND id like CONCAT(#{condition.id.data} , '%')
+            </if>
+            <if test="condition.id.op=='in'">
+                ${condition.groupOp}   id  ${condition.id.op}
+                <foreach collection="condition.id.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.accountNo!=null">
+
+            <if test="condition.accountNo.op!='in' and condition.accountNo.op!='like' and condition.accountNo.op!='leftlike'">
+                AND   account_no  ${condition.accountNo.op} #{condition.accountNo.data}
+            </if>
+            <if test="condition.accountNo.op=='like'">
+                AND account_no like CONCAT('%', #{condition.accountNo.data} , '%')
+            </if>
+            <if test="condition.accountNo.op=='leftlike'">
+                AND account_no like CONCAT(#{condition.accountNo.data} , '%')
+            </if>
+            <if test="condition.accountNo.op=='in'">
+                ${condition.groupOp}   account_no  ${condition.accountNo.op}
+                <foreach collection="condition.accountNo.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.userId!=null">
+
+            <if test="condition.userId.op!='in' and condition.userId.op!='like' and condition.userId.op!='leftlike'">
+                AND   user_id  ${condition.userId.op} #{condition.userId.data}
+            </if>
+            <if test="condition.userId.op=='like'">
+                AND user_id like CONCAT('%', #{condition.userId.data} , '%')
+            </if>
+            <if test="condition.userId.op=='leftlike'">
+                AND user_id like CONCAT(#{condition.userId.data} , '%')
+            </if>
+            <if test="condition.userId.op=='in'">
+                ${condition.groupOp}   user_id  ${condition.userId.op}
+                <foreach collection="condition.userId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.balance!=null">
+
+            <if test="condition.balance.op!='in' and condition.balance.op!='like' and condition.balance.op!='leftlike'">
+                AND   balance  ${condition.balance.op} #{condition.balance.data}
+            </if>
+            <if test="condition.balance.op=='like'">
+                AND balance like CONCAT('%', #{condition.balance.data} , '%')
+            </if>
+            <if test="condition.balance.op=='leftlike'">
+                AND balance like CONCAT(#{condition.balance.data} , '%')
+            </if>
+            <if test="condition.balance.op=='in'">
+                ${condition.groupOp}   balance  ${condition.balance.op}
+                <foreach collection="condition.balance.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.bouns!=null">
+
+            <if test="condition.bouns.op!='in' and condition.bouns.op!='like' and condition.bouns.op!='leftlike'">
+                AND   bouns  ${condition.bouns.op} #{condition.bouns.data}
+            </if>
+            <if test="condition.bouns.op=='like'">
+                AND bouns like CONCAT('%', #{condition.bouns.data} , '%')
+            </if>
+            <if test="condition.bouns.op=='leftlike'">
+                AND bouns like CONCAT(#{condition.bouns.data} , '%')
+            </if>
+            <if test="condition.bouns.op=='in'">
+                ${condition.groupOp}   bouns  ${condition.bouns.op}
+                <foreach collection="condition.bouns.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.backBouns!=null">
+
+            <if test="condition.backBouns.op!='in' and condition.backBouns.op!='like' and condition.backBouns.op!='leftlike'">
+                AND   back_bouns  ${condition.backBouns.op} #{condition.backBouns.data}
+            </if>
+            <if test="condition.backBouns.op=='like'">
+                AND back_bouns like CONCAT('%', #{condition.backBouns.data} , '%')
+            </if>
+            <if test="condition.backBouns.op=='leftlike'">
+                AND back_bouns like CONCAT(#{condition.backBouns.data} , '%')
+            </if>
+            <if test="condition.backBouns.op=='in'">
+                ${condition.groupOp}   back_bouns  ${condition.backBouns.op}
+                <foreach collection="condition.backBouns.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.roles!=null">
+
+            <if test="condition.roles.op!='in' and condition.roles.op!='like' and condition.roles.op!='leftlike'">
+                AND   roles  ${condition.roles.op} #{condition.roles.data}
+            </if>
+            <if test="condition.roles.op=='like'">
+                AND roles like CONCAT('%', #{condition.roles.data} , '%')
+            </if>
+            <if test="condition.roles.op=='leftlike'">
+                AND roles like CONCAT(#{condition.roles.data} , '%')
+            </if>
+            <if test="condition.roles.op=='in'">
+                ${condition.groupOp}   roles  ${condition.roles.op}
+                <foreach collection="condition.roles.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.credit!=null">
+
+            <if test="condition.credit.op!='in' and condition.credit.op!='like' and condition.credit.op!='leftlike'">
+                AND   credit  ${condition.credit.op} #{condition.credit.data}
+            </if>
+            <if test="condition.credit.op=='like'">
+                AND credit like CONCAT('%', #{condition.credit.data} , '%')
+            </if>
+            <if test="condition.credit.op=='leftlike'">
+                AND credit like CONCAT(#{condition.credit.data} , '%')
+            </if>
+            <if test="condition.credit.op=='in'">
+                ${condition.groupOp}   credit  ${condition.credit.op}
+                <foreach collection="condition.credit.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.createDt!=null">
+
+            <if test="condition.createDt.op!='in' and condition.createDt.op!='like' and condition.createDt.op!='leftlike'">
+                AND   create_dt  ${condition.createDt.op} #{condition.createDt.data}
+            </if>
+            <if test="condition.createDt.op=='like'">
+                AND create_dt like CONCAT('%', #{condition.createDt.data} , '%')
+            </if>
+            <if test="condition.createDt.op=='leftlike'">
+                AND create_dt like CONCAT(#{condition.createDt.data} , '%')
+            </if>
+            <if test="condition.createDt.op=='in'">
+                ${condition.groupOp}   create_dt  ${condition.createDt.op}
+                <foreach collection="condition.createDt.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.updateDt!=null">
+
+            <if test="condition.updateDt.op!='in' and condition.updateDt.op!='like' and condition.updateDt.op!='leftlike'">
+                AND   update_dt  ${condition.updateDt.op} #{condition.updateDt.data}
+            </if>
+            <if test="condition.updateDt.op=='like'">
+                AND update_dt like CONCAT('%', #{condition.updateDt.data} , '%')
+            </if>
+            <if test="condition.updateDt.op=='leftlike'">
+                AND update_dt like CONCAT(#{condition.updateDt.data} , '%')
+            </if>
+            <if test="condition.updateDt.op=='in'">
+                ${condition.groupOp}   update_dt  ${condition.updateDt.op}
+                <foreach collection="condition.updateDt.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.createBy!=null">
+
+            <if test="condition.createBy.op!='in' and condition.createBy.op!='like' and condition.createBy.op!='leftlike'">
+                AND   create_by  ${condition.createBy.op} #{condition.createBy.data}
+            </if>
+            <if test="condition.createBy.op=='like'">
+                AND create_by like CONCAT('%', #{condition.createBy.data} , '%')
+            </if>
+            <if test="condition.createBy.op=='leftlike'">
+                AND create_by like CONCAT(#{condition.createBy.data} , '%')
+            </if>
+            <if test="condition.createBy.op=='in'">
+                ${condition.groupOp}   create_by  ${condition.createBy.op}
+                <foreach collection="condition.createBy.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.updateBy!=null">
+
+            <if test="condition.updateBy.op!='in' and condition.updateBy.op!='like' and condition.updateBy.op!='leftlike'">
+                AND   update_by  ${condition.updateBy.op} #{condition.updateBy.data}
+            </if>
+            <if test="condition.updateBy.op=='like'">
+                AND update_by like CONCAT('%', #{condition.updateBy.data} , '%')
+            </if>
+            <if test="condition.updateBy.op=='leftlike'">
+                AND update_by like CONCAT(#{condition.updateBy.data} , '%')
+            </if>
+            <if test="condition.updateBy.op=='in'">
+                ${condition.groupOp}   update_by  ${condition.updateBy.op}
+                <foreach collection="condition.updateBy.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.deposit!=null">
+
+            <if test="condition.deposit.op!='in' and condition.deposit.op!='like' and condition.deposit.op!='leftlike'">
+                AND   deposit  ${condition.deposit.op} #{condition.deposit.data}
+            </if>
+            <if test="condition.deposit.op=='like'">
+                AND deposit like CONCAT('%', #{condition.deposit.data} , '%')
+            </if>
+            <if test="condition.deposit.op=='leftlike'">
+                AND deposit like CONCAT(#{condition.deposit.data} , '%')
+            </if>
+            <if test="condition.deposit.op=='in'">
+                ${condition.groupOp}   deposit  ${condition.deposit.op}
+                <foreach collection="condition.deposit.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+                </trim>
+
+        <if test="sorter!=null" >
+        ORDER BY
+        <foreach collection="sorter" item="sort" separator="," >
+            ${sort.field} ${sort.order}</foreach>
+        </if>
+        LIMIT 0,1
+        </select>
+
+        <!-- 查询 -->
+        <select id="queryOneByWhereSql" resultType="UserAcounts">
+        SELECT
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                <if test="selector.id!=null">
+                    , id
+                </if>
+                <if test="selector.accountNo!=null">
+                    , account_no
+                </if>
+                <if test="selector.userId!=null">
+                    , user_id
+                </if>
+                <if test="selector.balance!=null">
+                    , balance
+                </if>
+                <if test="selector.bouns!=null">
+                    , bouns
+                </if>
+                <if test="selector.backBouns!=null">
+                    , back_bouns
+                </if>
+                <if test="selector.roles!=null">
+                    , roles
+                </if>
+                <if test="selector.credit!=null">
+                    , credit
+                </if>
+                <if test="selector.createDt!=null">
+                    , create_dt
+                </if>
+                <if test="selector.updateDt!=null">
+                    , update_dt
+                </if>
+                <if test="selector.createBy!=null">
+                    , create_by
+                </if>
+                <if test="selector.updateBy!=null">
+                    , update_by
+                </if>
+                <if test="selector.deposit!=null">
+                    , deposit
+                </if>
+        </trim>
+        </if>
+        <if test="selector==null">
+        <include refid="Base_Column_List" />
+        </if>
+
+        FROM power_user_acounts
+
+        <if test="nativeSql!=null">
+${nativeSql}        </if>
+
+        <if test="sorter!=null" >
+        ORDER BY
+        <foreach collection="sorter" item="sort" separator="," >
+            ${sort.field} ${sort.order}</foreach>
+        </if>
+        LIMIT 0,1
+        </select>
+
+        <!-- 查询 -->
+        <select id="queryList" resultType="UserAcounts">
+        SELECT
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                <if test="selector.id!=null">
+                    , id
+                </if>
+                <if test="selector.accountNo!=null">
+                    , account_no
+                </if>
+                <if test="selector.userId!=null">
+                    , user_id
+                </if>
+                <if test="selector.balance!=null">
+                    , balance
+                </if>
+                <if test="selector.bouns!=null">
+                    , bouns
+                </if>
+                <if test="selector.backBouns!=null">
+                    , back_bouns
+                </if>
+                <if test="selector.roles!=null">
+                    , roles
+                </if>
+                <if test="selector.credit!=null">
+                    , credit
+                </if>
+                <if test="selector.createDt!=null">
+                    , create_dt
+                </if>
+                <if test="selector.updateDt!=null">
+                    , update_dt
+                </if>
+                <if test="selector.createBy!=null">
+                    , create_by
+                </if>
+                <if test="selector.updateBy!=null">
+                    , update_by
+                </if>
+                <if test="selector.deposit!=null">
+                    , deposit
+                </if>
+        </trim>
+        </if>
+        <if test="selector==null">
+        <include refid="Base_Column_List" />
+        </if>
+
+        FROM power_user_acounts
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+        <if test="condition.id!=null">
+
+            <if test="condition.id.op!='in' and condition.id.op!='like' and condition.id.op!='leftlike'">
+                ${condition.groupOp}   id  ${condition.id.op} #{condition.id.data}
+            </if>
+            <if test="condition.id.op=='like'">
+                AND id like CONCAT('%', #{condition.id.data} , '%')
+            </if>
+            <if test="condition.id.op=='leftlike'">
+                AND id like CONCAT(#{condition.id.data} , '%')
+            </if>
+            <if test="condition.id.op=='in'">
+                ${condition.groupOp}   id  ${condition.id.op}
+                <foreach collection="condition.id.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.accountNo!=null">
+
+            <if test="condition.accountNo.op!='in' and condition.accountNo.op!='like' and condition.accountNo.op!='leftlike'">
+                ${condition.groupOp}   account_no  ${condition.accountNo.op} #{condition.accountNo.data}
+            </if>
+            <if test="condition.accountNo.op=='like'">
+                AND account_no like CONCAT('%', #{condition.accountNo.data} , '%')
+            </if>
+            <if test="condition.accountNo.op=='leftlike'">
+                AND account_no like CONCAT(#{condition.accountNo.data} , '%')
+            </if>
+            <if test="condition.accountNo.op=='in'">
+                ${condition.groupOp}   account_no  ${condition.accountNo.op}
+                <foreach collection="condition.accountNo.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.userId!=null">
+
+            <if test="condition.userId.op!='in' and condition.userId.op!='like' and condition.userId.op!='leftlike'">
+                ${condition.groupOp}   user_id  ${condition.userId.op} #{condition.userId.data}
+            </if>
+            <if test="condition.userId.op=='like'">
+                AND user_id like CONCAT('%', #{condition.userId.data} , '%')
+            </if>
+            <if test="condition.userId.op=='leftlike'">
+                AND user_id like CONCAT(#{condition.userId.data} , '%')
+            </if>
+            <if test="condition.userId.op=='in'">
+                ${condition.groupOp}   user_id  ${condition.userId.op}
+                <foreach collection="condition.userId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.balance!=null">
+
+            <if test="condition.balance.op!='in' and condition.balance.op!='like' and condition.balance.op!='leftlike'">
+                ${condition.groupOp}   balance  ${condition.balance.op} #{condition.balance.data}
+            </if>
+            <if test="condition.balance.op=='like'">
+                AND balance like CONCAT('%', #{condition.balance.data} , '%')
+            </if>
+            <if test="condition.balance.op=='leftlike'">
+                AND balance like CONCAT(#{condition.balance.data} , '%')
+            </if>
+            <if test="condition.balance.op=='in'">
+                ${condition.groupOp}   balance  ${condition.balance.op}
+                <foreach collection="condition.balance.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.bouns!=null">
+
+            <if test="condition.bouns.op!='in' and condition.bouns.op!='like' and condition.bouns.op!='leftlike'">
+                ${condition.groupOp}   bouns  ${condition.bouns.op} #{condition.bouns.data}
+            </if>
+            <if test="condition.bouns.op=='like'">
+                AND bouns like CONCAT('%', #{condition.bouns.data} , '%')
+            </if>
+            <if test="condition.bouns.op=='leftlike'">
+                AND bouns like CONCAT(#{condition.bouns.data} , '%')
+            </if>
+            <if test="condition.bouns.op=='in'">
+                ${condition.groupOp}   bouns  ${condition.bouns.op}
+                <foreach collection="condition.bouns.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.backBouns!=null">
+
+            <if test="condition.backBouns.op!='in' and condition.backBouns.op!='like' and condition.backBouns.op!='leftlike'">
+                ${condition.groupOp}   back_bouns  ${condition.backBouns.op} #{condition.backBouns.data}
+            </if>
+            <if test="condition.backBouns.op=='like'">
+                AND back_bouns like CONCAT('%', #{condition.backBouns.data} , '%')
+            </if>
+            <if test="condition.backBouns.op=='leftlike'">
+                AND back_bouns like CONCAT(#{condition.backBouns.data} , '%')
+            </if>
+            <if test="condition.backBouns.op=='in'">
+                ${condition.groupOp}   back_bouns  ${condition.backBouns.op}
+                <foreach collection="condition.backBouns.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.roles!=null">
+
+            <if test="condition.roles.op!='in' and condition.roles.op!='like' and condition.roles.op!='leftlike'">
+                ${condition.groupOp}   roles  ${condition.roles.op} #{condition.roles.data}
+            </if>
+            <if test="condition.roles.op=='like'">
+                AND roles like CONCAT('%', #{condition.roles.data} , '%')
+            </if>
+            <if test="condition.roles.op=='leftlike'">
+                AND roles like CONCAT(#{condition.roles.data} , '%')
+            </if>
+            <if test="condition.roles.op=='in'">
+                ${condition.groupOp}   roles  ${condition.roles.op}
+                <foreach collection="condition.roles.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.credit!=null">
+
+            <if test="condition.credit.op!='in' and condition.credit.op!='like' and condition.credit.op!='leftlike'">
+                ${condition.groupOp}   credit  ${condition.credit.op} #{condition.credit.data}
+            </if>
+            <if test="condition.credit.op=='like'">
+                AND credit like CONCAT('%', #{condition.credit.data} , '%')
+            </if>
+            <if test="condition.credit.op=='leftlike'">
+                AND credit like CONCAT(#{condition.credit.data} , '%')
+            </if>
+            <if test="condition.credit.op=='in'">
+                ${condition.groupOp}   credit  ${condition.credit.op}
+                <foreach collection="condition.credit.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.createDt!=null">
+
+            <if test="condition.createDt.op!='in' and condition.createDt.op!='like' and condition.createDt.op!='leftlike'">
+                ${condition.groupOp}   create_dt  ${condition.createDt.op} #{condition.createDt.data}
+            </if>
+            <if test="condition.createDt.op=='like'">
+                AND create_dt like CONCAT('%', #{condition.createDt.data} , '%')
+            </if>
+            <if test="condition.createDt.op=='leftlike'">
+                AND create_dt like CONCAT(#{condition.createDt.data} , '%')
+            </if>
+            <if test="condition.createDt.op=='in'">
+                ${condition.groupOp}   create_dt  ${condition.createDt.op}
+                <foreach collection="condition.createDt.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.updateDt!=null">
+
+            <if test="condition.updateDt.op!='in' and condition.updateDt.op!='like' and condition.updateDt.op!='leftlike'">
+                ${condition.groupOp}   update_dt  ${condition.updateDt.op} #{condition.updateDt.data}
+            </if>
+            <if test="condition.updateDt.op=='like'">
+                AND update_dt like CONCAT('%', #{condition.updateDt.data} , '%')
+            </if>
+            <if test="condition.updateDt.op=='leftlike'">
+                AND update_dt like CONCAT(#{condition.updateDt.data} , '%')
+            </if>
+            <if test="condition.updateDt.op=='in'">
+                ${condition.groupOp}   update_dt  ${condition.updateDt.op}
+                <foreach collection="condition.updateDt.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.createBy!=null">
+
+            <if test="condition.createBy.op!='in' and condition.createBy.op!='like' and condition.createBy.op!='leftlike'">
+                ${condition.groupOp}   create_by  ${condition.createBy.op} #{condition.createBy.data}
+            </if>
+            <if test="condition.createBy.op=='like'">
+                AND create_by like CONCAT('%', #{condition.createBy.data} , '%')
+            </if>
+            <if test="condition.createBy.op=='leftlike'">
+                AND create_by like CONCAT(#{condition.createBy.data} , '%')
+            </if>
+            <if test="condition.createBy.op=='in'">
+                ${condition.groupOp}   create_by  ${condition.createBy.op}
+                <foreach collection="condition.createBy.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.updateBy!=null">
+
+            <if test="condition.updateBy.op!='in' and condition.updateBy.op!='like' and condition.updateBy.op!='leftlike'">
+                ${condition.groupOp}   update_by  ${condition.updateBy.op} #{condition.updateBy.data}
+            </if>
+            <if test="condition.updateBy.op=='like'">
+                AND update_by like CONCAT('%', #{condition.updateBy.data} , '%')
+            </if>
+            <if test="condition.updateBy.op=='leftlike'">
+                AND update_by like CONCAT(#{condition.updateBy.data} , '%')
+            </if>
+            <if test="condition.updateBy.op=='in'">
+                ${condition.groupOp}   update_by  ${condition.updateBy.op}
+                <foreach collection="condition.updateBy.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.deposit!=null">
+
+            <if test="condition.deposit.op!='in' and condition.deposit.op!='like' and condition.deposit.op!='leftlike'">
+                ${condition.groupOp}   deposit  ${condition.deposit.op} #{condition.deposit.data}
+            </if>
+            <if test="condition.deposit.op=='like'">
+                AND deposit like CONCAT('%', #{condition.deposit.data} , '%')
+            </if>
+            <if test="condition.deposit.op=='leftlike'">
+                AND deposit like CONCAT(#{condition.deposit.data} , '%')
+            </if>
+            <if test="condition.deposit.op=='in'">
+                ${condition.groupOp}   deposit  ${condition.deposit.op}
+                <foreach collection="condition.deposit.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        </trim>
+
+        <if test="sorter!=null" >
+        ORDER BY
+        <foreach collection="sorter" item="sort" separator="," >
+            ${sort.field} ${sort.order}</foreach>
+        </if>
+        </select>
+
+        <!-- 查询 -->
+        <select id="queryListByWhereSql" resultType="UserAcounts">
+            SELECT
+            <if test="selector!=null">
+                <trim prefixOverrides=",">
+                    <if test="selector.id!=null">
+                        , id
+                    </if>
+                    <if test="selector.accountNo!=null">
+                        , account_no
+                    </if>
+                    <if test="selector.userId!=null">
+                        , user_id
+                    </if>
+                    <if test="selector.balance!=null">
+                        , balance
+                    </if>
+                    <if test="selector.bouns!=null">
+                        , bouns
+                    </if>
+                    <if test="selector.backBouns!=null">
+                        , back_bouns
+                    </if>
+                    <if test="selector.roles!=null">
+                        , roles
+                    </if>
+                    <if test="selector.credit!=null">
+                        , credit
+                    </if>
+                    <if test="selector.createDt!=null">
+                        , create_dt
+                    </if>
+                    <if test="selector.updateDt!=null">
+                        , update_dt
+                    </if>
+                    <if test="selector.createBy!=null">
+                        , create_by
+                    </if>
+                    <if test="selector.updateBy!=null">
+                        , update_by
+                    </if>
+                    <if test="selector.deposit!=null">
+                        , deposit
+                    </if>
+            </trim>
+        </if>
+        <if test="selector==null">
+            <include refid="Base_Column_List" />
+        </if>
+
+        FROM power_user_acounts
+
+        <if test="nativeSql!=null">
+${nativeSql}        </if>
+
+        <if test="sorter!=null" >
+            ORDER BY
+            <foreach collection="sorter" item="sort" separator="," >
+                ${sort.field} ${sort.order}</foreach>
+        </if>
+        </select>
+
+        <select id="queryBySql" resultType="Map">
+${executeSql}        </select>
+
+        <select id="queryBySqlCount" resultType="java.lang.Long">
+${executeSqlCount}        </select>
+
+    <!-- 读取数据 end-->
+
+    <!-- 分页数据 start-->
+
+        <select id="queryPage" resultType="UserAcounts">
+        SELECT
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                <if test="selector.id!=null">
+                    , id
+                </if>
+                <if test="selector.accountNo!=null">
+                    , account_no
+                </if>
+                <if test="selector.userId!=null">
+                    , user_id
+                </if>
+                <if test="selector.balance!=null">
+                    , balance
+                </if>
+                <if test="selector.bouns!=null">
+                    , bouns
+                </if>
+                <if test="selector.backBouns!=null">
+                    , back_bouns
+                </if>
+                <if test="selector.roles!=null">
+                    , roles
+                </if>
+                <if test="selector.credit!=null">
+                    , credit
+                </if>
+                <if test="selector.createDt!=null">
+                    , create_dt
+                </if>
+                <if test="selector.updateDt!=null">
+                    , update_dt
+                </if>
+                <if test="selector.createBy!=null">
+                    , create_by
+                </if>
+                <if test="selector.updateBy!=null">
+                    , update_by
+                </if>
+                <if test="selector.deposit!=null">
+                    , deposit
+                </if>
+        </trim>
+        </if>
+        <if test="selector==null">
+        <include refid="Base_Column_List" />
+        </if>
+                FROM power_user_acounts
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+        <if test="condition.id!=null">
+
+            <if test="condition.id.op!='in' and condition.id.op!='like' and condition.id.op!='leftlike'">
+                ${condition.groupOp}   id  ${condition.id.op} #{condition.id.data}
+            </if>
+            <if test="condition.id.op=='like'">
+                AND id like CONCAT('%', #{condition.id.data} , '%')
+            </if>
+            <if test="condition.id.op=='leftlike'">
+                AND id like CONCAT(#{condition.id.data} , '%')
+            </if>
+            <if test="condition.id.op=='in'">
+                ${condition.groupOp}   id  ${condition.id.op}
+                <foreach collection="condition.id.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.accountNo!=null">
+
+            <if test="condition.accountNo.op!='in' and condition.accountNo.op!='like' and condition.accountNo.op!='leftlike'">
+                ${condition.groupOp}   account_no  ${condition.accountNo.op} #{condition.accountNo.data}
+            </if>
+            <if test="condition.accountNo.op=='like'">
+                AND account_no like CONCAT('%', #{condition.accountNo.data} , '%')
+            </if>
+            <if test="condition.accountNo.op=='leftlike'">
+                AND account_no like CONCAT(#{condition.accountNo.data} , '%')
+            </if>
+            <if test="condition.accountNo.op=='in'">
+                ${condition.groupOp}   account_no  ${condition.accountNo.op}
+                <foreach collection="condition.accountNo.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.userId!=null">
+
+            <if test="condition.userId.op!='in' and condition.userId.op!='like' and condition.userId.op!='leftlike'">
+                ${condition.groupOp}   user_id  ${condition.userId.op} #{condition.userId.data}
+            </if>
+            <if test="condition.userId.op=='like'">
+                AND user_id like CONCAT('%', #{condition.userId.data} , '%')
+            </if>
+            <if test="condition.userId.op=='leftlike'">
+                AND user_id like CONCAT(#{condition.userId.data} , '%')
+            </if>
+            <if test="condition.userId.op=='in'">
+                ${condition.groupOp}   user_id  ${condition.userId.op}
+                <foreach collection="condition.userId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.balance!=null">
+
+            <if test="condition.balance.op!='in' and condition.balance.op!='like' and condition.balance.op!='leftlike'">
+                ${condition.groupOp}   balance  ${condition.balance.op} #{condition.balance.data}
+            </if>
+            <if test="condition.balance.op=='like'">
+                AND balance like CONCAT('%', #{condition.balance.data} , '%')
+            </if>
+            <if test="condition.balance.op=='leftlike'">
+                AND balance like CONCAT(#{condition.balance.data} , '%')
+            </if>
+            <if test="condition.balance.op=='in'">
+                ${condition.groupOp}   balance  ${condition.balance.op}
+                <foreach collection="condition.balance.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.bouns!=null">
+
+            <if test="condition.bouns.op!='in' and condition.bouns.op!='like' and condition.bouns.op!='leftlike'">
+                ${condition.groupOp}   bouns  ${condition.bouns.op} #{condition.bouns.data}
+            </if>
+            <if test="condition.bouns.op=='like'">
+                AND bouns like CONCAT('%', #{condition.bouns.data} , '%')
+            </if>
+            <if test="condition.bouns.op=='leftlike'">
+                AND bouns like CONCAT(#{condition.bouns.data} , '%')
+            </if>
+            <if test="condition.bouns.op=='in'">
+                ${condition.groupOp}   bouns  ${condition.bouns.op}
+                <foreach collection="condition.bouns.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.backBouns!=null">
+
+            <if test="condition.backBouns.op!='in' and condition.backBouns.op!='like' and condition.backBouns.op!='leftlike'">
+                ${condition.groupOp}   back_bouns  ${condition.backBouns.op} #{condition.backBouns.data}
+            </if>
+            <if test="condition.backBouns.op=='like'">
+                AND back_bouns like CONCAT('%', #{condition.backBouns.data} , '%')
+            </if>
+            <if test="condition.backBouns.op=='leftlike'">
+                AND back_bouns like CONCAT(#{condition.backBouns.data} , '%')
+            </if>
+            <if test="condition.backBouns.op=='in'">
+                ${condition.groupOp}   back_bouns  ${condition.backBouns.op}
+                <foreach collection="condition.backBouns.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.roles!=null">
+
+            <if test="condition.roles.op!='in' and condition.roles.op!='like' and condition.roles.op!='leftlike'">
+                ${condition.groupOp}   roles  ${condition.roles.op} #{condition.roles.data}
+            </if>
+            <if test="condition.roles.op=='like'">
+                AND roles like CONCAT('%', #{condition.roles.data} , '%')
+            </if>
+            <if test="condition.roles.op=='leftlike'">
+                AND roles like CONCAT(#{condition.roles.data} , '%')
+            </if>
+            <if test="condition.roles.op=='in'">
+                ${condition.groupOp}   roles  ${condition.roles.op}
+                <foreach collection="condition.roles.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.credit!=null">
+
+            <if test="condition.credit.op!='in' and condition.credit.op!='like' and condition.credit.op!='leftlike'">
+                ${condition.groupOp}   credit  ${condition.credit.op} #{condition.credit.data}
+            </if>
+            <if test="condition.credit.op=='like'">
+                AND credit like CONCAT('%', #{condition.credit.data} , '%')
+            </if>
+            <if test="condition.credit.op=='leftlike'">
+                AND credit like CONCAT(#{condition.credit.data} , '%')
+            </if>
+            <if test="condition.credit.op=='in'">
+                ${condition.groupOp}   credit  ${condition.credit.op}
+                <foreach collection="condition.credit.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.createDt!=null">
+
+            <if test="condition.createDt.op!='in' and condition.createDt.op!='like' and condition.createDt.op!='leftlike'">
+                ${condition.groupOp}   create_dt  ${condition.createDt.op} #{condition.createDt.data}
+            </if>
+            <if test="condition.createDt.op=='like'">
+                AND create_dt like CONCAT('%', #{condition.createDt.data} , '%')
+            </if>
+            <if test="condition.createDt.op=='leftlike'">
+                AND create_dt like CONCAT(#{condition.createDt.data} , '%')
+            </if>
+            <if test="condition.createDt.op=='in'">
+                ${condition.groupOp}   create_dt  ${condition.createDt.op}
+                <foreach collection="condition.createDt.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.updateDt!=null">
+
+            <if test="condition.updateDt.op!='in' and condition.updateDt.op!='like' and condition.updateDt.op!='leftlike'">
+                ${condition.groupOp}   update_dt  ${condition.updateDt.op} #{condition.updateDt.data}
+            </if>
+            <if test="condition.updateDt.op=='like'">
+                AND update_dt like CONCAT('%', #{condition.updateDt.data} , '%')
+            </if>
+            <if test="condition.updateDt.op=='leftlike'">
+                AND update_dt like CONCAT(#{condition.updateDt.data} , '%')
+            </if>
+            <if test="condition.updateDt.op=='in'">
+                ${condition.groupOp}   update_dt  ${condition.updateDt.op}
+                <foreach collection="condition.updateDt.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.createBy!=null">
+
+            <if test="condition.createBy.op!='in' and condition.createBy.op!='like' and condition.createBy.op!='leftlike'">
+                ${condition.groupOp}   create_by  ${condition.createBy.op} #{condition.createBy.data}
+            </if>
+            <if test="condition.createBy.op=='like'">
+                AND create_by like CONCAT('%', #{condition.createBy.data} , '%')
+            </if>
+            <if test="condition.createBy.op=='leftlike'">
+                AND create_by like CONCAT(#{condition.createBy.data} , '%')
+            </if>
+            <if test="condition.createBy.op=='in'">
+                ${condition.groupOp}   create_by  ${condition.createBy.op}
+                <foreach collection="condition.createBy.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.updateBy!=null">
+
+            <if test="condition.updateBy.op!='in' and condition.updateBy.op!='like' and condition.updateBy.op!='leftlike'">
+                ${condition.groupOp}   update_by  ${condition.updateBy.op} #{condition.updateBy.data}
+            </if>
+            <if test="condition.updateBy.op=='like'">
+                AND update_by like CONCAT('%', #{condition.updateBy.data} , '%')
+            </if>
+            <if test="condition.updateBy.op=='leftlike'">
+                AND update_by like CONCAT(#{condition.updateBy.data} , '%')
+            </if>
+            <if test="condition.updateBy.op=='in'">
+                ${condition.groupOp}   update_by  ${condition.updateBy.op}
+                <foreach collection="condition.updateBy.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        <if test="condition.deposit!=null">
+
+            <if test="condition.deposit.op!='in' and condition.deposit.op!='like' and condition.deposit.op!='leftlike'">
+                ${condition.groupOp}   deposit  ${condition.deposit.op} #{condition.deposit.data}
+            </if>
+            <if test="condition.deposit.op=='like'">
+                AND deposit like CONCAT('%', #{condition.deposit.data} , '%')
+            </if>
+            <if test="condition.deposit.op=='leftlike'">
+                AND deposit like CONCAT(#{condition.deposit.data} , '%')
+            </if>
+            <if test="condition.deposit.op=='in'">
+                ${condition.groupOp}   deposit  ${condition.deposit.op}
+                <foreach collection="condition.deposit.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
+        </trim>
+
+        <if test="sorter!=null" >
+        ORDER BY
+        <foreach collection="sorter" item="sort" separator="," >
+            ${sort.field} ${sort.order}</foreach>
+        </if>
+
+        <if test="offset != null">
+        limit ${offset}, ${rows}
+        </if>
+        </select>
+
+        <select id="queryPageByWhereSql" resultType="UserAcounts">
+        SELECT
+        <if test="selector!=null">
+            <trim prefixOverrides=",">
+                <if test="selector.id!=null">
+                    , id
+                </if>
+                <if test="selector.accountNo!=null">
+                    , account_no
+                </if>
+                <if test="selector.userId!=null">
+                    , user_id
+                </if>
+                <if test="selector.balance!=null">
+                    , balance
+                </if>
+                <if test="selector.bouns!=null">
+                    , bouns
+                </if>
+                <if test="selector.backBouns!=null">
+                    , back_bouns
+                </if>
+                <if test="selector.roles!=null">
+                    , roles
+                </if>
+                <if test="selector.credit!=null">
+                    , credit
+                </if>
+                <if test="selector.createDt!=null">
+                    , create_dt
+                </if>
+                <if test="selector.updateDt!=null">
+                    , update_dt
+                </if>
+                <if test="selector.createBy!=null">
+                    , create_by
+                </if>
+                <if test="selector.updateBy!=null">
+                    , update_by
+                </if>
+                <if test="selector.deposit!=null">
+                    , deposit
+                </if>
+        </trim>
+        </if>
+        <if test="selector==null">
+        <include refid="Base_Column_List" />
+        </if>
+                FROM power_user_acounts
+
+        <if test="nativeSql!=null">
+${nativeSql}        </if>
+
+        <if test="sorter!=null" >
+        ORDER BY
+        <foreach collection="sorter" item="sort" separator="," >
+            ${sort.field} ${sort.order}</foreach>
+        </if>
+
+        <if test="offset != null">
+        limit ${offset}, ${rows}
+        </if>
+        </select>
+
+        <select id="count" resultType="java.lang.Integer">
+        SELECT count(id) FROM power_user_acounts
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+
+                <if test="condition.id.op!='in' and condition.id.op!='like' and condition.id.op!='leftlike'">
+                    ${condition.groupOp}   id  ${condition.id.op} #{condition.id.data}
+                </if>
+                <if test="condition.id.op=='like'">
+                    AND id like CONCAT('%', #{condition.id.data} , '%')
+                </if>
+                <if test="condition.id.op=='leftlike'">
+                    AND id like CONCAT(#{condition.id.data} , '%')
+                </if>
+                <if test="condition.id.op=='in'">
+                    ${condition.groupOp}   id  ${condition.id.op}
+                    <foreach collection="condition.id.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.accountNo!=null">
+
+                <if test="condition.accountNo.op!='in' and condition.accountNo.op!='like' and condition.accountNo.op!='leftlike'">
+                    ${condition.groupOp}   account_no  ${condition.accountNo.op} #{condition.accountNo.data}
+                </if>
+                <if test="condition.accountNo.op=='like'">
+                    AND account_no like CONCAT('%', #{condition.accountNo.data} , '%')
+                </if>
+                <if test="condition.accountNo.op=='leftlike'">
+                    AND account_no like CONCAT(#{condition.accountNo.data} , '%')
+                </if>
+                <if test="condition.accountNo.op=='in'">
+                    ${condition.groupOp}   account_no  ${condition.accountNo.op}
+                    <foreach collection="condition.accountNo.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.userId!=null">
+
+                <if test="condition.userId.op!='in' and condition.userId.op!='like' and condition.userId.op!='leftlike'">
+                    ${condition.groupOp}   user_id  ${condition.userId.op} #{condition.userId.data}
+                </if>
+                <if test="condition.userId.op=='like'">
+                    AND user_id like CONCAT('%', #{condition.userId.data} , '%')
+                </if>
+                <if test="condition.userId.op=='leftlike'">
+                    AND user_id like CONCAT(#{condition.userId.data} , '%')
+                </if>
+                <if test="condition.userId.op=='in'">
+                    ${condition.groupOp}   user_id  ${condition.userId.op}
+                    <foreach collection="condition.userId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.balance!=null">
+
+                <if test="condition.balance.op!='in' and condition.balance.op!='like' and condition.balance.op!='leftlike'">
+                    ${condition.groupOp}   balance  ${condition.balance.op} #{condition.balance.data}
+                </if>
+                <if test="condition.balance.op=='like'">
+                    AND balance like CONCAT('%', #{condition.balance.data} , '%')
+                </if>
+                <if test="condition.balance.op=='leftlike'">
+                    AND balance like CONCAT(#{condition.balance.data} , '%')
+                </if>
+                <if test="condition.balance.op=='in'">
+                    ${condition.groupOp}   balance  ${condition.balance.op}
+                    <foreach collection="condition.balance.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.bouns!=null">
+
+                <if test="condition.bouns.op!='in' and condition.bouns.op!='like' and condition.bouns.op!='leftlike'">
+                    ${condition.groupOp}   bouns  ${condition.bouns.op} #{condition.bouns.data}
+                </if>
+                <if test="condition.bouns.op=='like'">
+                    AND bouns like CONCAT('%', #{condition.bouns.data} , '%')
+                </if>
+                <if test="condition.bouns.op=='leftlike'">
+                    AND bouns like CONCAT(#{condition.bouns.data} , '%')
+                </if>
+                <if test="condition.bouns.op=='in'">
+                    ${condition.groupOp}   bouns  ${condition.bouns.op}
+                    <foreach collection="condition.bouns.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.backBouns!=null">
+
+                <if test="condition.backBouns.op!='in' and condition.backBouns.op!='like' and condition.backBouns.op!='leftlike'">
+                    ${condition.groupOp}   back_bouns  ${condition.backBouns.op} #{condition.backBouns.data}
+                </if>
+                <if test="condition.backBouns.op=='like'">
+                    AND back_bouns like CONCAT('%', #{condition.backBouns.data} , '%')
+                </if>
+                <if test="condition.backBouns.op=='leftlike'">
+                    AND back_bouns like CONCAT(#{condition.backBouns.data} , '%')
+                </if>
+                <if test="condition.backBouns.op=='in'">
+                    ${condition.groupOp}   back_bouns  ${condition.backBouns.op}
+                    <foreach collection="condition.backBouns.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.roles!=null">
+
+                <if test="condition.roles.op!='in' and condition.roles.op!='like' and condition.roles.op!='leftlike'">
+                    ${condition.groupOp}   roles  ${condition.roles.op} #{condition.roles.data}
+                </if>
+                <if test="condition.roles.op=='like'">
+                    AND roles like CONCAT('%', #{condition.roles.data} , '%')
+                </if>
+                <if test="condition.roles.op=='leftlike'">
+                    AND roles like CONCAT(#{condition.roles.data} , '%')
+                </if>
+                <if test="condition.roles.op=='in'">
+                    ${condition.groupOp}   roles  ${condition.roles.op}
+                    <foreach collection="condition.roles.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.credit!=null">
+
+                <if test="condition.credit.op!='in' and condition.credit.op!='like' and condition.credit.op!='leftlike'">
+                    ${condition.groupOp}   credit  ${condition.credit.op} #{condition.credit.data}
+                </if>
+                <if test="condition.credit.op=='like'">
+                    AND credit like CONCAT('%', #{condition.credit.data} , '%')
+                </if>
+                <if test="condition.credit.op=='leftlike'">
+                    AND credit like CONCAT(#{condition.credit.data} , '%')
+                </if>
+                <if test="condition.credit.op=='in'">
+                    ${condition.groupOp}   credit  ${condition.credit.op}
+                    <foreach collection="condition.credit.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.createDt!=null">
+
+                <if test="condition.createDt.op!='in' and condition.createDt.op!='like' and condition.createDt.op!='leftlike'">
+                    ${condition.groupOp}   create_dt  ${condition.createDt.op} #{condition.createDt.data}
+                </if>
+                <if test="condition.createDt.op=='like'">
+                    AND create_dt like CONCAT('%', #{condition.createDt.data} , '%')
+                </if>
+                <if test="condition.createDt.op=='leftlike'">
+                    AND create_dt like CONCAT(#{condition.createDt.data} , '%')
+                </if>
+                <if test="condition.createDt.op=='in'">
+                    ${condition.groupOp}   create_dt  ${condition.createDt.op}
+                    <foreach collection="condition.createDt.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.updateDt!=null">
+
+                <if test="condition.updateDt.op!='in' and condition.updateDt.op!='like' and condition.updateDt.op!='leftlike'">
+                    ${condition.groupOp}   update_dt  ${condition.updateDt.op} #{condition.updateDt.data}
+                </if>
+                <if test="condition.updateDt.op=='like'">
+                    AND update_dt like CONCAT('%', #{condition.updateDt.data} , '%')
+                </if>
+                <if test="condition.updateDt.op=='leftlike'">
+                    AND update_dt like CONCAT(#{condition.updateDt.data} , '%')
+                </if>
+                <if test="condition.updateDt.op=='in'">
+                    ${condition.groupOp}   update_dt  ${condition.updateDt.op}
+                    <foreach collection="condition.updateDt.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.createBy!=null">
+
+                <if test="condition.createBy.op!='in' and condition.createBy.op!='like' and condition.createBy.op!='leftlike'">
+                    ${condition.groupOp}   create_by  ${condition.createBy.op} #{condition.createBy.data}
+                </if>
+                <if test="condition.createBy.op=='like'">
+                    AND create_by like CONCAT('%', #{condition.createBy.data} , '%')
+                </if>
+                <if test="condition.createBy.op=='leftlike'">
+                    AND create_by like CONCAT(#{condition.createBy.data} , '%')
+                </if>
+                <if test="condition.createBy.op=='in'">
+                    ${condition.groupOp}   create_by  ${condition.createBy.op}
+                    <foreach collection="condition.createBy.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.updateBy!=null">
+
+                <if test="condition.updateBy.op!='in' and condition.updateBy.op!='like' and condition.updateBy.op!='leftlike'">
+                    ${condition.groupOp}   update_by  ${condition.updateBy.op} #{condition.updateBy.data}
+                </if>
+                <if test="condition.updateBy.op=='like'">
+                    AND update_by like CONCAT('%', #{condition.updateBy.data} , '%')
+                </if>
+                <if test="condition.updateBy.op=='leftlike'">
+                    AND update_by like CONCAT(#{condition.updateBy.data} , '%')
+                </if>
+                <if test="condition.updateBy.op=='in'">
+                    ${condition.groupOp}   update_by  ${condition.updateBy.op}
+                    <foreach collection="condition.updateBy.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+            <if test="condition.deposit!=null">
+
+                <if test="condition.deposit.op!='in' and condition.deposit.op!='like' and condition.deposit.op!='leftlike'">
+                    ${condition.groupOp}   deposit  ${condition.deposit.op} #{condition.deposit.data}
+                </if>
+                <if test="condition.deposit.op=='like'">
+                    AND deposit like CONCAT('%', #{condition.deposit.data} , '%')
+                </if>
+                <if test="condition.deposit.op=='leftlike'">
+                    AND deposit like CONCAT(#{condition.deposit.data} , '%')
+                </if>
+                <if test="condition.deposit.op=='in'">
+                    ${condition.groupOp}   deposit  ${condition.deposit.op}
+                    <foreach collection="condition.deposit.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
+        </trim>
+        </select>
+
+        <select id="countByWhereSql" resultType="java.lang.Integer">
+        SELECT count(id) FROM power_user_acounts
+        <if test="nativeSql!=null">
+${nativeSql}        </if>
+        </select>
+
+    <!-- 分页数据 end-->
+
+    <!-- 删除 start-->
+    <!-- 按Id删除 -->
+        <delete id="delete" parameterType="java.lang.Long">
+        DELETE FROM power_user_acounts
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+        </delete>
+
+
+        <delete id="deleteByCondition" parameterType="java.util.Map">
+        DELETE FROM power_user_acounts
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.accountNo!=null">
+                AND account_no = #{condition.accountNo}
+            </if>
+            <if test="condition.userId!=null">
+                AND user_id = #{condition.userId}
+            </if>
+            <if test="condition.balance!=null">
+                AND balance = #{condition.balance}
+            </if>
+            <if test="condition.bouns!=null">
+                AND bouns = #{condition.bouns}
+            </if>
+            <if test="condition.backBouns!=null">
+                AND back_bouns = #{condition.backBouns}
+            </if>
+            <if test="condition.roles!=null">
+                AND roles = #{condition.roles}
+            </if>
+            <if test="condition.credit!=null">
+                AND credit = #{condition.credit}
+            </if>
+            <if test="condition.createDt!=null">
+                AND create_dt = #{condition.createDt}
+            </if>
+            <if test="condition.updateDt!=null">
+                AND update_dt = #{condition.updateDt}
+            </if>
+            <if test="condition.createBy!=null">
+                AND create_by = #{condition.createBy}
+            </if>
+            <if test="condition.updateBy!=null">
+                AND update_by = #{condition.updateBy}
+            </if>
+            <if test="condition.deposit!=null">
+                AND deposit = #{condition.deposit}
+            </if>
+        </trim>
+        </delete>
+
+        <delete id="deleteByWhereSql" parameterType="java.lang.String">
+        DELETE FROM power_user_acounts
+        <if test="nativeSql!=null">
+${nativeSql}        </if>
+        <if test="nativeSql==null">
+            WHERE 1=2
+        </if>
+        </delete>
+
+        <delete id="deleteAll" >
+        DELETE FROM power_user_acounts
+        </delete>
+
+
+    <!-- 删除 end-->
+</mapper>
+
