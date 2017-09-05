@@ -20,8 +20,8 @@ public class WxPayConfig {
         WxPayService wxPayService = new WxPayServiceImpl();
         com.github.binarywang.wxpay.config.WxPayConfig wxPayConfig = new com.github.binarywang.wxpay.config.WxPayConfig();
         wxPayConfig.setTradeType("JSAPI");
-        wxPayConfig.setAppId("wx0a6f912b64eaf720");
-        wxPayConfig.setKeyPath("classpah:wx-pay-config/apiclient_cert.p12");
+        wxPayConfig.setAppId("wx81a4de5934b52e4d");
+        wxPayConfig.setKeyPath("classpath:wx-pay-config/apiclient_cert.p12");
         wxPayConfig.setMchId("1442541002");
         wxPayConfig.setNotifyUrl("http://139.224.16.177:9000/api/app/pay/notify");
         wxPayService.setConfig(wxPayConfig);

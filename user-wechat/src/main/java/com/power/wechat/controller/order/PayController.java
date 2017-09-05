@@ -117,7 +117,7 @@ public class PayController {
     @PostMapping("/{uniqueKey}/refund")
     public boolean refund(@PathVariable String uniqueKey){
         String openId = UserContext.getCurrentUser().getOpenId();
-        Long accountId = UserContext.getCurrentUser().getAccountId();
+         Long accountId = UserContext.getCurrentUser().getAccountId();
         logger.info("收到用户退款请求，当前用户openId:{},当前公众号:{}",openId,uniqueKey);
 
         UserAcounts userAcounts = userAcountsFacade.getUserAccountsByAccountId(accountId);
@@ -133,7 +133,7 @@ public class PayController {
             //用户没有可退订单
             throw new BizException(ERRORCODE.UNIFIED_BALANCE_ORDER_ZORE.getCode(),ERRORCODE.UNIFIED_BALANCE_ORDER_ZORE.getMessage());
         }
-        if (ordersFacade.countPendingOrder(accountId)==0){
+        if (ordersFacade.countPendingOrder(accountId)!=0){
             //用户没有已经清算的订单
             throw new BizException(ERRORCODE.UNIFIED_PENDING_ORDER_NOT_ZORE.getCode(),ERRORCODE.UNIFIED_PENDING_ORDER_NOT_ZORE.getMessage());
         }
@@ -143,6 +143,7 @@ public class PayController {
         WxEvent wxEvent = new WxEvent();
         wxEvent.setOpenId(openId);
         wxEvent.setUniqueKey(uniqueKey);
+        wxEvent.setUserInfoDTO(UserContext.getCurrentUser());
         wxEvent.setEvent(PowerEvent.ORDER_REFUND);
         listener.eventDispatched(wxEvent);
         return true;
