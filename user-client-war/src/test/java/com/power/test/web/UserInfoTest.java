@@ -171,6 +171,8 @@ public class UserInfoTest extends BaseTest{
                 "<CreateTime>123456789</CreateTime>\n" +
                 "<MsgType><![CDATA[event]]></MsgType>\n" +
                 "<Event><![CDATA[subscribe]]></Event>\n" +
+                "<EventKey><![CDATA[C0000001]]></EventKey>\n" +
+                "<Ticket><![CDATA[TICKET]]></Ticket>\n" +
                 "</xml>";
 
         String uniqueKey = "powertest";

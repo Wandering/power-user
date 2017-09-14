@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.power.dao.ex.IRecommenderExDAO">
+
+
+
+<!--
+C
+insert
+insertMap
+R
+findOne
+findAll
+exists
+queryOne
+queryOneByWhereSql
+queryList
+queryListByWhereSql
+queryBySql
+queryBySqlCount
+U
+D
+-->
+
+
+    <select id="getAgentAndParentByCode" resultType="map">
+          SELECT agent.id as id ,IFNULL(agent.parent,1) as parentId FROM power_station_base stationbase
+          INNER JOIN agencies agent ON stationbase.agencyId = agent.id where stationbase.code = #{code};
+    </select>
+
+    <select id="getAgentParentById" resultType="long">
+          SELECT IFNULL(parent,1) FROM agencies where id = #{id};
+    </select>
+
+    <select id="getUserRecommendById" resultType="UserRecommend">
+          SELECT direct_recommender as directRecommender,direct_type as directType  from power_user_recommend where id = #{id}
+    </select>
+</mapper>
+

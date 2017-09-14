@@ -29,6 +29,7 @@ D
         platformId as platformId ,
         openId as openId ,
         unionId as unionId ,
+        updateTime as updateTime ,
         createTime as createTime ,
         userId as userId ,
         status as status 
@@ -41,6 +42,7 @@ D
         platformId,
         openId,
         unionId,
+        updateTime,
         createTime,
         userId,
         status
@@ -48,6 +50,7 @@ D
         #{platformId},
         #{openId},
         #{unionId},
+        #{updateTime},
         #{createTime},
         #{userId},
         #{status}
@@ -60,6 +63,7 @@ D
         platformId,
         openId,
         unionId,
+        updateTime,
         createTime,
         userId,
         status
@@ -67,6 +71,7 @@ D
         #{map.platformId},
         #{map.openId},
         #{map.unionId},
+        #{map.updateTime},
         #{map.createTime},
         #{map.userId},
         #{map.status}
@@ -89,6 +94,9 @@ D
             </if>
             <if test="unionId!=null">
                 unionId = #{unionId},
+            </if>
+            <if test="updateTime!=null">
+                updateTime = #{updateTime},
             </if>
             <if test="createTime!=null">
                 createTime = #{createTime},
@@ -116,6 +124,9 @@ D
             <if test="map.unionId!=null">
                 unionId = #{map.unionId},
             </if>
+            <if test="map.updateTime!=null">
+                updateTime = #{map.updateTime},
+            </if>
             <if test="map.createTime!=null">
                 createTime = #{map.createTime},
             </if>
@@ -142,6 +153,9 @@ D
             <if test="update.unionId!=null">
                 unionId = #{update.unionId},
             </if>
+            <if test="update.updateTime!=null">
+                updateTime = #{update.updateTime},
+            </if>
             <if test="update.createTime!=null">
                 createTime = #{update.createTime},
             </if>
@@ -165,6 +179,9 @@ D
         </if>
         <if test="condition.unionId!=null">
             AND unionId = #{condition.unionId}
+        </if>
+        <if test="condition.updateTime!=null">
+            AND updateTime = #{condition.updateTime}
         </if>
         <if test="condition.createTime!=null">
             AND createTime = #{condition.createTime}
@@ -190,6 +207,9 @@ D
             <if test="update.unionId!=null">
                 unionId = #{update.unionId},
             </if>
+            <if test="update.updateTime!=null">
+                updateTime = #{update.updateTime},
+            </if>
             <if test="update.createTime!=null">
                 createTime = #{update.createTime},
             </if>
@@ -214,6 +234,7 @@ ${nativeSql}        </if>
             platformId = #{platformId},
             openId = #{openId},
             unionId = #{unionId},
+            updateTime = #{updateTime},
             createTime = #{createTime},
             userId = #{userId},
             status = #{status},
@@ -255,6 +276,9 @@ ${nativeSql}        </if>
                 </if>
                 <if test="selector.unionId!=null">
                     , unionId
+                </if>
+                <if test="selector.updateTime!=null">
+                    , updateTime
                 </if>
                 <if test="selector.createTime!=null">
                     , createTime
@@ -337,6 +361,22 @@ ${nativeSql}        </if>
                 <foreach collection="condition.unionId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
             </if>
         </if>
+        <if test="condition.updateTime!=null">
+
+            <if test="condition.updateTime.op!='in' and condition.updateTime.op!='like' and condition.updateTime.op!='leftlike'">
+                AND   updateTime  ${condition.updateTime.op} #{condition.updateTime.data}
+            </if>
+            <if test="condition.updateTime.op=='like'">
+                AND updateTime like CONCAT('%', #{condition.updateTime.data} , '%')
+            </if>
+            <if test="condition.updateTime.op=='leftlike'">
+                AND updateTime like CONCAT(#{condition.updateTime.data} , '%')
+            </if>
+            <if test="condition.updateTime.op=='in'">
+                ${condition.groupOp}   updateTime  ${condition.updateTime.op}
+                <foreach collection="condition.updateTime.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
         <if test="condition.createTime!=null">
 
             <if test="condition.createTime.op!='in' and condition.createTime.op!='like' and condition.createTime.op!='leftlike'">
@@ -412,6 +452,9 @@ ${nativeSql}        </if>
                 <if test="selector.unionId!=null">
                     , unionId
                 </if>
+                <if test="selector.updateTime!=null">
+                    , updateTime
+                </if>
                 <if test="selector.createTime!=null">
                     , createTime
                 </if>
@@ -456,6 +499,9 @@ ${nativeSql}        </if>
                 </if>
                 <if test="selector.unionId!=null">
                     , unionId
+                </if>
+                <if test="selector.updateTime!=null">
+                    , updateTime
                 </if>
                 <if test="selector.createTime!=null">
                     , createTime
@@ -538,6 +584,22 @@ ${nativeSql}        </if>
                 <foreach collection="condition.unionId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
             </if>
         </if>
+        <if test="condition.updateTime!=null">
+
+            <if test="condition.updateTime.op!='in' and condition.updateTime.op!='like' and condition.updateTime.op!='leftlike'">
+                ${condition.groupOp}   updateTime  ${condition.updateTime.op} #{condition.updateTime.data}
+            </if>
+            <if test="condition.updateTime.op=='like'">
+                AND updateTime like CONCAT('%', #{condition.updateTime.data} , '%')
+            </if>
+            <if test="condition.updateTime.op=='leftlike'">
+                AND updateTime like CONCAT(#{condition.updateTime.data} , '%')
+            </if>
+            <if test="condition.updateTime.op=='in'">
+                ${condition.groupOp}   updateTime  ${condition.updateTime.op}
+                <foreach collection="condition.updateTime.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
         <if test="condition.createTime!=null">
 
             <if test="condition.createTime.op!='in' and condition.createTime.op!='like' and condition.createTime.op!='leftlike'">
@@ -612,6 +674,9 @@ ${nativeSql}        </if>
                     <if test="selector.unionId!=null">
                         , unionId
                     </if>
+                    <if test="selector.updateTime!=null">
+                        , updateTime
+                    </if>
                     <if test="selector.createTime!=null">
                         , createTime
                     </if>
@@ -664,6 +729,9 @@ ${executeSqlCount}        </select>
                 </if>
                 <if test="selector.unionId!=null">
                     , unionId
+                </if>
+                <if test="selector.updateTime!=null">
+                    , updateTime
                 </if>
                 <if test="selector.createTime!=null">
                     , createTime
@@ -745,6 +813,22 @@ ${executeSqlCount}        </select>
                 <foreach collection="condition.unionId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
             </if>
         </if>
+        <if test="condition.updateTime!=null">
+
+            <if test="condition.updateTime.op!='in' and condition.updateTime.op!='like' and condition.updateTime.op!='leftlike'">
+                ${condition.groupOp}   updateTime  ${condition.updateTime.op} #{condition.updateTime.data}
+            </if>
+            <if test="condition.updateTime.op=='like'">
+                AND updateTime like CONCAT('%', #{condition.updateTime.data} , '%')
+            </if>
+            <if test="condition.updateTime.op=='leftlike'">
+                AND updateTime like CONCAT(#{condition.updateTime.data} , '%')
+            </if>
+            <if test="condition.updateTime.op=='in'">
+                ${condition.groupOp}   updateTime  ${condition.updateTime.op}
+                <foreach collection="condition.updateTime.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+            </if>
+        </if>
         <if test="condition.createTime!=null">
 
             <if test="condition.createTime.op!='in' and condition.createTime.op!='like' and condition.createTime.op!='leftlike'">
@@ -821,6 +905,9 @@ ${executeSqlCount}        </select>
                 </if>
                 <if test="selector.unionId!=null">
                     , unionId
+                </if>
+                <if test="selector.updateTime!=null">
+                    , updateTime
                 </if>
                 <if test="selector.createTime!=null">
                     , createTime
@@ -919,6 +1006,22 @@ ${nativeSql}        </if>
                     <foreach collection="condition.unionId.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
                 </if>
             </if>
+            <if test="condition.updateTime!=null">
+
+                <if test="condition.updateTime.op!='in' and condition.updateTime.op!='like' and condition.updateTime.op!='leftlike'">
+                    ${condition.groupOp}   updateTime  ${condition.updateTime.op} #{condition.updateTime.data}
+                </if>
+                <if test="condition.updateTime.op=='like'">
+                    AND updateTime like CONCAT('%', #{condition.updateTime.data} , '%')
+                </if>
+                <if test="condition.updateTime.op=='leftlike'">
+                    AND updateTime like CONCAT(#{condition.updateTime.data} , '%')
+                </if>
+                <if test="condition.updateTime.op=='in'">
+                    ${condition.groupOp}   updateTime  ${condition.updateTime.op}
+                    <foreach collection="condition.updateTime.data" item="listItem" open="(" close=")" separator="," >#{listItem}</foreach>
+                </if>
+            </if>
             <if test="condition.createTime!=null">
 
                 <if test="condition.createTime.op!='in' and condition.createTime.op!='like' and condition.createTime.op!='leftlike'">
@@ -1002,6 +1105,9 @@ ${nativeSql}        </if>
             </if>
             <if test="condition.unionId!=null">
                 AND unionId = #{condition.unionId}
+            </if>
+            <if test="condition.updateTime!=null">
+                AND updateTime = #{condition.updateTime}
             </if>
             <if test="condition.createTime!=null">
                 AND createTime = #{condition.createTime}

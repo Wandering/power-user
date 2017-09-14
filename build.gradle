@@ -55,7 +55,7 @@ task testReport(type: TestReport) {
 /** 此闭包内的声明子类皆可使用 */
 allprojects {
     group = 'com.power'
-    version = '0.0.1-SNAPSHOT'
+    version = '0.0.2-SNAPSHOT'
 
     apply plugin: 'java'
     sourceCompatibility=1.8

@@ -3,6 +3,7 @@ package com.power.wechat.controller.callback;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import com.power.domain.PlatformInfo;
+import com.power.enums.UserChannelEnum;
 import com.power.facade.IPlatformInfoFacade;
 import com.power.wechat.controller.login.LoginController;
 import com.power.wechat.util.WxMpServiceUtil;
@@ -44,7 +45,9 @@ public class CallbackController {
 
 
     /**
+     *<pre>
      *
+     *</pre>
      * @param signature 签名
      * @param timestamp 时间戳
      * @param nonce 随机字符
@@ -83,6 +86,7 @@ public class CallbackController {
             String openId = wxMpXmlMessage.getFromUser();
             Long createTime = wxMpXmlMessage.getCreateTime();
             String msgType = wxMpXmlMessage.getMsgType();
+            String eventKey = wxMpXmlMessage.getEventKey();
             /////////////////////////////////////////////////
 //            String adminUser= "";
 //            String openId= "";
@@ -94,7 +98,7 @@ public class CallbackController {
                 case WxConsts.XML_MSG_EVENT:
                     String enevt = wxMpXmlMessage.getEvent();
 //                String enevt= WxConsts.EVT_SUBSCRIBE;
-                    rtnMsg = event(adminUser, openId, createTime, msgType, enevt, uniqueKey);
+                    rtnMsg = event(adminUser, openId, createTime, msgType, enevt,eventKey, uniqueKey);
                     break;
                 default:
                     rtnMsg =null;
@@ -116,7 +120,7 @@ public class CallbackController {
      * @param msgType 消息类型，event
      * @param enevt 事件类型，subscribe(订阅)、unsubscribe(取消订阅)
      */
-    private WxMpXmlOutMessage event(String adminUser,String openId, Long createTime,String msgType,String enevt, @PathVariable String uniqueKey) throws WxErrorException {
+    private WxMpXmlOutMessage event(String adminUser,String openId, Long createTime,String msgType,String enevt,String eventKey,String uniqueKey) throws WxErrorException {
         WxMpService wxMpService = WxMpServiceUtil.getWxMpService(uniqueKey);
         logger.debug("===============openId:{}=================",openId);
         WxMpUser wxMpUser = null;
@@ -153,6 +157,7 @@ public class CallbackController {
             wechat.put("country",wxMpUser.getCountry());
             wechat.put("nickname",wxMpUser.getNickname());
             wechat.put("headimgurl",wxMpUser.getHeadImgUrl());
+            putExInfo(wechat,eventKey);
         }
 
         boolean flag = false;
@@ -216,6 +221,30 @@ public class CallbackController {
             return null;
         }
         return null;
+    }
+
+    /**
+     * 解析用户关注事件中携带的参数信息
+     * @param wechat
+     * @param eventKey
+     */
+    private void putExInfo(Map<String,Object> wechat,String eventKey){
+        if (eventKey.isEmpty()){
+            wechat.put("channel", UserChannelEnum.PLATFORM);
+            return;
+        }
+        if (eventKey.startsWith("C")){
+            wechat.put("stationCode",eventKey);
+            wechat.put("channel", UserChannelEnum.AGENCY_STATION);
+            return;
+        }
+        if (eventKey.startsWith("A")){
+            wechat.put("agencyId",eventKey.substring("A".length()));
+            wechat.put("channel", UserChannelEnum.AGENCY_USER);
+            return;
+        }
+        wechat.put("userId",eventKey);
+        wechat.put("channel", UserChannelEnum.USER);
     }
 
 }

@@ -8,7 +8,7 @@
  * Copyright (c) 2013-2014, starteasy Inc. All Rights Reserved.
  * 
  * Project Name: codegen
- * $Id:  2017-06-09 16:32:57 $ 
+ * $Id:  2017-09-11 10:14:40 $ 
  */
 package com.power.domain;
 import com.power.core.domain.BaseDomain;
@@ -26,6 +26,8 @@ public class UserPlatform extends BaseDomain<Long> {
     private String openId;
     /** 唯一key */
     private String unionId;
+    /** 更新时间 */
+    private Long updateTime;
     /** 创建时间 */
     private Long createTime;
     /** 用户ID */
@@ -64,6 +66,13 @@ public class UserPlatform extends BaseDomain<Long> {
     public String getUnionId() {
         return this.unionId;
     }
+    public void setUpdateTime(Long value) {
+        this.updateTime = value;
+    }
+
+    public Long getUpdateTime() {
+        return this.updateTime;
+    }
     public void setCreateTime(Long value) {
         this.createTime = value;
     }
@@ -85,6 +94,7 @@ public class UserPlatform extends BaseDomain<Long> {
 			.append("PlatformId",getPlatformId())
 			.append("OpenId",getOpenId())
 			.append("UnionId",getUnionId())
+			.append("UpdateTime",getUpdateTime())
 			.append("CreateTime",getCreateTime())
 			.append("UserId",getUserId())
 			.append("Status",getStatus())

@@ -20,10 +20,13 @@ import com.power.core.exception.BizException;
 import com.power.core.service.IBaseService;
 import com.power.core.service.impl.AbstractPersistenceProvider;
 import com.power.domain.*;
+import com.power.enums.UserChannelEnum;
+import com.power.enums.UserTypeEnum;
 import com.power.facade.IPlatformInfoFacade;
 import com.power.http.BizHttpClient;
 import com.power.service.*;
 import com.power.service.ex.IPlatformInfoExService;
+import com.power.service.ex.IRecommenderExService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,6 +54,12 @@ public class PlatformInfoFacadeImpl extends AbstractPersistenceProvider implemen
 
     @Autowired
     private IUserExpandService userExpandService;
+
+    @Autowired
+    private IUserRecommendService userRecommendService;
+
+    @Autowired
+    private IRecommenderExService recommenderExService;
 
     @Autowired
     BizHttpClient bizHttpClient;
@@ -146,11 +155,14 @@ public class PlatformInfoFacadeImpl extends AbstractPersistenceProvider implemen
                 userPlatform.setCreateTime(System.currentTimeMillis()/1000);
                 userPlatformService.create(userPlatform);
             }
+
+
             //添加用户运营商对应关系
             UserAccount userAccount = new UserAccount();
             userAccount.setAgencyId(platformInfo.getAgencyId());
             userAccount.setUserId(userPlatform.getUserId());
             userAccountService.create(userAccount);
+            createUserRecommend(wechat,userAccount.getId());
             try{
                 //通知业务系统保存当前用户ID
                 bizHttpClient.syncRegUserToBiz(userAccount.getId());
@@ -180,4 +192,46 @@ public class PlatformInfoFacadeImpl extends AbstractPersistenceProvider implemen
         logger.info(JSON.toJSON(userPlatform));
         return true;
     }
+
+    private void createUserRecommend(Map<String,Object> wechat,Long accountId){
+            UserRecommend userRecommend = new UserRecommend();
+            UserChannelEnum userChannelEnum = (UserChannelEnum) wechat.get("channel");
+            userRecommend.setChannel(userChannelEnum.getCode());
+            userRecommend.setId(accountId);
+            if (userChannelEnum.compareTo(UserChannelEnum.PLATFORM)==0){
+                userRecommend.setDirectRecommender(1L);
+                userRecommend.setDirectType(UserTypeEnum.AGENCY.getCode());
+                userRecommend.setIndirectRecommender(1L);
+                userRecommend.setIndirectType(UserTypeEnum.AGENCY.getCode());
+            }else if (userChannelEnum.compareTo(UserChannelEnum.AGENCY_STATION)==0){
+                Map<String,Object> map = recommenderExService.getAgentAndParentByCode(wechat.get("stationCode").toString());
+                Long id = (Long) map.get("id");
+                Long parentId = (Long) map.get("parentId");
+                userRecommend.setDirectRecommender(id);
+                userRecommend.setDirectType(UserTypeEnum.AGENCY.getCode());
+                userRecommend.setIndirectRecommender(parentId);
+                userRecommend.setIndirectType(UserTypeEnum.AGENCY.getCode());
+            }else if (userChannelEnum.compareTo(UserChannelEnum.AGENCY_USER) == 0){
+                Long id = Long.parseLong(wechat.get("agencyId").toString(),1);
+                Long parentId = recommenderExService.getAgentParentById(id);
+                userRecommend.setDirectRecommender(id);
+                userRecommend.setDirectType(UserTypeEnum.AGENCY.getCode());
+                userRecommend.setIndirectRecommender(parentId);
+                userRecommend.setIndirectType(UserTypeEnum.AGENCY.getCode());
+            }else if (userChannelEnum.compareTo(UserChannelEnum.USER) == 0){
+                Long id = Long.parseLong(wechat.get("userId").toString(),1);
+
+                UserRecommend userRecommend1 = recommenderExService.getUserRecommendById(id);
+                userRecommend.setDirectRecommender(id);
+                userRecommend.setDirectType(UserTypeEnum.USER.getCode());
+                userRecommend.setIndirectRecommender(userRecommend1.getDirectRecommender());
+                userRecommend.setIndirectType(userRecommend1.getDirectType());
+            }
+
+
+            //给用户注册添加推荐人信息
+            userRecommendService.create(userRecommend);
+    }
+
+
 }
