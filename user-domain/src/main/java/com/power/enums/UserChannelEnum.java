@@ -4,10 +4,10 @@ package com.power.enums;
  * Created by Administrator on 2017/9/12.
  */
 public enum  UserChannelEnum {
-    AGENCY_STATION(0),
-    AGENCY_USER(1),
-    USER(2),
-    PLATFORM(3),
+    AGENCY_STATION(0),//桩关注
+    AGENCY_USER(1), //代理商推荐
+    USER(2),//用户推荐
+    PLATFORM(3),//宇能公众号
 
     ;
     private final int code;
