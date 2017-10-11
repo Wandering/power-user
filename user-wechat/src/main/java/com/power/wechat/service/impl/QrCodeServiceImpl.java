@@ -4,6 +4,7 @@ import com.power.wechat.util.WxMpServiceUtil;
 import com.power.yuneng.user.IQrCodeService;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,6 +13,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/9/12.
  */
+@Service("QrCodeServiceImpl")
 public class QrCodeServiceImpl implements IQrCodeService {
     @Override
     public String qrCodeCreateByStation(String stationCode,String uniqueKey) {
